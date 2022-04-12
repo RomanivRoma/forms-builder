@@ -1,0 +1,17 @@
+<div cdkDropList  class="dragElements__container cdk-drop-list p-2">
+    <div cdkDrag class="dragElements__item cdk-drag" *ngFor="let component of componentList">
+        <img src={{component.icon}} alt="">
+        <p class="m-0">{{ component.title }}</p>
+        <div *ngIf="component.tag == 'input'; then inputBlock else textareaBlock" class="dragElements__item__preview preview"></div>
+            <ng-template #inputBlock>
+                <input  *cdkDragPreview type={{component.type}}/>
+            </ng-template>
+            <ng-template #textareaBlock>
+                <textarea *cdkDragPreview></textarea>
+            </ng-template>
+
+            <!-- <img *cdkDragPreview [src]="movie.poster" [alt]="movie.title"> -->
+
+    </div>
+
+</div>

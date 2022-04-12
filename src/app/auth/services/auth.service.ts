@@ -37,7 +37,7 @@ export class AuthService {
   getUser(): User | null {
     return this.loggedUser
   }
-  setUser(user:any): void {
+  setUser(user:User): void {
     this.loggedUser = user
   }
   doLoginUser(loginInfo: any){

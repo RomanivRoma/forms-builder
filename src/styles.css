@@ -6,6 +6,7 @@
 html,
 body {
   height: 100%;
+  background: lightgray;
 }
 
 
@@ -41,3 +42,5 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
