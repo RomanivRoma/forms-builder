@@ -4,20 +4,21 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, tap, pipe, mapTo, catchError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
+import { User } from '../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private loggedUser: any = null;
+  private loggedUser: User | null = null;
 
   private readonly JWT_TOKEN = 'JWT_TOKEN'
 
   constructor(public jwtHelper: JwtHelperService,
               private http: HttpClient) { 
   }
-  getUserByToken(): any {
+  getUserByToken(): User {
     const token: string = this.getToken()
     const userByToken = this.getDecodedAccessToken(token)
     return userByToken
@@ -33,7 +34,7 @@ export class AuthService {
     const token = localStorage.getItem(this.JWT_TOKEN) || ''  
     return !this.jwtHelper.isTokenExpired(token)
   }
-  getUser(): any {
+  getUser(): User | null {
     return this.loggedUser
   }
   setUser(user:any): void {
@@ -45,7 +46,7 @@ export class AuthService {
     this.loggedUser = user
     this.storeToken(token)
   }
-  login(user: { email: string, password: string}): Observable<boolean>{
+  login(user: User): Observable<boolean>{
     return this.http.post<any>(`${environment.apiURL}/login`, user)
     .pipe(
       tap(token => this.doLoginUser(token)),

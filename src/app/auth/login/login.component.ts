@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from '../../interfaces/user.interface'
 
 @Component({
   selector: 'app-login',
@@ -27,13 +28,13 @@ export class LoginComponent implements OnInit {
   }
 
 
+
   submit(): void {
-    this.authService.login(
-      {
-        email: this.form.value.email,
-        password: this.form.value.password
-      }
-    )
+    const user: User = {
+      email: this.form.value.email,
+      password: this.form.value.password
+    }
+    this.authService.login(user)
     .subscribe(res => {
       if(res){
         this.router.navigate(['/'])

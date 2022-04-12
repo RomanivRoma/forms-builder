@@ -13,6 +13,13 @@
       "login": "test",
       "confirmPassword": "test",
       "id": 2
+    },
+    {
+      "email": "test2@test",
+      "password": "$2a$10$SQOwq2jiPt5zRj9JOLmKYubbwEh7FtoCkdmTaChnRu1c.pIGRhs.K",
+      "login": "test2",
+      "confirmPassword": "test",
+      "id": 3
     }
   ]
 }

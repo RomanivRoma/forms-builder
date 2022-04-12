@@ -1,6 +1,6 @@
-interface User {
-    id: number,
-    login: string,
+export interface User {
+    id?: number,
+    login?: string,
     email: string,
     password: string
 }
