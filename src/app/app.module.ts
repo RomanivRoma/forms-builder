@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import { BuilderModule } from './builder/builder.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { ResizableModule } from 'angular-resizable-element';
+import { PortalModule } from '@angular/cdk/portal'
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AuthModule,
     BrowserAnimationsModule,
     BuilderModule,
+    // ResizableModule,
+    PortalModule
   ],
   providers: [
 

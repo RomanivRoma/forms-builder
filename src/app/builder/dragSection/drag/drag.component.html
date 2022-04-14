@@ -1,15 +1,35 @@
-<div cdkDropList  class="dragElements__container cdk-drop-list p-2">
-    <div cdkDrag class="dragElements__item cdk-drag" *ngFor="let component of componentList">
-        <img src={{component.icon}} alt="">
-        <p class="m-0">{{ component.title }}</p>
-        <div *ngIf="component.tag == 'input'; then inputBlock else textareaBlock" class="dragElements__item__preview preview"></div>
+<div cdkDropList 
+     cdkDropListSortingDisabled
+     [cdkDropListData]="componentList"
+     [cdkDropListEnterPredicate]="noReturnPredicate"
+     (cdkDropListExited)="onSourceListExited($event)"
+     (cdkDropListEntered)="onSourceListEntered($event)"
+     class="dragElements__container p-2">
+    <div cdkDrag
+        (cdkDragStarted)="dragStart($event)"
+         class="dragElements__item d-flex align-items-center justify-content-between"
+         *ngFor="let component of componentList; index as index "
+         >
+        <div class="d-flex align-items-center">
+            <img class="me-3" src={{component.icon}} alt="">
+            <p class="m-0">{{ component.title }}</p>
+        </div>
+        <div (click)="handleAdd(component)">
+            <img class="dragElements__item__addIcon" src="assets/img/add-plus.svg">
+        </div>
+        <div *cdkDragPreview class="dragElements__item__preview preview">
+            <ng-container [ngTemplateOutlet]="component.tag == 'input' ? inputBlock : component.tag == 'textarea' ? textareaBlock : selectBlock"></ng-container>
+
             <ng-template #inputBlock>
-                <input  *cdkDragPreview type={{component.type}}/>
+                <input   type={{component.type}}/>
             </ng-template>
             <ng-template #textareaBlock>
-                <textarea *cdkDragPreview></textarea>
+                <textarea></textarea>
             </ng-template>
-
+            <ng-template #selectBlock>
+                <select></select>
+            </ng-template>
+        </div>
             <!-- <img *cdkDragPreview [src]="movie.poster" [alt]="movie.title"> -->
 
     </div>

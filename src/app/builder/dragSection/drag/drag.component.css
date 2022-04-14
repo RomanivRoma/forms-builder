@@ -23,5 +23,20 @@
     width: 38px;
     height: 38px;
     pointer-events: none;
-    margin-right: 25px;
 }
+.dragElements__container .dragElements__item  .dragElements__item__addIcon{
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+}
+.cdk-drop-dragging .cdk-drag {
+    transition: transform .3s cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .cdk-drag-animating {
+    transition: transform .3s cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .cdk-drag-placeholder {
+    background: rgba(0, 0, 0, .2);
+  }

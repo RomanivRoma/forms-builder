@@ -1,0 +1,31 @@
+<div class="toggle__container">
+    <mat-button-toggle-group #toggleGroup
+                             #group="matButtonToggleGroup"
+                             (change)="onValChange(group.value)"
+                             name="SelectedStyle"
+                             aria-label="Style Selected"
+                             value="form">
+        <mat-button-toggle value="form">Form</mat-button-toggle>
+        <mat-button-toggle value="element">Element</mat-button-toggle>
+      </mat-button-toggle-group>
+</div>
+
+<div class="editor__container">
+    <ng-template [cdkPortalOutlet]="activePortal | async"></ng-template>
+</div>
+<ng-template #formPortal>
+    <div class="form__editor">
+        <label>Title: <input type="text"></label>
+        <label>Font size: <input type="number"></label>
+        <label>Font color: <input type="number"></label>
+        <label>Width: <input type="number"></label>
+        <label>Height: <input type="number"></label>
+    </div>
+</ng-template>
+<ng-template #elementPortal>
+    <div class="form__editor">
+        <label>Type: <input type="text"></label>
+        <label>Font size: <input type="number"></label>
+        <label>Font color: <input type="number"></label>
+    </div>
+</ng-template>

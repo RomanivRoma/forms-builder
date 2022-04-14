@@ -24,3 +24,7 @@
 .styling {
     grid-area: styling; 
 }
+
+mwlResizable {
+    box-sizing: border-box;
+  }

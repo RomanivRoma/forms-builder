@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import { IDragComponent } from '../../../interfaces/dragComponent.interface';
+import { DragElement } from '../../../interfaces/DragElement.interface';
+import {CdkDragEnter, CdkDragExit, CdkDragStart} from '@angular/cdk/drag-drop';
+import { DragDropService } from '../../services/drag-drop.service';
+
 
 @Component({
   selector: 'app-drag',
@@ -10,100 +12,31 @@ import { IDragComponent } from '../../../interfaces/dragComponent.interface';
 })
 export class DragComponent implements OnInit {
 
-  componentList: Array<IDragComponent> = [
-    {
-      title: 'Text',
-      icon: `${environment.images}/pencil.svg`,
-      tag: 'input',
-      type: 'text',
-    },
-    {
-      title: 'Text Input',
-      icon: `${environment.images}/toy-alphabet-blocks.svg`,
-      tag: 'input',
-      type: 'text',
-    },
-    {
-      title: 'Textarea',
-      icon: `${environment.images}/writing.svg`,
-      tag: 'textarea',
-      type: 'text',
-    },
-    {
-      title: 'Checkbox',
-      icon: `${environment.images}/checkbox.svg`,
-      tag: 'input',
-      type: 'checkbox',
-    },
-    {
-      title: 'Date',
-      icon: `${environment.images}/date.svg`,
-      tag: 'input',
-      type: 'date',
-    },
-    {
-      title: 'Email',
-      icon: `${environment.images}/email-round-solid.svg`,
-      tag: 'input',
-      type: 'email',
-    },
-    {
-      title: 'Password',
-      icon: `${environment.images}/password.svg`,
-      tag: 'input',
-      type: 'password',
-    },
-    {
-      title: 'Number',
-      icon: `${environment.images}/board-score.svg`,
-      tag: 'input',
-      type: 'text',
-    },
-    {
-      title: 'Link',
-      icon: `${environment.images}/domain-name.svg`,
-      tag: 'input',
-      type: 'text',
-    },
-    {
-      title: 'Radio Button',
-      icon: `${environment.images}/list-view.svg`,
-      tag: 'input',
-      type: 'text',
-    },
-    {
-      title: 'Multi Select',
-      icon: `${environment.images}/select-all.svg`,
-      tag: 'input',
-      type: 'text',
-    },
-    {
-      title: 'Select',
-      icon: `${environment.images}/check-mark-box-line.svg`,
-      tag: 'input',
-      type: 'text',
-    },
-    {
-      title: 'File Uploader',
-      icon: `${environment.images}/file-upload.svg`,
-      tag: 'input',
-      type: 'file',
-    },
-    {
-      title: 'Button',
-      icon: `${environment.images}/submit-label.svg`,
-      tag: 'input',
-      type: 'text',
-    },
-  ]
+  componentList: DragElement[];
 
-  constructor() { }
+  constructor(private dragDrop: DragDropService) { }
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.componentList, event.previousIndex, event.currentIndex);
+  noReturnPredicate() {
+    return false;
   }
-
+  onSourceListExited(event: CdkDragExit<any>) {
+    console.log(event, 'exit');
+    
+  }
+  handleAdd(item: DragElement): void{
+    console.log(item);
+    
+    this.dragDrop.addToForm(item)
+  }
+  dragStart(event: CdkDragStart<any>){
+    this.componentList = [...event.source.dropContainer.data]
+  }
+  onSourceListEntered(event: CdkDragEnter<any>) {
+    console.log(event, 'enter');
+    
+  }
   ngOnInit(): void {
+    this.componentList = this.dragDrop.getComponents()
   }
 
 }
