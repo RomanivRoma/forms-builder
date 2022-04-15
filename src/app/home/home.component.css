@@ -22,9 +22,6 @@
     grid-area: drop; 
 }
 .styling {
-    grid-area: styling; 
+    grid-area: styling;
+    margin-top: 5px; 
 }
-
-mwlResizable {
-    box-sizing: border-box;
-  }

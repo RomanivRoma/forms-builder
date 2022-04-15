@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { DragElement } from '../../../interfaces/DragElement.interface';
+import { DragElement } from '../../interfaces/DragElement.interface';
 import {CdkDragEnter, CdkDragExit, CdkDragStart} from '@angular/cdk/drag-drop';
-import { DragDropService } from '../../services/drag-drop.service';
+import { DragDropService } from '../services/drag-drop.service';
 
 
 @Component({
@@ -21,11 +21,9 @@ export class DragComponent implements OnInit {
   }
   onSourceListExited(event: CdkDragExit<any>) {
     console.log(event, 'exit');
-    
   }
   handleAdd(item: DragElement): void{
     console.log(item);
-    
     this.dragDrop.addToForm(item)
   }
   dragStart(event: CdkDragStart<any>){

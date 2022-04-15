@@ -1,0 +1,17 @@
+.editor__container{
+    height: 82vh;
+    background: #fff;
+    padding: 15px 5px;
+    border: 2px solid #999;
+}
+.toggle__container{
+    /* margin-bottom: -2px; */
+}
+.form__editor input{
+    width: 180px;
+}
+.form__editor{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}

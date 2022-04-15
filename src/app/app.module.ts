@@ -9,7 +9,10 @@ import { AuthModule } from './auth/auth.module';
 import { BuilderModule } from './builder/builder.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { ResizableModule } from 'angular-resizable-element';
-import { PortalModule } from '@angular/cdk/portal'
+import { PortalModule } from '@angular/cdk/portal';
+import { StoreModule } from '@ngrx/store';
+import { formReducer } from './builder/reducers/form.reducer';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { PortalModule } from '@angular/cdk/portal'
     BrowserAnimationsModule,
     BuilderModule,
     // ResizableModule,
-    PortalModule
+    PortalModule,
+    StoreModule.forRoot({
+      form: formReducer
+    })
   ],
   providers: [
 

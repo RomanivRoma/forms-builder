@@ -2,7 +2,10 @@ import { Component, ElementRef, OnInit, EventEmitter, Output, ViewChild } from '
 import { DragElement } from '../../../interfaces/DragElement.interface';
 import {CdkDragDrop, moveItemInArray, copyArrayItem, CdkDragEnter, CdkDragMove} from '@angular/cdk/drag-drop';
 import { environment } from 'src/environments/environment';
+import { pipe, take } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { DragDropService } from '../../services/drag-drop.service';
+import { AppState } from 'src/app/app.state';
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
@@ -59,7 +62,8 @@ export class DropComponent implements OnInit {
     this.dragDrop.setSelectedElement(index, element)
   }
 
-  constructor(private dragDrop: DragDropService) { }
+  constructor(private dragDrop: DragDropService,
+              private store: Store<AppState>) { }
   handleRemoveComponent(index: number){
     this.addedComponents.splice(index, 1);
   }
@@ -79,6 +83,10 @@ export class DropComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.select('form')
+      .subscribe(val => {
+         console.log(val);
+    });
     this.addedComponents = this.dragDrop.getAddedComponents()
   }
 

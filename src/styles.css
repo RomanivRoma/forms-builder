@@ -76,3 +76,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-button-toggle-appearance-standard{
   background: #e0e0e0;
 }
+.mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard{
+  border-radius: 0 !important;
+  border: none !important;
+}
+/* .mat-button-toggle-checked.mat-button-toggle-appearance-standard{ */
+  .mat-button-toggle-checked{
+    border: 2px solid #999 !important;
+    border-bottom: none !important;
+}
+
+.mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle{
+  border-left: none;
+}
+.mat-button-toggle{
+  /* border: 2px solid #999; */
+}

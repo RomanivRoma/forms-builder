@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DragDropService {
+
+  formTitle: string;
   currentSelectedElementIndex: number | null;
   currentSelectedElement: HTMLElement | null;
   componentList: DragElement[] = [
@@ -94,10 +96,10 @@ export class DragDropService {
       tag: 'input',
       type: 'submit',
     },
-  ]
+  ];
   addedComponentList: DragElement[] = [];
   constructor() { }
-
+  
   addToForm(item: DragElement): void{
     this.addedComponentList.push(item)
   }
@@ -111,7 +113,6 @@ export class DragDropService {
   getComponents(): DragElement[]{
     return this.componentList
   }
-
   getAddedComponents(): DragElement[]{
     return this.addedComponentList
   }
