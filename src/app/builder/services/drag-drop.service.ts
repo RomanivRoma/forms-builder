@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef, ViewChild } from '@angular/core';
 import { DragElement } from 'src/app/interfaces/DragElement.interface';
 import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -6,10 +6,14 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { elementStyleValueChange } from '../actions/element.actions';
 import { BehaviorSubject } from 'rxjs';
+import { saveAs } from 'file-saver';
+import { DropComponent } from '../dropSection/drop.component';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DragDropService {
+  @ViewChild(DropComponent, {static: true}) private formRef: ElementRef;
   formStyle: FormGroup = new FormGroup({
     title: new FormControl(''),
     fontSize: new FormControl(''),
@@ -141,10 +145,7 @@ export class DragDropService {
   }
   
   setSelectedElement(index: number | null, element: HTMLInputElement | null): void{
-    if (!element) {
-      return
-    }
-    if(this.currentSelectedElement?.isSameNode(element)){
+    if(this.currentSelectedElement?.isSameNode(element) || !element){
       this.currentSelectedElementIndex = null 
       this.currentSelectedElement = null
       this.elementDisablingChange.next(true);
@@ -175,5 +176,58 @@ export class DragDropService {
     this.elementStyle.patchValue(elementStyle);
     this.store.dispatch(elementStyleValueChange(elementStyle))
   }
-
+  setForm(form: ElementRef){
+    this.formRef = form
+  }
+  download(filename:string) {
+    const html = this.formRef.nativeElement
+    let style = `<style>
+    .drop__container{
+      border-radius: 5px;
+      padding: 13px;
+    }
+    .drop__container .drop__header{
+        background: rgb(19, 192, 13);
+        color: #fff;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    .drop__container .drop__header h1{
+        margin: 0;
+        padding: 15px;
+        font-size: 29px;
+    }
+    .drop__container .drop__wrapper{
+        border: 2px solid rgb(163, 163, 163);
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    .drop__container .drop__body{
+        min-height: 30px;
+        background: #fff;
+        overflow: auto;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 15px;
+    }
+    .drop__container .drop__footer{
+        background: rgb(202, 202, 202);
+        min-height: 30px;
+    }
+    .custom-text input{ 
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+    .custom-text input:active{ 
+        border-bottom: 2px solid lightslategray;
+    }
+    .dragElements__item {
+        display: flex;
+        padding: 10px;
+        align-items: center;
+    }
+                  </style>`
+    saveAs('data:text/html;charset=utf-8, ' + encodeURIComponent(style + html.outerHTML), filename)
+  }
 }
