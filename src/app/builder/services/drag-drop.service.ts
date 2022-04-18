@@ -1,15 +1,36 @@
 import { Injectable } from '@angular/core';
 import { DragElement } from 'src/app/interfaces/DragElement.interface';
 import { environment } from 'src/environments/environment';
-
+import { FormControl, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
+import { elementStyleValueChange } from '../actions/element.actions';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class DragDropService {
-
+  formStyle: FormGroup = new FormGroup({
+    title: new FormControl(''),
+    fontSize: new FormControl(''),
+    fontColor: new FormControl(''),
+    width: new FormControl(''),
+    height: new FormControl(''),
+  });
+  elementStyle: FormGroup = new FormGroup({
+    placeholder: new FormControl(''),
+    width: new FormControl(''),
+    height: new FormControl(''),
+    required: new FormControl(''),
+    fontColor: new FormControl(''),
+    fontSize: new FormControl(''),
+    fontWeight: new FormControl(''),
+    border: new FormControl(''),
+  });
+  elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   formTitle: string;
   currentSelectedElementIndex: number | null;
-  currentSelectedElement: HTMLElement | null;
+  currentSelectedElement: HTMLInputElement | null;
   componentList: DragElement[] = [
     {
       title: 'Text',
@@ -97,23 +118,62 @@ export class DragDropService {
       type: 'submit',
     },
   ];
+
   addedComponentList: DragElement[] = [];
-  constructor() { }
-  
+  constructor(private store: Store<AppState>) { }
+
   addToForm(item: DragElement): void{
     this.addedComponentList.push(item)
   }
-  setSelectedElement(index: number | null, element: HTMLElement | null): void{
+  rgb2hex(rgb:any) {
+    let sep = rgb.indexOf(",") > -1 ? "," : " ";
+    rgb = rgb.substr(4).split(")")[0].split(sep);
+    let r = (+rgb[0]).toString(16),
+        g = (+rgb[1]).toString(16),
+        b = (+rgb[2]).toString(16);
+    if (r.length == 1)
+      r = "0" + r;
+    if (g.length == 1)
+      g = "0" + g;
+    if (b.length == 1)
+      b = "0" + b;
+    return "#" + r + g + b;
+  }
+  
+  setSelectedElement(index: number | null, element: HTMLInputElement | null): void{
+    if (!element) {
+      return
+    }
+    if(this.currentSelectedElement?.isSameNode(element)){
+      this.currentSelectedElementIndex = null 
+      this.currentSelectedElement = null
+      this.elementDisablingChange.next(true);
+      return
+    }
+    this.elementDisablingChange.next(false);
     this.currentSelectedElementIndex = index
     this.currentSelectedElement = element
+        
+    // const initialState: Element = {
+    //     placeholder: 'Placeholder',
+    //     fontSize: 25,
+    //     fontColor: '#000',
+    //     width: 300,
+    //     height: 300,
+    //     required: false
+    // }
+    let style = getComputedStyle(element)
+    let elementStyle = {
+      placeholder: element.placeholder,
+      fontSize: +style.fontSize.replace(/[^0-9]/g,''),
+      fontColor: this.rgb2hex(style.color),
+      fontWeight: style.fontWeight,
+      width: element.offsetWidth,
+      height: element.offsetHeight,
+      required: element.required
+    }
+    this.elementStyle.patchValue(elementStyle);
+    this.store.dispatch(elementStyleValueChange(elementStyle))
   }
-  getSelectedElement(): HTMLElement | null{
-    return this.currentSelectedElement
-  }
-  getComponents(): DragElement[]{
-    return this.componentList
-  }
-  getAddedComponents(): DragElement[]{
-    return this.addedComponentList
-  }
+
 }
