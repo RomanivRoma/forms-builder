@@ -1,7 +1,7 @@
- <div class="builder__container" cdkDropListGroup >
-    <app-drag 
-        class="builder__item drag">
-    </app-drag>
-    <app-drop class="builder__item drop"></app-drop>
+ <div class="builder__container">
+     <ng-container cdkDropListGroup>
+        <app-drag class="builder__item drag"></app-drag>
+        <app-drop class="builder__item drop"></app-drop>
+     </ng-container>
     <app-styling class="builder__item styling"></app-styling>
 </div>

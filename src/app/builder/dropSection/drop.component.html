@@ -1,51 +1,48 @@
-<div class="drop__container">
+
+
+<div #mainForm
+     [ngStyle]="formStyle" 
+     class="drop__container">
     <div class="drop__header">
-        <h1>{{''}}</h1>
+        <h1 [ngStyle]="titleStyle">
+            {{form.title}}
+        </h1>
     </div>
     <div class="drop__wrapper">
         <div cdkDropList
              fxLayout="row"
-             [cdkDropListData]="addedComponents"
+             [cdkDropListData]="dragDrop.addedComponentList"
              (cdkDropListDropped)="drop($event)"
              class="drop__body">
             <div cdkDrag
                  class="dragElements__item"
-                 *ngFor="let component of addedComponents; index as index"
+                 *ngFor="let component of dragDrop.addedComponentList; index as index"
                  [ngClass]="component?.class || '' "
-                 [ngClass]="selectedElementIndex == index ? 'selected' : ''"
+                 [ngClass]="dragDrop.currentSelectedElementIndex == index ? 'selected' : ''"
                  (cdkDragEntered)="entered($event)"
                  (click)="handleSelect($event, index)">
                 <ng-container [ngTemplateOutlet]="
                                                 component.tag == 'input' ? inputBlock :
                                                 component.tag == 'textarea' ? textareaBlock :
-                                                component.tag == 'select    ' ? selectBlock :
+                                                component.tag == 'select' ? selectBlock :
                                                 null">
                 </ng-container>
         
                 <ng-template #inputBlock>
-                    <input type={{component.type}} placeholder={{component.type}}/>
+                    <input class="drop__item" type={{component.type}} placeholder={{component.type}}/>
                 </ng-template>
                 <ng-template #textareaBlock>
-                    <textarea placeholder={{component.type}}></textarea>
+                    <textarea class="drop__item" placeholder={{component.type}}></textarea>
                 </ng-template>
                 <ng-template #selectBlock>
-                    <select></select>
+                    <select class="drop__item">
+                        <option value="" disabled selected hidden>{{ component.type }}</option>
+                    </select>
                 </ng-template>
 
-                <div class="edit-block"> 
-                    <img 
-                        class="confirm"
-                        src="assets/img/right-correct.svg"/>
-                    <img
-                        class="reset"
-                        src="assets/img/remove-cross.svg"/>
-                    <img
-                        class="delete"
-                        src="assets/img/close-red.svg"/>
-                </div>
+               
             </div>
         </div>
-
     </div>
 
 

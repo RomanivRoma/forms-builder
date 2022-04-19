@@ -1,16 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragComponent } from './dragSection/drag.component';
-import { DropComponent } from './dropSection/drop/drop.component';
+import { DropComponent } from './dropSection/drop.component';
 import { StylingComponent } from './stylingSection/styling.component'
 import { HomeComponent } from '../home/home.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { PortalModule } from '@angular/cdk/portal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnectFormDirective } from './directives/connect-form.directive';
+import { SafeStylePipe } from '../pipes/safe-style.pipe';
+
+
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule } from '@angular/material/input'
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -19,17 +27,22 @@ import { ConnectFormDirective } from './directives/connect-form.directive';
     StylingComponent,
     HomeComponent,
     ConnectFormDirective,
+    SafeStylePipe
   ],
   imports: [
     CommonModule,
     DragDropModule,
     BrowserAnimationsModule,
-    // MatFormFieldModule,
     MatButtonToggleModule,
-    // MatIconModule
+    MatIconModule,
     PortalModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSliderModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule
   ],
 })
 export class BuilderModule { }

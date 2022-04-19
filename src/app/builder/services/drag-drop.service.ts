@@ -20,6 +20,7 @@ export class DragDropService {
     fontColor: new FormControl(''),
     width: new FormControl(''),
     height: new FormControl(''),
+    align: new FormControl('')
   });
   elementStyle: FormGroup = new FormGroup({
     placeholder: new FormControl(''),
@@ -30,9 +31,10 @@ export class DragDropService {
     fontSize: new FormControl(''),
     fontWeight: new FormControl(''),
     border: new FormControl(''),
+    align: new FormControl(''),
+    containerWidth: new FormControl(''),
   });
   elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  formTitle: string;
   currentSelectedElementIndex: number | null;
   currentSelectedElement: HTMLInputElement | null;
   componentList: DragElement[] = [
@@ -129,6 +131,9 @@ export class DragDropService {
   addToForm(item: DragElement): void{
     this.addedComponentList.push(item)
   }
+  clearForm(): void{
+    this.addedComponentList = []
+  }
   rgb2hex(rgb:any) {
     let sep = rgb.indexOf(",") > -1 ? "," : " ";
     rgb = rgb.substr(4).split(")")[0].split(sep);
@@ -154,24 +159,22 @@ export class DragDropService {
     this.elementDisablingChange.next(false);
     this.currentSelectedElementIndex = index
     this.currentSelectedElement = element
-        
-    // const initialState: Element = {
-    //     placeholder: 'Placeholder',
-    //     fontSize: 25,
-    //     fontColor: '#000',
-    //     width: 300,
-    //     height: 300,
-    //     required: false
-    // }
-    let style = getComputedStyle(element)
+    this.setCurrentStylesToElement(element)
+  }
+  setCurrentStylesToElement(element: HTMLInputElement){
+    const style = getComputedStyle(element)
+    const parent = element.parentElement as HTMLElement
+    
     let elementStyle = {
       placeholder: element.placeholder,
       fontSize: +style.fontSize.replace(/[^0-9]/g,''),
       fontColor: this.rgb2hex(style.color),
       fontWeight: style.fontWeight,
-      width: element.offsetWidth,
+      width: +style.width.replace(/[^0-9]/g,'') || 100,
       height: element.offsetHeight,
-      required: element.required
+      required: element.required,
+      align: style.textAlign,
+      containerWidth: +parent.style.width.replace(/[^0-9]/g,'') || 100
     }
     this.elementStyle.patchValue(elementStyle);
     this.store.dispatch(elementStyleValueChange(elementStyle))
@@ -226,6 +229,9 @@ export class DragDropService {
         display: flex;
         padding: 10px;
         align-items: center;
+    }
+    .dragElements__item {
+      width: 100%;
     }
                   </style>`
     saveAs('data:text/html;charset=utf-8, ' + encodeURIComponent(style + html.outerHTML), filename)

@@ -6,8 +6,9 @@ const initialState: Form = {
     title: 'Form Title',
     fontSize: 25,
     fontColor: '#000',
-    width: 300,
-    height: 300 
+    width: 500,
+    height: 300 ,
+    align: 'left'
 }
 
 export const formReducer = createReducer(
@@ -15,4 +16,4 @@ export const formReducer = createReducer(
     on(formStyleValueChange, (state, { type, ...update }) => { 
         return ({ ...state, ...update })
     }),
-  );
+);

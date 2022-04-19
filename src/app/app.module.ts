@@ -12,12 +12,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PortalModule } from '@angular/cdk/portal';
 import { StoreModule } from '@ngrx/store';
 import { formReducer } from './builder/reducers/form.reducer';
+import { elementReducer } from './builder/reducers/element.reducers';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
+    // SafeStylePipe,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { formReducer } from './builder/reducers/form.reducer';
     // ResizableModule,
     PortalModule,
     StoreModule.forRoot({
-      form: formReducer
+      form: formReducer,
+      element: elementReducer,
     })
   ],
   providers: [

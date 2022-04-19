@@ -3,6 +3,7 @@ import { FormGroupDirective } from '@angular/forms';
 import { Subscription, take, debounceTime } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { formStyleValueChange } from '../actions/form.actions';
+import { elementStyleValueChange } from '../actions/element.actions';
 
 @Directive({
   selector: '[connectForm]'
@@ -10,13 +11,14 @@ import { formStyleValueChange } from '../actions/form.actions';
 export class ConnectFormDirective {
   @Input('connectForm') path : string;
   @Input() debounce : number = 300;
-  @Output() error = new EventEmitter();
-  @Output() success = new EventEmitter();
   formChange : Subscription;
   constructor( private formGroupDirective : FormGroupDirective,
                private store : Store<any> ) {}
   ngOnInit() {
-    this.store.select(state => state.form)
+    this.store.select(state => state[this.path])
+    .pipe(
+      take(1)
+    )
       .subscribe(val => {
          this.formGroupDirective.form.patchValue(val);
     });
@@ -26,7 +28,7 @@ export class ConnectFormDirective {
         debounceTime(this.debounce)
       )
       .subscribe(value => {
-        this.store.dispatch(formStyleValueChange(value))
+        this.store.dispatch(this.path == 'element' ? elementStyleValueChange(value) : formStyleValueChange(value))
       })
     }
 }
