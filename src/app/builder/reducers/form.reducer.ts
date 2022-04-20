@@ -8,7 +8,8 @@ const initialState: Form = {
     fontColor: '#000',
     width: 500,
     height: 300 ,
-    align: 'left'
+    align: 'left',
+    background: '#13c00d',
 }
 
 export const formReducer = createReducer(

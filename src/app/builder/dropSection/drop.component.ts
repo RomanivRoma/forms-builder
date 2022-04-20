@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, EventEmitter, Output, ViewChild, AfterVi
 import { DragElement } from '../../interfaces/DragElement.interface';
 import {CdkDragDrop, moveItemInArray, copyArrayItem, CdkDragEnter, CdkDragMove} from '@angular/cdk/drag-drop';
 import { environment } from 'src/environments/environment';
-import { pipe, single, take } from 'rxjs';
+import { pipe, single, take, takeUntil, takeWhile } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { DragDropService } from '../services/drag-drop.service';
@@ -20,16 +20,10 @@ export class DropComponent implements OnInit, AfterViewInit {
   element: any
   titleStyle: any;
   formStyle: any;
+  headerStyle: any;
 
-  dropListReceiverElement?: HTMLElement;
-  dragDropInfo?: {
-    dragIndex: number;
-    dropIndex: number;
-  };
   constructor(public dragDrop: DragDropService,
-              private store: Store<AppState>) { 
-                // localStorage.setItem('JWT_TOKEN', '')
-              }
+              private store: Store<AppState>) { }
 
               
   drop(event: CdkDragDrop<DragElement[]>) {
@@ -65,7 +59,7 @@ export class DropComponent implements OnInit, AfterViewInit {
     this.store.select('form')
       .subscribe(val => {
         console.log(val);
-        const newStyle: any = val
+        
         this.form = val
         this.titleStyle = {
           'fontSize.px': this.form.fontSize,
@@ -73,8 +67,11 @@ export class DropComponent implements OnInit, AfterViewInit {
           'textAlign': this.form.align   
         }
         this.formStyle = {
-          'width': this.form.width + (Number.isInteger(this.form.width) ? 'px' : '') ,
-          'height': this.form.height  + (Number.isInteger(this.form.height) ? 'px' : '')
+          'width.px': this.form.width,
+          'height.px': this.form.height
+        }
+        this.headerStyle = {
+          'backgroundColor': this.form.background
         }
     });
     this.store.select('element')
@@ -85,17 +82,29 @@ export class DropComponent implements OnInit, AfterViewInit {
         const parent = currentSelectedElement.parentElement || currentSelectedElement
         currentSelectedElement.placeholder = this.element.placeholder
         currentSelectedElement.required = this.element.required 
+        // currentSelectedElement.value = this.element.value   
+        currentSelectedElement.innerText = this.element.value    
         const elementStyle = {
           'color': this.element.fontColor,
           'font-size': this.element.fontSize + 'px',
           'width': this.element.width + '%',
           'height': this.element.height + 'px',
           'font-weight': this.element.fontWeight,
+          'background': this.element.background,
+          'border-radius': this.element.borderRadius + 'px',
+          'border-color': this.element.borderColor,
+          'padding-left': this.element.paddingLeft + 'px',
+          'padding-top': this.element.paddingTop + 'px',
+          'padding-right': this.element.paddingRight + 'px',
+          'padding-bottom': this.element.paddingBottom + 'px',
+          'margin-left': this.element.marginLeft + 'px',
+          'margin-top': this.element.marginTop + 'px',
+          'margin-right': this.element.marginRight + 'px',
+          'margin-bottom': this.element.marginBottom + 'px',
         }
         Object.assign(currentSelectedElement.style, elementStyle)
         parent.style.width = this.element.containerWidth + '%'
         parent.style.justifyContent = this.element.align
     });
   }
-
 }

@@ -21,7 +21,7 @@
             <ng-container [ngTemplateOutlet]="component.tag == 'input' ? inputBlock : component.tag == 'textarea' ? textareaBlock : selectBlock"></ng-container>
 
             <ng-template #inputBlock>
-                <input   type={{component.type}}/>
+                <input type={{component.type}}/>
             </ng-template>
             <ng-template #textareaBlock>
                 <textarea></textarea>

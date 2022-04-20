@@ -12,6 +12,10 @@ export class ConnectFormDirective {
   @Input('connectForm') path : string;
   @Input() debounce : number = 300;
   formChange : Subscription;
+  dispatches: any = {
+    'element': elementStyleValueChange,
+    'form': formStyleValueChange
+  }
   constructor( private formGroupDirective : FormGroupDirective,
                private store : Store<any> ) {}
   ngOnInit() {
@@ -28,7 +32,7 @@ export class ConnectFormDirective {
         debounceTime(this.debounce)
       )
       .subscribe(value => {
-        this.store.dispatch(this.path == 'element' ? elementStyleValueChange(value) : formStyleValueChange(value))
+        this.store.dispatch(this.dispatches[this.path](value))
       })
     }
 }

@@ -1,6 +1,6 @@
 import { TemplatePortal } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { DragDropService } from '../services/drag-drop.service';
 import { SwitcherPortalService } from '../services/switcher-portal.service';
 import { Store } from '@ngrx/store';
@@ -21,7 +21,7 @@ export class StylingComponent implements OnInit {
   innerHeight: number = window.innerHeight;
   @ViewChild('elementPortal', {static: true}) elementPortal: TemplateRef<unknown>;
   @ViewChild('formPortal', {static: true}) formPortal: TemplateRef<unknown>;
-
+  isFormControlVisible: any;
   portal$: Observable<TemplatePortal>;
   constructor(private viewContainerRef: ViewContainerRef,
               public switcherPortal: SwitcherPortalService,
@@ -34,6 +34,9 @@ export class StylingComponent implements OnInit {
       this.value = val ? 'form' : 'element'
       this.setPortal(portal)
     });   
+    this.dragDrop.formControlVisibleChange.subscribe(val =>{
+      this.isFormControlVisible = val
+    })
   }
   setPortal(portal: TemplatePortal){
     this.activePortal.next(portal)
@@ -71,13 +74,5 @@ export class StylingComponent implements OnInit {
   onValChange(val: string){
     const portal = new TemplatePortal(val == 'form' ? this.formPortal : this.elementPortal, this.viewContainerRef)
     this.setPortal(portal)
-  }
-  onTypeChange(type:string, val: string){
-    if(val == 'auto'){
-      const updated:any = {}
-      updated[type] = val
-      this.store.dispatch(formStyleValueChange({...this.dragDrop.formStyle.value, ...updated}))
-    }
-    
   }
 }

@@ -5,7 +5,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { elementStyleValueChange } from '../actions/element.actions';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
 
@@ -20,7 +20,8 @@ export class DragDropService {
     fontColor: new FormControl(''),
     width: new FormControl(''),
     height: new FormControl(''),
-    align: new FormControl('')
+    align: new FormControl(''),
+    background: new FormControl(''),
   });
   elementStyle: FormGroup = new FormGroup({
     placeholder: new FormControl(''),
@@ -30,9 +31,27 @@ export class DragDropService {
     fontColor: new FormControl(''),
     fontSize: new FormControl(''),
     fontWeight: new FormControl(''),
-    border: new FormControl(''),
+    borderColor: new FormControl(''),
+    borderRadius: new FormControl(''),
+    background: new FormControl(''),
     align: new FormControl(''),
     containerWidth: new FormControl(''),
+    value: new FormControl(''),
+    paddingTop: new FormControl(''),
+    paddingRight: new FormControl(''),
+    paddingBottom: new FormControl(''),
+    paddingLeft: new FormControl(''),
+    marginTop: new FormControl(''),
+    marginRight: new FormControl(''),
+    marginBottom: new FormControl(''),
+    marginLeft: new FormControl(''),
+  });
+  formControlVisibleChange: BehaviorSubject<any> = new BehaviorSubject<any>({
+    placeholder: true,
+    required: true,
+    value: true,
+    borderRadius: true,
+    borderColor: true
   });
   elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   currentSelectedElementIndex: number | null;
@@ -43,18 +62,21 @@ export class DragDropService {
       icon: `${environment.images}/pencil.svg`,
       tag: 'input',
       type: 'text',
-      class: 'custom-text'
+      class: 'custom-text',
+      value: 'Text'
     },
     {
       title: 'Text Input',
       icon: `${environment.images}/toy-alphabet-blocks.svg`,
       tag: 'input',
+      placeholder: 'Placeholer',
       type: 'text',
     },
     {
       title: 'Textarea',
       icon: `${environment.images}/writing.svg`,
       tag: 'textarea',
+      placeholder: 'Placeholer',
       type: 'text',
     },
     {
@@ -73,54 +95,64 @@ export class DragDropService {
       title: 'Email',
       icon: `${environment.images}/email-round-solid.svg`,
       tag: 'input',
+      placeholder: 'Placeholer',
       type: 'email',
     },
     {
       title: 'Password',
       icon: `${environment.images}/password.svg`,
       tag: 'input',
+      placeholder: 'Placeholer',
       type: 'password',
     },
     {
       title: 'Number',
       icon: `${environment.images}/board-score.svg`,
       tag: 'input',
+      placeholder: 'Placeholer',
       type: 'number',
     },
     {
       title: 'Link',
       icon: `${environment.images}/domain-name.svg`,
       tag: 'input',
+      placeholder: 'Placeholer',
       type: 'url',
     },
     {
       title: 'Radio Button',
       icon: `${environment.images}/list-view.svg`,
       tag: 'input',
+      placeholder: 'Placeholer',
       type: 'radio',
     },
     {
       title: 'Multi Select',
       icon: `${environment.images}/select-all.svg`,
       tag: 'select',
+      placeholder: 'Placeholer',
       type: 'text',
     },
     {
       title: 'Select',
       icon: `${environment.images}/check-mark-box-line.svg`,
       tag: 'select',
+      placeholder: 'Placeholer',
       type: 'text',
     },
     {
       title: 'File Uploader',
       icon: `${environment.images}/file-upload.svg`,
       tag: 'input',
+      placeholder: 'Placeholer',
       type: 'file',
     },
     {
       title: 'Button',
       icon: `${environment.images}/submit-label.svg`,
-      tag: 'input',
+      tag: 'button',
+      placeholder: 'Placeholer',
+      value: 'Submit',
       type: 'submit',
     },
   ];
@@ -150,7 +182,7 @@ export class DragDropService {
   }
   
   setSelectedElement(index: number | null, element: HTMLInputElement | null): void{
-    if(this.currentSelectedElement?.isSameNode(element) || !element){
+    if(this.currentSelectedElement?.isSameNode(element) || !element || !element.parentElement){
       this.currentSelectedElementIndex = null 
       this.currentSelectedElement = null
       this.elementDisablingChange.next(true);
@@ -160,21 +192,64 @@ export class DragDropService {
     this.currentSelectedElementIndex = index
     this.currentSelectedElement = element
     this.setCurrentStylesToElement(element)
+    if(element.parentElement.className.includes('custom-text')){
+      this.formControlVisibleChange.next({
+        placeholder: false,
+        required: false,
+        value: true,
+        borderRadius: false,
+        borderColor: false
+      })
+    }
+    else if( element.type == 'submit'){
+      this.formControlVisibleChange.next({
+        placeholder: false,
+        required: false,
+        value: true,
+        borderRadius: true,
+        borderColor: true
+      })
+    }else if(element.tagName == "SELECT" || element.type == 'radio' || element.type == 'checkbox'){
+      this.formControlVisibleChange.next({
+        placeholder: false,
+        required: true,
+        value: false,
+        borderRadius: true,
+        borderColor: true
+      })
+    }else{
+      this.formControlVisibleChange.next({
+        placeholder: true,
+        required: true,
+        value: false,
+      })
+    }
   }
   setCurrentStylesToElement(element: HTMLInputElement){
     const style = getComputedStyle(element)
-    const parent = element.parentElement as HTMLElement
-    
+    const parent = element.parentElement as HTMLElement   
     let elementStyle = {
       placeholder: element.placeholder,
       fontSize: +style.fontSize.replace(/[^0-9]/g,''),
       fontColor: this.rgb2hex(style.color),
       fontWeight: style.fontWeight,
-      width: +style.width.replace(/[^0-9]/g,'') || 100,
+      width: +element.style.width.replace(/[^0-9]/g,''),
       height: element.offsetHeight,
       required: element.required,
-      align: style.textAlign,
-      containerWidth: +parent.style.width.replace(/[^0-9]/g,'') || 100
+      align: parent.style.justifyContent,
+      containerWidth: +parent.style.width.replace(/[^0-9]/g,''),
+      value: element.innerText,
+      background: this.rgb2hex(style.backgroundColor),
+      borderRadius: style.borderRadius,
+      borderColor: style.borderColor,
+      paddingTop: style.paddingTop.replace(/[^0-9]/g,''),
+      paddingRight: style.paddingRight.replace(/[^0-9]/g,''),
+      paddingBottom: style.paddingBottom.replace(/[^0-9]/g,''),
+      paddingLeft: style.paddingLeft.replace(/[^0-9]/g,''),
+      marginTop: style.marginTop.replace(/[^0-9]/g,''),
+      marginRight: style.marginRight.replace(/[^0-9]/g,''),
+      marginBottom: style.marginBottom.replace(/[^0-9]/g,''),
+      marginLeft: style.marginLeft.replace(/[^0-9]/g,''),
     }
     this.elementStyle.patchValue(elementStyle);
     this.store.dispatch(elementStyleValueChange(elementStyle))
@@ -194,6 +269,9 @@ export class DragDropService {
         color: #fff;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
+    }
+    .drop__container p{
+      margin: 0;
     }
     .drop__container .drop__header h1{
         margin: 0;

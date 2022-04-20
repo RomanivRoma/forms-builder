@@ -3,10 +3,13 @@
     padding: 10px 0;
 }
 .drop__container .drop__header{
-    background: rgb(19, 192, 13);
+    /* background: rgb(19, 192, 13); */
     color: #fff;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+.drop__container p{
+    margin: 0;
 }
 .drop__container .drop__header h1{
     margin: 0;
@@ -36,24 +39,27 @@
 .dragElements__item,
 .dragElements__item input,
 .dragElements__item textarea,
+.dragElements__item p,
 .dragElements__item select{
     width: 100%;
+    outline: none;
 }
-.dragElements__item input[type="checkbox"],
-.dragElements__item input[type="radio"]{
-    width: auto;
+.dragElements__item input,
+.dragElements__item textarea,
+.dragElements__item p,
+.dragElements__item select{
+    margin: 5px;
 }
 .custom-text input{ 
     background: transparent;
     border: none;
     outline: none;
 }
-.custom-text input:active{ 
+.custom-text.selected p{ 
     border-bottom: 2px solid lightslategray;
 }
 .dragElements__item {
     display: flex;
-    padding: 10px;
     align-items: center;
 }
 .dragElements__item.selected {

@@ -5,8 +5,9 @@
     border: 2px solid #999;
     overflow: auto;
 }
-.toggle__container{
+.toggle__container .mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard{
     /* margin-bottom: -2px; */
+    border-radius: 0;
 }
 .form__editor > *{
     width: 100%;
@@ -34,4 +35,11 @@
 .form__editor mat-button-toggle-group{
     margin: 0 auto;
     width: fit-content !important;
+}
+.input__number__container{
+    display: flex;
+    gap: 5px;
+}
+.input__number__container .mat-form-field{
+    width: 65px;
 }
