@@ -5,7 +5,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { elementStyleValueChange } from '../actions/element.actions';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
 
@@ -222,6 +222,8 @@ export class DragDropService {
         placeholder: true,
         required: true,
         value: false,
+        borderRadius: true,
+        borderColor: true
       })
     }
   }
@@ -278,6 +280,12 @@ export class DragDropService {
         padding: 15px;
         font-size: 29px;
     }
+    .dragElements__item input,
+    .dragElements__item textarea,
+    .dragElements__item p,
+    .dragElements__item select{
+        margin: 5px;
+    }
     .drop__container .drop__wrapper{
         border: 2px solid rgb(163, 163, 163);
         border-bottom-left-radius: 5px;
@@ -290,27 +298,38 @@ export class DragDropService {
         display: flex;
         flex-wrap: wrap;
         padding: 15px;
+        height: 100%;
     }
     .drop__container .drop__footer{
         background: rgb(202, 202, 202);
         min-height: 30px;
     }
-    .custom-text input{ 
-        background: transparent;
-        border: none;
-        outline: none;
-    }
-    .custom-text input:active{ 
-        border-bottom: 2px solid lightslategray;
-    }
     .dragElements__item {
         display: flex;
-        padding: 10px;
         align-items: center;
     }
     .dragElements__item {
       width: 100%;
     }
+    ::-webkit-scrollbar-track{
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      background-color: #F5F5F5;
+    }
+    
+    ::-webkit-scrollbar{
+      width: 8px;
+      height: 8px;
+      background-color: #F5F5F5;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb{
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+      background-color: #555;
+    }
+    
                   </style>`
     saveAs('data:text/html;charset=utf-8, ' + encodeURIComponent(style + html.outerHTML), filename)
   }

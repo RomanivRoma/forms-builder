@@ -5,7 +5,6 @@ import { DragDropService } from '../services/drag-drop.service';
 import { SwitcherPortalService } from '../services/switcher-portal.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
-import { formStyleValueChange } from '../actions/form.actions';
 
 @Component({
   selector: 'app-styling',
@@ -25,8 +24,7 @@ export class StylingComponent implements OnInit {
   portal$: Observable<TemplatePortal>;
   constructor(private viewContainerRef: ViewContainerRef,
               public switcherPortal: SwitcherPortalService,
-              public dragDrop: DragDropService,
-              private store: Store<AppState>) {
+              public dragDrop: DragDropService) {
     this.dragDrop.elementDisablingChange
     .subscribe(val =>{ 
       const portal = new TemplatePortal(val ? this.formPortal : this.elementPortal, this.viewContainerRef)          
@@ -44,7 +42,6 @@ export class StylingComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnDestroy(){
-    // this.dragDrop.elementDisablingChange.unsubscribe()
   }
   handleSelect($event: Event){
     const element = ($event.target as HTMLInputElement) 
