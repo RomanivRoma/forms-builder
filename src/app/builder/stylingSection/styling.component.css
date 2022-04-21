@@ -6,40 +6,38 @@
     overflow: auto;
 }
 .toggle__container .mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard{
-    /* margin-bottom: -2px; */
     border-radius: 0;
 }
-.form__editor > *{
+::ng-deep .form__editor > *{
     width: 100%;
 }
 .form__editor{
     display: flex;
     gap: 10px;
     flex-direction: column;
-    /* align-items: flex-end; */
 }
-.edit-block{
+::ng-deep .edit-block{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
-.edit-block img{
+::ng-deep .edit-block img{
     width: 40px;
     height: 40px;
 }
-.button__container{
+::ng-deep .button__container{
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
-.form__editor mat-button-toggle-group{
+::ng-deep .form__editor mat-button-toggle-group{
     margin: 0 auto;
     width: fit-content !important;
 }
-.input__number__container{
+::ng-deep .input__number__container{
     display: flex;
     gap: 5px;
 }
-.input__number__container .mat-form-field{
-    width: 65px;
+::ng-deep .input__number__container .mat-form-field{
+    width: 55px;
 }

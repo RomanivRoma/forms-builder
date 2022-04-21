@@ -16,7 +16,6 @@ export class DragComponent implements OnInit {
   componentList: DragElement[];
 
   constructor(private dragDrop: DragDropService) { }
-
   noReturnPredicate() {
     return false;
   }
@@ -36,5 +35,4 @@ export class DragComponent implements OnInit {
   ngOnInit(): void {
     this.componentList = this.dragDrop.componentList
   }
-
 }

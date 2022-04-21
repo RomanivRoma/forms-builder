@@ -12,13 +12,17 @@ import { ConnectFormDirective } from './directives/connect-form.directive';
 import { SafeStylePipe } from '../pipes/safe-style.pipe';
 
 
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatIconModule} from '@angular/material/icon';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule } from '@angular/material/input'
-import {MatButtonModule} from '@angular/material/button';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input'
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ElementComponent } from './stylingSection/element/element.component';
+import { FormComponent } from './stylingSection/form/form.component';
+import { DragItemComponent } from './dragSection/drag-item/drag-item.component';
+import { DropItemComponent } from './dropSection/drop-item/drop-item.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     StylingComponent,
     HomeComponent,
     ConnectFormDirective,
-    SafeStylePipe
+    SafeStylePipe,
+    ElementComponent,
+    FormComponent,
+    DragItemComponent,
+    DropItemComponent
   ],
   imports: [
     CommonModule,

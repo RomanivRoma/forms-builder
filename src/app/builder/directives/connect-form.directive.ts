@@ -1,6 +1,6 @@
-import { Directive, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
-import { Subscription, take, debounceTime } from 'rxjs';
+import { Subscription, take, debounceTime, takeUntil, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { formStyleValueChange } from '../actions/form.actions';
 import { elementStyleValueChange } from '../actions/element.actions';
@@ -9,6 +9,8 @@ import { elementStyleValueChange } from '../actions/element.actions';
   selector: '[connectForm]'
 })
 export class ConnectFormDirective {
+
+  destroy$: Subject<boolean> = new Subject();
   @Input('connectForm') path : string;
   @Input() debounce : number = 300;
   formChange : Subscription;
@@ -29,10 +31,15 @@ export class ConnectFormDirective {
 
     this.formChange = this.formGroupDirective.form.valueChanges
       .pipe(
+        takeUntil(this.destroy$), 
         debounceTime(this.debounce)
       )
       .subscribe(value => {
         this.store.dispatch(this.dispatches[this.path](value))
       })
+    }
+    ngOnDestroy(){
+      this.destroy$.next(true)
+      this.destroy$.complete()
     }
 }

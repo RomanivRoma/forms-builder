@@ -6,8 +6,6 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SwitcherPortalService {
-  elementPortal: TemplateRef<unknown>;
-  formPortal: TemplateRef<unknown>;
 
   constructor() { }
 

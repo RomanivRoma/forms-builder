@@ -1,0 +1,23 @@
+<div cdkDrag (cdkDragStarted)="onDragStart($event)"
+    class="dragElements__item d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+        <img class="me-3" src={{component.icon}} alt="">
+        <p class="m-0">{{ component.title }}</p>
+    </div>
+    <div (click)="addComponent(component)">
+        <img class="dragElements__item__addIcon" src="assets/img/add-plus.svg">
+    </div>
+    <div *cdkDragPreview class="dragElements__item__preview preview">
+        <ng-container [ngTemplateOutlet]="component.tag == 'input' ? inputBlock : component.tag == 'textarea' ? textareaBlock : selectBlock"></ng-container>
+
+        <ng-template #inputBlock>
+            <input type={{component.type}}/>
+        </ng-template>
+        <ng-template #textareaBlock>
+            <textarea></textarea>
+        </ng-template>
+        <ng-template #selectBlock>
+            <select></select>
+        </ng-template>
+    </div>
+</div>
