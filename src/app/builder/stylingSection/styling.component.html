@@ -1,17 +1,15 @@
 <div class="toggle__container">
-    <mat-button-toggle-group #toggleGroup
+    <mat-button-toggle-group 
                              #group="matButtonToggleGroup"
                              (change)="onValChange(group.value)"
-                             name="SelectedStyle"
-                             aria-label="Style Selected"
-                             [(ngModel)]="value"
+                             [value]="value"
                              >
         <mat-button-toggle value="form">Form</mat-button-toggle>
         <mat-button-toggle [disabled]="dragDrop.elementDisablingChange | async" value="element">Element</mat-button-toggle>
-      </mat-button-toggle-group>
+    </mat-button-toggle-group>
 </div>
 <div class="editor__container">
-    <ng-template [cdkPortalOutlet]="activePortal | async"></ng-template>
+    <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
 </div>
 <ng-template #formPortal>
     <form [formGroup]="dragDrop.formStyle"

@@ -1,6 +1,6 @@
-import { TemplatePortal } from '@angular/cdk/portal';
+import { TemplatePortal, Portal } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, Subscription, takeUntil, skip } from 'rxjs';
 import { DragDropService } from '../services/drag-drop.service';
 import { SwitcherPortalService } from '../services/switcher-portal.service';
 import { Store } from '@ngrx/store';
@@ -8,48 +8,56 @@ import { AppState } from 'src/app/app.state';
 
 @Component({
   selector: 'app-styling',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './styling.component.html',
-  styleUrls: ['./styling.component.css']
+  styleUrls: ['./styling.component.css'],
 })
 export class StylingComponent implements OnInit {
   value: string;
   isDisabled: boolean;
-  activePortal = new Subject<TemplatePortal>();
+  selectedPortal: Portal<any>;
   innerWidth: number = window.innerWidth;
   innerHeight: number = window.innerHeight;
-  @ViewChild('elementPortal', {static: true}) elementPortal: TemplateRef<unknown>;
-  @ViewChild('formPortal', {static: true}) formPortal: TemplateRef<unknown>;
+  @ViewChild('elementPortal', {static: true}) elementPortalContent: TemplateRef<unknown>;
+  @ViewChild('formPortal', {static: true}) formPortalContent: TemplateRef<unknown>;
+  formPortal: TemplatePortal<any>;
+  elementPortal: TemplatePortal<any>;
   isFormControlVisible: any;
-  portal$: Observable<TemplatePortal>;
+  destroy$: Subject<boolean> = new Subject();
   constructor(private viewContainerRef: ViewContainerRef,
               public switcherPortal: SwitcherPortalService,
               public dragDrop: DragDropService) {
+  
+  }
+  ngOnInit(): void {
     this.dragDrop.elementDisablingChange
-    .subscribe(val =>{ 
-      const portal = new TemplatePortal(val ? this.formPortal : this.elementPortal, this.viewContainerRef)          
-      if(!portal.templateRef) return
+    .pipe(
+      takeUntil(this.destroy$), 
+      skip(1)
+    )
+    .subscribe(val =>{
       this.value = val ? 'form' : 'element'
-      this.setPortal(portal)
+      this.setPortal(this.value)
     });   
-    this.dragDrop.formControlVisibleChange.subscribe(val =>{
+    this.dragDrop.formControlVisibleChange
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe(val =>{
       this.isFormControlVisible = val
     })
   }
-  setPortal(portal: TemplatePortal){
-    this.activePortal.next(portal)
-  }
-  ngOnInit(): void {
-  }
   ngOnDestroy(){
+    this.destroy$.next(true)
+    this.destroy$.complete()
+  }
+  ngAfterViewInit() {
+    this.elementPortal = new TemplatePortal(this.elementPortalContent, this.viewContainerRef);
+    this.formPortal = new TemplatePortal(this.formPortalContent, this.viewContainerRef);
   }
   handleSelect($event: Event){
     const element = ($event.target as HTMLInputElement) 
     if(element.className.includes('delete')){
       this.handleRemoveComponent(this.dragDrop.currentSelectedElementIndex || 0)
-      this.handleUnselect()
-    }
-    else if(element.className.includes('reset')){
       this.handleUnselect()
     }
     else if(element.className.includes('confirm')){
@@ -68,8 +76,10 @@ export class StylingComponent implements OnInit {
   handleClear(){
     this.dragDrop.clearForm()
   }
+  setPortal(val: string){
+    this.selectedPortal = val == 'form' ? this.formPortal : this.elementPortal
+  }
   onValChange(val: string){
-    const portal = new TemplatePortal(val == 'form' ? this.formPortal : this.elementPortal, this.viewContainerRef)
-    this.setPortal(portal)
+    this.setPortal(val)
   }
 }
