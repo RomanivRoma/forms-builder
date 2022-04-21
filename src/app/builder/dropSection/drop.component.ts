@@ -12,8 +12,6 @@ import { DragDropService } from '../services/drag-drop.service';
   styleUrls: ['./drop.component.css'],
 })
 export class DropComponent implements OnInit, AfterViewInit {
-  
-  @Output() onSelectElement = new EventEmitter<DragElement>()
   @ViewChild('dropListContainer') dropListContainer?: ElementRef;
   @ViewChild('mainForm', {static: true}) formRef: ElementRef;
   destroy$: Subject<boolean> = new Subject();
@@ -22,12 +20,9 @@ export class DropComponent implements OnInit, AfterViewInit {
   titleStyle: any;
   formStyle: any;
   headerStyle: any;
-  elementDisabled: boolean;
 
   constructor(public dragDrop: DragDropService,
-              private store: Store<AppState>,
-              private cdr: ChangeDetectorRef) { }
-
+              private store: Store<AppState>) { }
               
   drop(event: CdkDragDrop<DragElement[]>) {
     if (event.previousContainer === event.container) {
@@ -45,13 +40,11 @@ export class DropComponent implements OnInit, AfterViewInit {
       );
     }
   }
-
   handleSelect($event: Event, index:number){
     const target = ($event.target as HTMLInputElement) 
     const element = target.querySelector('.drop__item') as HTMLInputElement || $event.target as HTMLInputElement
     this.dragDrop.setSelectedElement(index, element)
   }
-
   entered(event: CdkDragEnter) {
     moveItemInArray(this.dragDrop.addedComponentList, event.item.data, event.container.data);
   }
@@ -61,10 +54,7 @@ export class DropComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.store.select('form')
     .pipe(
-      takeUntil(this.destroy$),
-      tap(val =>{
-        console.log(val);
-      })
+      takeUntil(this.destroy$)
     )
       .subscribe(val => {
         this.form = val
@@ -80,42 +70,41 @@ export class DropComponent implements OnInit, AfterViewInit {
         this.headerStyle = {
           'backgroundColor': this.form.background
         }
-        // this.cdr.detectChanges()
     });
-    // this.store.select('element')
-    //   .subscribe(val => {
-    //     console.log(val);
-        
-    //     this.element = val
-    //     let currentSelectedElement = this.dragDrop.currentSelectedElement
-    //     if(!currentSelectedElement) return
-    //     const parent = currentSelectedElement.parentElement || currentSelectedElement
-    //     currentSelectedElement.placeholder = this.element.placeholder
-    //     currentSelectedElement.required = this.element.required 
-    //     // currentSelectedElement.value = this.element.value   
-    //     currentSelectedElement.innerText = this.element.value    
-    //     const elementStyle = {
-    //       'color': this.element.fontColor,
-    //       'font-size': this.element.fontSize + 'px',
-    //       'width': this.element.width + '%',
-    //       'height': this.element.height + 'px',
-    //       'font-weight': this.element.fontWeight,
-    //       'background': this.element.background,
-    //       'border-radius': this.element.borderRadius + 'px',
-    //       'border-color': this.element.borderColor,
-    //       'padding-left': this.element.paddingLeft + 'px',
-    //       'padding-top': this.element.paddingTop + 'px',
-    //       'padding-right': this.element.paddingRight + 'px',
-    //       'padding-bottom': this.element.paddingBottom + 'px',
-    //       'margin-left': this.element.marginLeft + 'px',
-    //       'margin-top': this.element.marginTop + 'px',
-    //       'margin-right': this.element.marginRight + 'px',
-    //       'margin-bottom': this.element.marginBottom + 'px',
-    //     }
-    //     Object.assign(currentSelectedElement.style, elementStyle)
-    //     parent.style.width = this.element.containerWidth + '%'
-    //     parent.style.justifyContent = this.element.align
-    // });
+    this.store.select('element')
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+      .subscribe(val => {
+        this.element = val
+        let currentSelectedElement = this.dragDrop.currentSelectedElement
+        if(!currentSelectedElement) return
+        const parent = currentSelectedElement.parentElement || currentSelectedElement
+        currentSelectedElement.placeholder = this.element.placeholder
+        currentSelectedElement.required = this.element.required 
+        currentSelectedElement.innerText = this.element.value    
+        const elementStyle = {
+          'color': this.element.fontColor,
+          'font-size': this.element.fontSize + 'px',
+          'width': this.element.width + '%',
+          'height': this.element.height + 'px',
+          'font-weight': this.element.fontWeight,
+          'background': this.element.background,
+          'border-radius': this.element.borderRadius + 'px',
+          'border-color': this.element.borderColor,
+          'padding-left': this.element.paddingLeft + 'px',
+          'padding-top': this.element.paddingTop + 'px',
+          'padding-right': this.element.paddingRight + 'px',
+          'padding-bottom': this.element.paddingBottom + 'px',
+          'margin-left': this.element.marginLeft + 'px',
+          'margin-top': this.element.marginTop + 'px',
+          'margin-right': this.element.marginRight + 'px',
+          'margin-bottom': this.element.marginBottom + 'px',
+        }
+        Object.assign(currentSelectedElement.style, elementStyle)
+        parent.style.width = this.element.containerWidth + '%'
+        parent.style.justifyContent = this.element.align
+    });
   }
   ngOnDestroy(){
     this.destroy$.next(true)

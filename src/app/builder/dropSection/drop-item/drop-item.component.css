@@ -1,0 +1,33 @@
+.drop__container p{
+    margin: 0;
+}
+.dragElements__item,
+.dragElements__item input,
+.dragElements__item textarea,
+.dragElements__item p,
+.dragElements__item select{
+    width: 100%;
+    outline: none;
+}
+.dragElements__item input,
+.dragElements__item textarea,
+.dragElements__item p,
+.dragElements__item select{
+    margin: 5px;
+    border-radius: 0px;
+}
+.custom-text input{ 
+    background: transparent;
+    border: none;
+    outline: none;
+}
+.custom-text.selected p{ 
+    border-bottom: 2px solid lightslategray;
+}
+.dragElements__item {
+    display: flex;
+    align-items: center;
+}
+.dragElements__item.selected {
+    background:rgb(179 255 183 / 47%);
+}

@@ -1,0 +1,50 @@
+<div cdkDrag
+     style="width: 100%;"
+     class="dragElements__item"
+     [ngClass]="(isSelected ? 'selected ' : '') + component.class || ''"
+     (cdkDragEntered)="entered($event)"
+     >
+    <ng-container [ngTemplateOutlet]="
+                                component.class == 'custom-text' ? textBlock :
+                                component.tag == 'input' ? inputBlock :
+                                component.tag == 'textarea' ? textareaBlock :
+                                component.tag == 'select' ? selectBlock :
+                                component.tag == 'button' ? buttonBlock :
+                                null">
+    </ng-container>
+
+    <ng-template #textBlock>
+        <p class="drop__item" 
+                style="width: 100%;"
+                >{{ component.value }}</p>
+        </ng-template>
+    <ng-template #inputBlock>
+        <input class="drop__item" 
+                #myInput
+                style="width: 100%;"
+                [readonly]="component.class == 'custom-text' ? true : false"
+                [value]="component.class == 'custom-text' ? component.value : ''" 
+                type={{component.type}}
+                [placeholder]="component.class ? '' : component.placeholder"/>
+    </ng-template>
+    <ng-template #textareaBlock>
+        <textarea 
+                    style="width: 100%;"
+                    class="drop__item"
+                    placeholder={{component.placeholder}}></textarea>
+    </ng-template>
+    <ng-template #selectBlock>
+        <select 
+                style="width: 100%;"
+                class="drop__item">
+        </select>
+    </ng-template>
+    <ng-template #buttonBlock>
+        <button 
+                style="width: 100%;"
+                class="drop__item">
+            {{ component.value }}
+        </button>
+    </ng-template>
+
+</div>
