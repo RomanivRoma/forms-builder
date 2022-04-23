@@ -125,11 +125,13 @@
             aria-label="units"></mat-slider>
     </div>
 </form>
-<div (click)="handleSelect($event)" class="edit-block"> 
+<div  class="edit-block"> 
     <img 
-    class="confirm"
-    src="assets/img/right-correct.svg"/>
+        (click)="handleUnselect()"
+        class="confirm"
+        src="assets/img/right-correct.svg"/>
     <img
-    class="delete"
-    src="assets/img/close-red.svg"/>
+        (click)="handleRemoveComponent(dragDrop.selectedElementId || 0)"
+        class="delete"
+        src="assets/img/close-red.svg"/>
 </div>

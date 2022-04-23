@@ -20,17 +20,13 @@ export class DragComponent implements OnInit {
     return false;
   }
   onSourceListExited(event: CdkDragExit<any>) {
-    console.log(event, 'exit');
+    event.container.data = this.dragDrop.componentList
   }
   handleAdd(item: DragElement): void{
     this.dragDrop.addToForm(item)
   }
   dragStart(event: CdkDragStart<any>){
     this.componentList = [...event.source.dropContainer.data]
-  }
-  onSourceListEntered(event: CdkDragEnter<any>) {
-    // console.log(event, 'enter');
-
   }
   ngOnInit(): void {
     this.componentList = this.dragDrop.componentList

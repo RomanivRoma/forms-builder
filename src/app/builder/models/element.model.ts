@@ -2,8 +2,22 @@ export class Element {
     placeholder: string;
     fontSize: number;
     fontColor: string;
+    fontWeight: string;
     width: number;
     height: number;
     required: boolean;
     align: string;
+    containerWidth: number;
+    value: string;
+    background: string;
+    borderRadius: number;
+    borderColor: string;
+    paddingTop: number;
+    paddingRight: number;
+    paddingBottom: number;
+    paddingLeft: number;
+    marginTop: number;
+    marginRight: number;
+    marginBottom: number;
+    marginLeft: number;
 }

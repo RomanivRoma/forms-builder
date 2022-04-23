@@ -15,11 +15,12 @@
              class="drop__body">
 
             <ng-container *ngFor="let component of dragDrop.addedComponentList; index as index ">
-                <app-drop-item (click)="handleSelect($event, index)"
-                                (onEntered)="entered($event)"
+                <app-drop-item (click)="handleSelect(component)"
+                                class="drop__item__container"
                                 [component]="component"
+                                [style]="component.parentStyle"
                                 style="width: 100%;"
-                                [isSelected]="dragDrop.currentSelectedElementIndex == index ? true : false"></app-drop-item>
+                                [isSelected]="dragDrop.selectedElementId == component.id ? true : false"></app-drop-item>
             </ng-container>
 
         </div>

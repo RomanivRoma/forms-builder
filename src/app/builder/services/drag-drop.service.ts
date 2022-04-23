@@ -53,17 +53,43 @@ export class DragDropService {
     borderRadius: true,
     borderColor: true
   });
+  id: number = 1;
   elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  currentSelectedElementIndex: number | null;
-  currentSelectedElement: HTMLInputElement | null;
+  selectedElementId: number | null;
+  selectedElementObject: DragElement | null;
+  defaultStyle: any = {
+    "fontSize": '14',
+    "fontColor": "#212529",
+    "fontWeight": "400",
+    "width": '100',
+    "height": '22',
+    "align": "left",
+    "containerWidth": '100',
+    "background": "#ffffff",
+    "borderRadius": '0',
+    "borderColor": '0',
+    "paddingTop": '0',
+    "paddingRight": '0',
+    "paddingBottom": '0',
+    "paddingLeft": '0',
+    "marginTop": '5',
+    "marginRight": '5',
+    "marginBottom": '5',
+    "marginLeft": '5'
+  }
+  defaultParentStyle: any = {
+    'width': '100'
+  }
   componentList: DragElement[] = [
     {
       title: 'Text',
       icon: `${environment.images}/pencil.svg`,
-      tag: 'input',
+      tag: 'p',
       type: 'text',
       class: 'custom-text',
-      value: 'Text'
+      value: 'Text',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Text Input',
@@ -71,6 +97,8 @@ export class DragDropService {
       tag: 'input',
       placeholder: 'Placeholer',
       type: 'text',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Textarea',
@@ -78,18 +106,24 @@ export class DragDropService {
       tag: 'textarea',
       placeholder: 'Placeholer',
       type: 'text',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Checkbox',
       icon: `${environment.images}/checkbox.svg`,
       tag: 'input',
       type: 'checkbox',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Date',
       icon: `${environment.images}/date.svg`,
       tag: 'input',
       type: 'date',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Email',
@@ -97,6 +131,8 @@ export class DragDropService {
       tag: 'input',
       placeholder: 'Placeholer',
       type: 'email',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Password',
@@ -104,6 +140,8 @@ export class DragDropService {
       tag: 'input',
       placeholder: 'Placeholer',
       type: 'password',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Number',
@@ -111,6 +149,8 @@ export class DragDropService {
       tag: 'input',
       placeholder: 'Placeholer',
       type: 'number',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Link',
@@ -118,6 +158,8 @@ export class DragDropService {
       tag: 'input',
       placeholder: 'Placeholer',
       type: 'url',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Radio Button',
@@ -125,6 +167,8 @@ export class DragDropService {
       tag: 'input',
       placeholder: 'Placeholer',
       type: 'radio',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Multi Select',
@@ -132,6 +176,8 @@ export class DragDropService {
       tag: 'select',
       placeholder: 'Placeholer',
       type: 'text',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Select',
@@ -139,6 +185,8 @@ export class DragDropService {
       tag: 'select',
       placeholder: 'Placeholer',
       type: 'text',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'File Uploader',
@@ -146,6 +194,8 @@ export class DragDropService {
       tag: 'input',
       placeholder: 'Placeholer',
       type: 'file',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
     {
       title: 'Button',
@@ -154,6 +204,8 @@ export class DragDropService {
       placeholder: 'Placeholer',
       value: 'Submit',
       type: 'submit',
+      style: this.defaultStyle,
+      parentStyle: this.defaultParentStyle
     },
   ];
 
@@ -161,38 +213,23 @@ export class DragDropService {
   constructor(private store: Store<AppState>) { }
 
   addToForm(item: DragElement): void{
-    this.addedComponentList.push(item)
+    this.addedComponentList.push({...item, id: this.id++})
   }
   clearForm(): void{
     this.addedComponentList = []
   }
-  rgb2hex(rgb:any) {
-    let sep = rgb.indexOf(",") > -1 ? "," : " ";
-    rgb = rgb.substr(4).split(")")[0].split(sep);
-    let r = (+rgb[0]).toString(16),
-        g = (+rgb[1]).toString(16),
-        b = (+rgb[2]).toString(16);
-    if (r.length == 1)
-      r = "0" + r;
-    if (g.length == 1)
-      g = "0" + g;
-    if (b.length == 1)
-      b = "0" + b;
-    return "#" + r + g + b;
-  }
-  
-  setSelectedElement(index: number | null, element: HTMLInputElement | null): void{
-    if(this.currentSelectedElement?.isSameNode(element) || !element || !element.parentElement){
-      this.currentSelectedElementIndex = null 
-      this.currentSelectedElement = null
-      this.elementDisablingChange.next(true);
+  setSelectedElement(component: DragElement| null): void{
+    if(!component || component.id == this.selectedElementId){
+      this.selectedElementId = null 
+      this.selectedElementObject = null
+      this.elementDisablingChange.next(true); 
       return
     }
     this.elementDisablingChange.next(false);
-    this.currentSelectedElementIndex = index
-    this.currentSelectedElement = element
-    this.setCurrentStylesToElement(element)
-    if(element.parentElement.className.includes('custom-text')){
+    this.selectedElementObject = component
+    this.selectedElementId = component.id || null
+    this.setCurrentStylesToElement(component)
+    if(component.class == 'custom-text'){
       this.formControlVisibleChange.next({
         placeholder: false,
         required: false,
@@ -201,7 +238,7 @@ export class DragDropService {
         borderColor: false
       })
     }
-    else if( element.type == 'submit'){
+    else if(component.type == 'submit'){
       this.formControlVisibleChange.next({
         placeholder: false,
         required: false,
@@ -209,7 +246,7 @@ export class DragDropService {
         borderRadius: true,
         borderColor: true
       })
-    }else if(element.tagName == "SELECT" || element.type == 'radio' || element.type == 'checkbox'){
+    }else if(component.tag == "select" || component.type == 'radio' || component.type == 'checkbox'){
       this.formControlVisibleChange.next({
         placeholder: false,
         required: true,
@@ -227,31 +264,46 @@ export class DragDropService {
       })
     }
   }
-  setCurrentStylesToElement(element: HTMLInputElement){
-    const style = getComputedStyle(element)
-    const parent = element.parentElement as HTMLElement   
-    let elementStyle = {
-      placeholder: element.placeholder,
-      fontSize: +style.fontSize.replace(/[^0-9]/g,''),
-      fontColor: this.rgb2hex(style.color),
-      fontWeight: style.fontWeight,
-      width: +element.style.width.replace(/[^0-9]/g,''),
-      height: element.offsetHeight,
-      required: element.required,
-      align: parent.style.justifyContent,
-      containerWidth: +parent.style.width.replace(/[^0-9]/g,''),
-      value: element.innerText,
-      background: this.rgb2hex(style.backgroundColor),
-      borderRadius: style.borderRadius,
-      borderColor: style.borderColor,
-      paddingTop: style.paddingTop.replace(/[^0-9]/g,''),
-      paddingRight: style.paddingRight.replace(/[^0-9]/g,''),
-      paddingBottom: style.paddingBottom.replace(/[^0-9]/g,''),
-      paddingLeft: style.paddingLeft.replace(/[^0-9]/g,''),
-      marginTop: style.marginTop.replace(/[^0-9]/g,''),
-      marginRight: style.marginRight.replace(/[^0-9]/g,''),
-      marginBottom: style.marginBottom.replace(/[^0-9]/g,''),
-      marginLeft: style.marginLeft.replace(/[^0-9]/g,''),
+  setCurrentStylesToElement(component: DragElement){
+    console.log(component.style, '123');
+  // background.px: "#ffffff"
+  // borderColor: 0
+  // borderRadius.px: 0
+  // color: "#212529"
+  // fontSize.px: 14
+  // fontWeight: "400"
+  // height.px: 22
+  // marginBottom.px: 5
+  // marginLeft.px: 5
+  // marginRight.px: 5
+  // marginTop.px: 5
+  // paddingBottom.px: 0
+  // paddingLeft.px: 0
+  // paddingRight.px: 0
+  // paddingTop.px: 0
+  // width.%: 100
+    const elementStyle = {
+      placeholder: component.placeholder || '',
+      value: component.value || '',
+      required: component.required || false,
+      fontColor: component.style.fontColor,
+      fontSize: component.style.fontSize.replace(/[^0-9]/g,''),
+      width: component.style.width.replace(/[^0-9]/g,''),
+      height: component.style.height.replace(/[^0-9]/g,''),
+      fontWeight: component.style.fontWeight,
+      background: component.style.background,
+      borderRadius: component.style.borderRadius.replace(/[^0-9]/g,''),
+      borderColor: component.style.borderColor,
+      paddingLeft: component.style.paddingLeft.replace(/[^0-9]/g,''),
+      paddingTop: component.style.paddingTop.replace(/[^0-9]/g,''),
+      paddingRight: component.style.paddingRight.replace(/[^0-9]/g,''),
+      paddingBottom: component.style.paddingBottom.replace(/[^0-9]/g,''),
+      marginLeft: component.style.marginLeft.replace(/[^0-9]/g,''),
+      marginTop: component.style.marginTop.replace(/[^0-9]/g,''),
+      marginRight: component.style.marginRight.replace(/[^0-9]/g,''),
+      marginBottom: component.style.marginBottom.replace(/[^0-9]/g,''),
+      align: component.style.align,
+      containerWidth: component.parentStyle.width.replace(/[^0-9]/g,''),
     }
     this.elementStyle.patchValue(elementStyle);
     this.store.dispatch(elementStyleValueChange(elementStyle))

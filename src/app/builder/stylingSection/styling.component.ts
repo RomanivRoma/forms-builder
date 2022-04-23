@@ -28,7 +28,7 @@ export class StylingComponent implements OnInit {
       skip(1)
     )
     .subscribe(val =>{
-      this.value = val ? 'form' : 'element'
+      this.value = val  ? 'form' : 'element'
       this.setPortal(this.value)
     });   
 
@@ -41,6 +41,7 @@ export class StylingComponent implements OnInit {
     this.elementPortal = new ComponentPortal(ElementComponent);
     this.formPortal = new ComponentPortal(FormComponent);
   }
+  
   setPortal(val: string){
     this.selectedPortal = val == 'form' ? this.formPortal : this.elementPortal
   }

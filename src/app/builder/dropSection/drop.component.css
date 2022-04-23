@@ -33,3 +33,6 @@
     background: rgb(202, 202, 202);
     min-height: 30px;
 }
+.drop__item__container{
+    display: inline;
+}

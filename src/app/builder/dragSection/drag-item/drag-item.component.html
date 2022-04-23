@@ -8,8 +8,14 @@
         <img class="dragElements__item__addIcon" src="assets/img/add-plus.svg">
     </div>
     <div *cdkDragPreview class="dragElements__item__preview preview">
-        <ng-container [ngTemplateOutlet]="component.tag == 'input' ? inputBlock : component.tag == 'textarea' ? textareaBlock : selectBlock"></ng-container>
+        <ng-container [ngTemplateOutlet]="component.tag == 'input' ? inputBlock :
+                                          component.tag == 'textarea' ? textareaBlock :
+                                          component.tag == 'p' ? textBlock :
+                                          component.tag == 'select' ? textBlock : selectBlock"></ng-container>
 
+        <ng-template #textBlock>
+            <p>{{component.value}}</p>
+        </ng-template>
         <ng-template #inputBlock>
             <input type={{component.type}}/>
         </ng-template>

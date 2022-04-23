@@ -23,27 +23,16 @@ export class ElementComponent implements OnInit {
       this.isFormControlVisible = val
     })
   }
-
   ngOnDestroy(){
     this.destroy$.next(true)
     this.destroy$.complete()
   }
-
-  handleSelect($event: Event){
-    const element = ($event.target as HTMLInputElement) 
-    if(element.className.includes('delete')){
-      this.handleRemoveComponent(this.dragDrop.currentSelectedElementIndex || 0)
-      this.handleUnselect()
-    }
-    else if(element.className.includes('confirm')){
-      this.handleUnselect()
-    }
-  }
-  handleRemoveComponent(index: number){
-    this.dragDrop.addedComponentList.splice(index, 1);
+  handleRemoveComponent(id: number){
+    this.dragDrop.addedComponentList = this.dragDrop.addedComponentList.filter(el => el.id != id)
+    this.handleUnselect()
   }
   handleUnselect(){
-    this.dragDrop.setSelectedElement(null, null)
+    this.dragDrop.setSelectedElement(null)
   }
 
 }
