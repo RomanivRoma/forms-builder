@@ -76,7 +76,6 @@ export class DropComponent implements OnInit, AfterViewInit {
         selectedElementObject.required = this.element.required 
         selectedElementObject.placeholder = this.element.placeholder
         selectedElementObject.value = this.element.value
-        console.log(this.element  );
          const elementStyle = {
           'color': this.element.fontColor,
           'fontSize': this.element.fontSize + 'px',
@@ -100,7 +99,6 @@ export class DropComponent implements OnInit, AfterViewInit {
           'width': this.element.containerWidth + '%',
           'justify-content': this.element.align,
         }
-        
     });
   }
   ngOnDestroy(){

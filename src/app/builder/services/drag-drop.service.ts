@@ -265,23 +265,6 @@ export class DragDropService {
     }
   }
   setCurrentStylesToElement(component: DragElement){
-    console.log(component.style, '123');
-  // background.px: "#ffffff"
-  // borderColor: 0
-  // borderRadius.px: 0
-  // color: "#212529"
-  // fontSize.px: 14
-  // fontWeight: "400"
-  // height.px: 22
-  // marginBottom.px: 5
-  // marginLeft.px: 5
-  // marginRight.px: 5
-  // marginTop.px: 5
-  // paddingBottom.px: 0
-  // paddingLeft.px: 0
-  // paddingRight.px: 0
-  // paddingTop.px: 0
-  // width.%: 100
     const elementStyle = {
       placeholder: component.placeholder || '',
       value: component.value || '',
