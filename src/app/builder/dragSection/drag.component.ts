@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { DragElement } from '../../interfaces/DragElement.interface';
-import {CdkDragEnter, CdkDragExit, CdkDragStart} from '@angular/cdk/drag-drop';
+import { CdkDragExit, CdkDragStart } from '@angular/cdk/drag-drop';
 import { DragDropService } from '../services/drag-drop.service';
-import { SwitcherPortalService } from '../services/switcher-portal.service';
 
 
 @Component({

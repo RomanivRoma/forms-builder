@@ -1,8 +1,7 @@
-import { Component, ElementRef, OnInit, EventEmitter, Output, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DragElement } from '../../interfaces/DragElement.interface';
-import {CdkDragDrop, moveItemInArray, copyArrayItem, CdkDragEnter, CdkDragMove} from '@angular/cdk/drag-drop';
-import { environment } from 'src/environments/environment';
-import { first, pipe, shareReplay, single, skip, take, takeUntil, Subject, tap } from 'rxjs';
+import { CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
+import { takeUntil, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { DragDropService } from '../services/drag-drop.service';
@@ -74,6 +73,7 @@ export class DropComponent implements OnInit, AfterViewInit {
         const selectedElementObject = this.dragDrop.selectedElementObject
         if(!selectedElementObject) return
         selectedElementObject.required = this.element.required 
+        selectedElementObject.label = this.element.label
         selectedElementObject.placeholder = this.element.placeholder
         selectedElementObject.value = this.element.value
          const elementStyle = {
@@ -97,7 +97,7 @@ export class DropComponent implements OnInit, AfterViewInit {
         selectedElementObject.style = elementStyle
         selectedElementObject.parentStyle = {
           'width': this.element.containerWidth + '%',
-          'justify-content': this.element.align,
+          'justifyContent': this.element.justifyContent,
         }
     });
   }

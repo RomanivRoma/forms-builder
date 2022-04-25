@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from '../../interfaces/User.interface';
 
@@ -13,7 +14,7 @@ import { User } from '../../interfaces/User.interface';
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
-
+  destroy$: Subject<boolean> = new Subject();
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -26,7 +27,10 @@ export class LoginComponent implements OnInit {
       password: '',
     })
   }
-
+  ngOnDestroy(){
+    this.destroy$.next(true)
+    this.destroy$.complete()
+  }
 
 
   submit(): void {
@@ -35,10 +39,14 @@ export class LoginComponent implements OnInit {
       password: this.form.value.password
     }
     this.authService.login(user)
+    .pipe(
+      takeUntil(this.destroy$),
+    )
     .subscribe(res => {
       if(res){
         this.router.navigate(['/'])
       }
     })
   }
+
 }

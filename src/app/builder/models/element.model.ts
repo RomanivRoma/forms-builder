@@ -6,7 +6,8 @@ export class Element {
     width: number;
     height: number;
     required: boolean;
-    align: string;
+    label: string;
+    justifyContent: string;
     containerWidth: number;
     value: string;
     background: string;

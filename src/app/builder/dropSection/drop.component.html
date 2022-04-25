@@ -4,7 +4,7 @@
     <div [ngStyle]="headerStyle" 
          class="drop__header">
         <h1 [ngStyle]="titleStyle">
-            {{form.title}}
+            {{form?.title}}
         </h1>
     </div>
     <div class="drop__wrapper">
@@ -13,12 +13,11 @@
              [cdkDropListData]="dragDrop.addedComponentList"
              (cdkDropListDropped)="drop($event)"
              class="drop__body">
-
             <ng-container *ngFor="let component of dragDrop.addedComponentList; index as index ">
                 <app-drop-item (click)="handleSelect(component)"
                                 class="drop__item__container"
                                 [component]="component"
-                                [style]="component.parentStyle"
+                                [style.width]="component.parentStyle.width"
                                 style="width: 100%;"
                                 [isSelected]="dragDrop.selectedElementId == component.id ? true : false"></app-drop-item>
             </ng-container>

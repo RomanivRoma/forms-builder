@@ -34,7 +34,7 @@ export class DragDropService {
     borderColor: new FormControl(''),
     borderRadius: new FormControl(''),
     background: new FormControl(''),
-    align: new FormControl(''),
+    justifyContent: new FormControl(''),
     containerWidth: new FormControl(''),
     value: new FormControl(''),
     paddingTop: new FormControl(''),
@@ -45,13 +45,15 @@ export class DragDropService {
     marginRight: new FormControl(''),
     marginBottom: new FormControl(''),
     marginLeft: new FormControl(''),
+    label: new FormControl(''),
   });
   formControlVisibleChange: BehaviorSubject<any> = new BehaviorSubject<any>({
     placeholder: true,
     required: true,
     value: true,
     borderRadius: true,
-    borderColor: true
+    borderColor: true,
+    label: true
   });
   id: number = 1;
   elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -235,7 +237,8 @@ export class DragDropService {
         required: false,
         value: true,
         borderRadius: false,
-        borderColor: false
+        borderColor: false,
+        label: false
       })
     }
     else if(component.type == 'submit'){
@@ -244,7 +247,8 @@ export class DragDropService {
         required: false,
         value: true,
         borderRadius: true,
-        borderColor: true
+        borderColor: true,
+        label: false
       })
     }else if(component.tag == "select" || component.type == 'radio' || component.type == 'checkbox'){
       this.formControlVisibleChange.next({
@@ -252,7 +256,8 @@ export class DragDropService {
         required: true,
         value: false,
         borderRadius: true,
-        borderColor: true
+        borderColor: true,
+        label: component.tag == "select" ? false :  true
       })
     }else{
       this.formControlVisibleChange.next({
@@ -260,32 +265,24 @@ export class DragDropService {
         required: true,
         value: false,
         borderRadius: true,
-        borderColor: true
+        borderColor: true,
+        label: false
       })
     }
   }
   setCurrentStylesToElement(component: DragElement){
-    const elementStyle = {
+    let elementStyle:any = {}
+    Object.keys(component.style).forEach(el =>{
+      elementStyle[el] = component.style[el]
+      if(elementStyle[el].includes('px') || elementStyle[el].includes('%'))
+        elementStyle[el] = elementStyle[el].replace(/[^0-9]/g,'')
+    })
+    elementStyle = {
+      ...elementStyle,
+      label: component.label || '',
       placeholder: component.placeholder || '',
       value: component.value || '',
       required: component.required || false,
-      fontColor: component.style.fontColor,
-      fontSize: component.style.fontSize.replace(/[^0-9]/g,''),
-      width: component.style.width.replace(/[^0-9]/g,''),
-      height: component.style.height.replace(/[^0-9]/g,''),
-      fontWeight: component.style.fontWeight,
-      background: component.style.background,
-      borderRadius: component.style.borderRadius.replace(/[^0-9]/g,''),
-      borderColor: component.style.borderColor,
-      paddingLeft: component.style.paddingLeft.replace(/[^0-9]/g,''),
-      paddingTop: component.style.paddingTop.replace(/[^0-9]/g,''),
-      paddingRight: component.style.paddingRight.replace(/[^0-9]/g,''),
-      paddingBottom: component.style.paddingBottom.replace(/[^0-9]/g,''),
-      marginLeft: component.style.marginLeft.replace(/[^0-9]/g,''),
-      marginTop: component.style.marginTop.replace(/[^0-9]/g,''),
-      marginRight: component.style.marginRight.replace(/[^0-9]/g,''),
-      marginBottom: component.style.marginBottom.replace(/[^0-9]/g,''),
-      align: component.style.align,
       containerWidth: component.parentStyle.width.replace(/[^0-9]/g,''),
     }
     this.elementStyle.patchValue(elementStyle);
@@ -331,6 +328,7 @@ export class DragDropService {
         background: #fff;
         overflow: auto;
         display: flex;
+        flex-direction: column;
         flex-wrap: wrap;
         padding: 15px;
         height: 100%;

@@ -9,8 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PortalModule } from '@angular/cdk/portal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnectFormDirective } from './directives/connect-form.directive';
-import { SafeStylePipe } from '../pipes/safe-style.pipe';
-
 
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from '@angular/material/slider';
@@ -31,7 +29,6 @@ import { DropItemComponent } from './dropSection/drop-item/drop-item.component';
     StylingComponent,
     HomeComponent,
     ConnectFormDirective,
-    SafeStylePipe,
     ElementComponent,
     FormComponent,
     DragItemComponent,

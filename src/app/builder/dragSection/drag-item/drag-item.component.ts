@@ -15,7 +15,6 @@ export class DragItemComponent implements OnInit {
   @Output() onAdd = new EventEmitter<DragElement>();
   @Output() dragStart = new EventEmitter<CdkDragStart<any>>();
 
-
   constructor() { }
 
   ngOnInit(): void {

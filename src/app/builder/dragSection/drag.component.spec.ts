@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { StoreModule } from '@ngrx/store';
 import { DragComponent } from './drag.component';
 
 describe('DragComponent', () => {
@@ -8,7 +8,10 @@ describe('DragComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DragComponent ]
+      declarations: [ DragComponent ],
+      imports: [
+        StoreModule.forRoot({})
+      ]
     })
     .compileComponents();
   });

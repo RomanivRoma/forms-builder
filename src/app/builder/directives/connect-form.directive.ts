@@ -23,23 +23,24 @@ export class ConnectFormDirective {
   ngOnInit() {
     this.store.select(state => state[this.path])
     .pipe(
+      takeUntil(this.destroy$),
       take(1)
     )
-      .subscribe(val => {
-         this.formGroupDirective.form.patchValue(val);
+    .subscribe(val => {
+        this.formGroupDirective.form.patchValue(val);
     });
 
     this.formChange = this.formGroupDirective.form.valueChanges
-      .pipe(
-        takeUntil(this.destroy$), 
-        debounceTime(this.debounce)
-      )
-      .subscribe(value => {
-        this.store.dispatch(this.dispatches[this.path](value))
-      })
-    }
-    ngOnDestroy(){
-      this.destroy$.next(true)
-      this.destroy$.complete()
-    }
+    .pipe(
+      takeUntil(this.destroy$), 
+      debounceTime(this.debounce)
+    )
+    .subscribe(value => {
+      this.store.dispatch(this.dispatches[this.path](value))
+    })
+  }
+  ngOnDestroy(){
+    this.destroy$.next(true)
+    this.destroy$.complete()
+  }
 }

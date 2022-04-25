@@ -5,6 +5,10 @@
         <mat-label>Text</mat-label>
         <input matInput formControlName="value" type="text">
     </mat-form-field>
+    <mat-form-field *ngIf="isFormControlVisible.label" appearance="fill">
+        <mat-label>Label</mat-label>
+        <input matInput formControlName="label" type="text">
+    </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Background color</mat-label>
         <input matInput type="color" formControlName="background" >
@@ -56,7 +60,7 @@
         <mat-label>Placeholder</mat-label>
         <input matInput formControlName="placeholder" type="text">
     </mat-form-field>
-    <mat-button-toggle-group value="left" class="mb-3" formControlName="align" #group = "matButtonToggleGroup">  
+    <mat-button-toggle-group value="left" class="mb-3" formControlName="justifyContent" #group = "matButtonToggleGroup">  
     <mat-button-toggle value = "left">  
         <mat-icon>format_align_left</mat-icon>  
     </mat-button-toggle>  

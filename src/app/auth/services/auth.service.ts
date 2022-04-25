@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, tap, pipe, mapTo, catchError, of } from 'rxjs';
+import { Observable, tap, pipe, mapTo, catchError, of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
 import { User } from '../../interfaces/User.interface';
@@ -11,14 +11,16 @@ import { User } from '../../interfaces/User.interface';
 })
 export class AuthService {
 
-  private loggedUser: User | null = null;
+  private readonly loggedUser: Subject<User | null> = new Subject<User | null>();
 
-  private readonly JWT_TOKEN = 'JWT_TOKEN'
+  readonly userLogin: Subject<string> = new Subject<string>();
+
+  private readonly JWT_TOKEN = 'JWT_TOKEN';
 
   constructor(public jwtHelper: JwtHelperService,
               private http: HttpClient) { 
   }
-  getUserByToken(): User {
+  getUserByToken(): any {
     const token: string = this.getToken()
     const userByToken = this.getDecodedAccessToken(token)
     return userByToken
@@ -34,16 +36,11 @@ export class AuthService {
     const token = localStorage.getItem(this.JWT_TOKEN) || ''  
     return !this.jwtHelper.isTokenExpired(token)
   }
-  getUser(): User | null {
-    return this.loggedUser
-  }
-  setUser(user:User): void {
-    this.loggedUser = user
-  }
   doLoginUser(loginInfo: any){
     const user = loginInfo.user
     const token = loginInfo.accessToken
-    this.loggedUser = user
+    this.loggedUser.next(user)
+    this.userLogin.next(user.login)
     this.storeToken(token)
   }
   login(user: User): Observable<boolean>{
@@ -57,7 +54,8 @@ export class AuthService {
       }));
   }
   doLogoutUser() {
-    this.loggedUser = null
+    this.userLogin.next('')
+    this.loggedUser.next(null)
     this.removeToken()
   }
   logout() {

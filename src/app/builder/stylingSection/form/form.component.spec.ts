@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { StoreModule } from '@ngrx/store';
 import { FormComponent } from './form.component';
 
 describe('FormComponent', () => {
@@ -8,7 +9,11 @@ describe('FormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FormComponent ]
+      declarations: [ FormComponent ],
+      imports: [
+        StoreModule.forRoot({}),
+        MatButtonToggleModule
+      ]
     })
     .compileComponents();
   });

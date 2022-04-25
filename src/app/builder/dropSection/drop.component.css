@@ -26,8 +26,10 @@
     min-height: 30px;
     /* background: #fff; */
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     padding: 15px;
+    height: 100%;
 }
 .drop__container .drop__footer{
     background: rgb(202, 202, 202);

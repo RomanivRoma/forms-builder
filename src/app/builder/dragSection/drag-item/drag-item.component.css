@@ -33,3 +33,6 @@
 .cdk-drag-placeholder {
     background: rgba(0, 0, 0, .2);
 }
+.dragElements__item__preview select{
+    width: 200px;
+}

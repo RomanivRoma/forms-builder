@@ -1,31 +1,43 @@
 <div cdkDrag
      style="width: 100%;"
+     [style.justifyContent]="component?.parentStyle.justifyContent"
      class="dragElements__item"
-     [class]="(isSelected ? 'selected ' : '') + component.class || ''">
+     [class]="(isSelected ? 'selected ' : '') + component?.class || ''">
     <ng-container [ngTemplateOutlet]="
-                                component.class == 'custom-text' ? textBlock :
-                                component.tag == 'input' ? inputBlock :
-                                component.tag == 'textarea' ? textareaBlock :
-                                component.tag == 'select' ? selectBlock :
-                                component.tag == 'button' ? buttonBlock :
+                                component?.class == 'custom-text' ? textBlock :
+                                component?.type == 'checkbox' || component?.type == 'radio' ? labelBlock :
+                                component?.tag == 'input' ? inputBlock :
+                                component?.tag == 'textarea' ? textareaBlock :
+                                component?.tag == 'select' ? selectBlock :
+                                component?.tag == 'button' ? buttonBlock :
                                 null">
     </ng-container>
 
     <ng-template #textBlock>
         <p  class="drop__item" 
             style="width: 100%;"
-            [style]="component.style"
-                >{{ component.value }}</p>
+            [style]="component?.style"
+                >{{ component?.value }}</p>
         </ng-template>
     <ng-template #inputBlock>
-        <input class="drop__item" 
-                #myInput
-                style="width: 100%; height: 22px;"
-                [style]="component.style"
-                [readonly]="component.class == 'custom-text' ? true : false"
-                type={{component.type}}
-                [required]="component.required || false"
-                placeholder={{component.placeholder}}/>
+            <input class="drop__item" 
+                    #myInput
+                    style="width: 100%; height: 22px;"
+                    [style]="component?.style"
+                    [readonly]="component?.class == 'custom-text' ? true : false"
+                    type={{component?.type}}
+                    [required]="component.required || false"
+                    placeholder={{component?.placeholder}}/>
+    </ng-template>
+    <ng-template #labelBlock>
+        <label  style="width: 100%;"
+                [style]="component.style">
+            <span>{{ component.label }}</span>
+            <input class="drop__item" 
+                    type={{component.type}}
+                    [required]="component.required || false"
+                    placeholder={{component.placeholder}}/>
+        </label>
     </ng-template>
     <ng-template #textareaBlock>
         <textarea 

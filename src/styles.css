@@ -46,7 +46,6 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;

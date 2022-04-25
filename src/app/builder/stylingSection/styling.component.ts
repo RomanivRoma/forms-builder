@@ -31,7 +31,6 @@ export class StylingComponent implements OnInit {
       this.value = val  ? 'form' : 'element'
       this.setPortal(this.value)
     });   
-
   }
   ngOnDestroy(){
     this.destroy$.next(true)

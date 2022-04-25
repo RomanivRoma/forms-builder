@@ -9,12 +9,22 @@
     width: 100%;
     outline: none;
 }
+.dragElements__item input[type='radio'],
+.dragElements__item input[type='checkbox']{
+    width: auto;
+}
+.dragElements__item label{
+    display: flex;
+    align-items: center;
+}
+.dragElements__item label,
 .dragElements__item input,
 .dragElements__item textarea,
 .dragElements__item p,
 .dragElements__item select{
     margin: 5px;
     border-radius: 0px;
+    pointer-events: none;
 }
 .custom-text input{ 
     background: transparent;
