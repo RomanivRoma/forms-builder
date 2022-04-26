@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { BehaviorSubject, share, shareReplay, Subject, takeUntil } from 'rxjs';
+import { AppState } from 'src/app/app.state';
+import { DragElement } from 'src/app/interfaces/DragElement.interface';
+import { elementStyleValueChange } from '../../actions/element.actions';
 import { DragDropService } from '../../services/drag-drop.service';
 
 @Component({
@@ -12,6 +17,7 @@ export class ElementComponent implements OnInit {
   isFormControlVisible: any;
   destroy$: Subject<boolean> = new Subject();
 
+
   constructor(public dragDrop: DragDropService) { }
 
   ngOnInit(): void {
@@ -22,7 +28,10 @@ export class ElementComponent implements OnInit {
     .subscribe(val =>{
       this.isFormControlVisible = val
     })
+    
+
   }
+
   ngOnDestroy(){
     this.destroy$.next(true)
     this.destroy$.complete()

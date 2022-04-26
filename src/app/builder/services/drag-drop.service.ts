@@ -5,7 +5,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { elementStyleValueChange } from '../actions/element.actions';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, Subscriber } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
 
@@ -14,15 +14,6 @@ import { DropComponent } from '../dropSection/drop.component';
 })
 export class DragDropService {
   @ViewChild(DropComponent, {static: true}) private formRef: ElementRef;
-  formStyle: FormGroup = new FormGroup({
-    title: new FormControl(''),
-    fontSize: new FormControl(''),
-    fontColor: new FormControl(''),
-    width: new FormControl(''),
-    height: new FormControl(''),
-    align: new FormControl(''),
-    background: new FormControl(''),
-  });
   elementStyle: FormGroup = new FormGroup({
     placeholder: new FormControl(''),
     width: new FormControl(''),
@@ -46,14 +37,6 @@ export class DragDropService {
     marginBottom: new FormControl(''),
     marginLeft: new FormControl(''),
     label: new FormControl(''),
-  });
-  formControlVisibleChange: BehaviorSubject<any> = new BehaviorSubject<any>({
-    placeholder: true,
-    required: true,
-    value: true,
-    borderRadius: true,
-    borderColor: true,
-    label: true
   });
   id: number = 1;
   elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -210,16 +193,18 @@ export class DragDropService {
       parentStyle: this.defaultParentStyle
     },
   ];
-
+  formControlVisibleChange: BehaviorSubject<any> = new BehaviorSubject<any>({
+    placeholder: true,
+    required: true,
+    value: true,
+    borderRadius: true,
+    borderColor: true,
+    label: true
+  });
   addedComponentList: DragElement[] = [];
   constructor(private store: Store<AppState>) { }
 
-  addToForm(item: DragElement): void{
-    this.addedComponentList.push({...item, id: this.id++})
-  }
-  clearForm(): void{
-    this.addedComponentList = []
-  }
+
   setSelectedElement(component: DragElement| null): void{
     if(!component || component.id == this.selectedElementId){
       this.selectedElementId = null 
@@ -287,6 +272,14 @@ export class DragDropService {
     }
     this.elementStyle.patchValue(elementStyle);
     this.store.dispatch(elementStyleValueChange(elementStyle))
+  }
+
+
+  addToForm(item: DragElement): void{
+    this.addedComponentList.push({...item, id: this.id++})
+  }
+  clearForm(): void{
+    this.addedComponentList = []
   }
   setForm(form: ElementRef){
     this.formRef = form

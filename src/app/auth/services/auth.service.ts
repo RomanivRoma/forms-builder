@@ -11,9 +11,8 @@ import { User } from '../../interfaces/User.interface';
 })
 export class AuthService {
 
-  private readonly loggedUser: Subject<User | null> = new Subject<User | null>();
+  readonly loggedUser: Subject<User | null> = new Subject<User | null>();
 
-  readonly userLogin: Subject<string> = new Subject<string>();
 
   private readonly JWT_TOKEN = 'JWT_TOKEN';
 
@@ -40,7 +39,6 @@ export class AuthService {
     const user = loginInfo.user
     const token = loginInfo.accessToken
     this.loggedUser.next(user)
-    this.userLogin.next(user.login)
     this.storeToken(token)
   }
   login(user: User): Observable<boolean>{
@@ -54,7 +52,6 @@ export class AuthService {
       }));
   }
   doLogoutUser() {
-    this.userLogin.next('')
     this.loggedUser.next(null)
     this.removeToken()
   }
@@ -65,11 +62,11 @@ export class AuthService {
   private storeToken(token: string) {
     localStorage.setItem(this.JWT_TOKEN, token);
   }
-
   private removeToken() {
     localStorage.removeItem(this.JWT_TOKEN);
   }
-  private getToken() {
+
+  private getToken(): string {
     return localStorage.getItem(this.JWT_TOKEN) || '';
   }
 }

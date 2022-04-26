@@ -76,7 +76,7 @@ export class DropComponent implements OnInit, AfterViewInit {
         selectedElementObject.label = this.element.label
         selectedElementObject.placeholder = this.element.placeholder
         selectedElementObject.value = this.element.value
-         const elementStyle = {
+        const elementStyle = {
           'color': this.element.fontColor,
           'fontSize': this.element.fontSize + 'px',
           'width': this.element.width + '%',
@@ -98,8 +98,8 @@ export class DropComponent implements OnInit, AfterViewInit {
         selectedElementObject.parentStyle = {
           'width': this.element.containerWidth + '%',
           'justifyContent': this.element.justifyContent,
-        }
-    });
+        }        
+      })
   }
   ngOnDestroy(){
     this.destroy$.next(true)

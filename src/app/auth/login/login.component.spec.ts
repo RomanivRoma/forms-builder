@@ -18,9 +18,7 @@ describe('LoginComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        BrowserModule,
         ReactiveFormsModule,
-        FormsModule
       ],
       providers: [
         { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

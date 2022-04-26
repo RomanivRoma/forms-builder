@@ -1,10 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
+import { FormComponent } from './form/form.component';
 
 import { StylingComponent } from './styling.component';
 
@@ -16,12 +14,7 @@ describe('StylingComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ StylingComponent ],
       imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        BrowserModule,
-        ReactiveFormsModule,
         MatButtonToggleModule,
-        FormsModule,
         StoreModule.forRoot({})
       ],
     })
@@ -36,5 +29,14 @@ describe('StylingComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('#setPortal should set active portal', () => {
+    const formPortal = new ComponentPortal(FormComponent) 
+
+    component.setPortal('form')
+
+    expect(component.selectedPortal).toEqual(formPortal)
+
   });
 });
