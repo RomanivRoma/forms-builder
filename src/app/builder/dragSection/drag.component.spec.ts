@@ -25,4 +25,6 @@ describe('DragComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
+  
 });

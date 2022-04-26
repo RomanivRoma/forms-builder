@@ -30,13 +30,13 @@ export class SignupComponent implements OnInit {
     this.destroy$.next(true)
     this.destroy$.complete()
   }
-  
+
   submit(): void {
     this.http.post<any>(`${environment.apiURL}/signup`, this.form.getRawValue())
     .pipe(
       takeUntil(this.destroy$),
     )
-      .subscribe(res => this.router.navigate(['/login']))
+    .subscribe(res => this.router.navigate(['/login']))
   }
 
 }

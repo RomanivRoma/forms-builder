@@ -23,8 +23,6 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  ngOnDestroy(){
-  }
   handleDownload(){
     this.dragDrop.download('form.html')
   }

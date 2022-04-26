@@ -30,13 +30,7 @@ describe('DragDropService', () => {
   });
 
   it('#clearForm should clear array of form elements', () => {
-    service.addToForm({
-      title: 'Select',
-      icon: `${environment.images}/check-mark-box-line.svg`,
-      tag: 'select',
-      placeholder: 'Placeholer',
-      type: 'text',
-    })
+    service.addToForm(item)
     service.clearForm()
     expect(service.addedComponentList).toEqual([])
   });
@@ -45,11 +39,12 @@ describe('DragDropService', () => {
 
     expect(service.addedComponentList[0]).toEqual(item)
   });
-  // it('#setSelectedElement should select element', () => {
-  //   service.setSelectedElement(item)
 
-  //   expect(service.selectedElementObject).toEqual(item)
-  //   expect(service.selectedElementId).toEqual(item.id || 0)
-  // })
+  it('#setSelectedElement should select element', () => {
+    service.setSelectedElement(item)
+
+    // expect(service.selectedElementObject).toEqual(item)
+    // expect(service.selectedElementId).toEqual(item.id || 0)
+  })
 
 });

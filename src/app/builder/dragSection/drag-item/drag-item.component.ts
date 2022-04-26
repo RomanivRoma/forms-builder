@@ -19,6 +19,7 @@ export class DragItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   onDragStart(event: CdkDragStart<any>){
     this.dragStart.emit(event)
   }
