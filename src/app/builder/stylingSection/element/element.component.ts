@@ -28,20 +28,18 @@ export class ElementComponent implements OnInit {
     .subscribe(val =>{
       this.isFormControlVisible = val
     })
-    
-
   }
 
   ngOnDestroy(){
     this.destroy$.next(true)
     this.destroy$.complete()
   }
-  handleRemoveComponent(id: number){
-    this.dragDrop.addedComponentList = this.dragDrop.addedComponentList.filter(el => el.id != id)
-    this.handleUnselect()
+  handleRemoveComponent(id: number | null){
+    if(!id) return
+    this.dragDrop.removeElement(id)
+    this.dragDrop.unselectElement()
   }
   handleUnselect(){
     this.dragDrop.unselectElement()
   }
-
 }

@@ -4,6 +4,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { NavComponent } from './nav.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthModule } from '../auth/auth.module';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -16,11 +18,14 @@ describe('NavComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         HttpClientModule,
+        // AuthModule
+
       ], 
       providers: [
         { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService,
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });
@@ -31,6 +36,9 @@ describe('NavComponent', () => {
     fixture.detectChanges();
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });

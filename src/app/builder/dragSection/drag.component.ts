@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DragElement } from '../../interfaces/DragElement.interface';
-import { CdkDragExit, CdkDragStart } from '@angular/cdk/drag-drop';
 import { DragDropService } from '../services/drag-drop.service';
 import { environment } from 'src/environments/environment';
 
@@ -169,6 +168,6 @@ export class DragComponent implements OnInit {
     return false;
   }
   handleAdd(item: DragElement): void{
-    this.dragDrop.addToForm(item)
+    this.dragDrop.addElement(item)
   }
 }

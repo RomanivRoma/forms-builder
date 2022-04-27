@@ -5,9 +5,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { elementStyleValueChange } from '../actions/element.actions';
-import { BehaviorSubject, Subject, Subscriber } from 'rxjs';
+import { BehaviorSubject, Observable, Observer, Subject, Subscriber } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
+import { add, take } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root'
@@ -51,99 +52,44 @@ export class DragDropService {
     borderColor: true,
     label: true
   });
-  addedComponentList: DragElement[] = [];
-  constructor() { 
-    
-  }
+  addedComponentList: BehaviorSubject<DragElement[]> = new BehaviorSubject<DragElement[]>([]);
 
+  constructor() { }
+
+  selectElement(component: DragElement): DragElement{
+    this.selectedElementId = component.id || null
+    this.selectedElementObject = component
+    this.elementDisablingChange.next(false)
+    return component
+  }
   unselectElement(): void{
     this.selectedElementId = null 
     this.selectedElementObject = null
-    this.elementDisablingChange.next(true); 
+    this.elementDisablingChange.next(true)
   }
-  setSelectedElement(component: DragElement): void{
-    if(component.id == this.selectedElementId){
-      this.unselectElement()
-      return 
-    }
-   
-    this.elementDisablingChange.next(false);
-    this.selectedElementObject = component
-    this.selectedElementId = component.id || null
-    this.setCurrentStylesToElement(component)
-    if(component.class == 'custom-text'){
-      this.formControlVisibleChange.next({
-        placeholder: false,
-        required: false,
-        value: true,
-        borderRadius: false,
-        borderColor: false,
-        label: false
-      })
-    }
-    else if(component.type == 'submit'){
-      this.formControlVisibleChange.next({
-        placeholder: false,
-        required: false,
-        value: true,
-        borderRadius: true,
-        borderColor: true,
-        label: false
-      })
-    }
-    else if(component.tag == "select" || component.type == 'radio' || component.type == 'checkbox'){
-      this.formControlVisibleChange.next({
-        placeholder: false,
-        required: true,
-        value: false,
-        borderRadius: true,
-        borderColor: true,
-        label: component.tag == "select" ? false :  true
-      })
-    }
-    else{
-      this.formControlVisibleChange.next({
-        placeholder: true,
-        required: true,
-        value: false,
-        borderRadius: true,
-        borderColor: true,
-        label: false
-      })
-    }
+  
+  addElement(item: DragElement): DragElement{
+    const addedElement = {id: this.id++, ...item}
+    const componentList = this.addedComponentList.getValue()
+    this.addedComponentList.next([...componentList, addedElement])
+    return addedElement
   }
-  setCurrentStylesToElement(component: DragElement){
-    let elementStyle:any = {}
-    Object.keys(component?.style || []).forEach(el =>{
-      elementStyle[el] = component.style[el]
-      if(elementStyle[el].includes('px') || elementStyle[el].includes('%'))
-        elementStyle[el] = elementStyle[el].replace(/[^0-9]/g,'')
-    })
-    elementStyle = {
-      ...elementStyle,
-      label: component?.label || '',
-      placeholder: component?.placeholder || '',
-      value: component?.value || '',
-      required: component?.required || false,
-      containerWidth: component.parentStyle?.width.replace(/[^0-9]/g,''),
-    }
-    this.elementStyle.patchValue(elementStyle);
-    // this.store.dispatch(elementStyleValueChange(elementStyle))
-  }
-
-
-  addToForm(item: DragElement): void{
-    this.addedComponentList.push({...item, id: this.id++})
+  removeElement(id: number){
+    const componentList = this.addedComponentList.getValue()
+    this.addedComponentList.next(componentList.filter(el => el.id != id))
   }
   clearForm(): void{
-    this.addedComponentList = []
+    this.addedComponentList.next([])
   }
   setForm(form: ElementRef){
     this.formRef = form
   }
+  getAddedComponents(): Observable<DragElement[]>{
+    return this.addedComponentList
+  }
   download(filename:string) {
     const html = this.formRef.nativeElement
-    let style = `<style>
+    const style = `<style>
     .drop__container{
       border-radius: 5px;
       padding: 13px;

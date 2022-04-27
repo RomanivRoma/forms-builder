@@ -2,6 +2,7 @@ import { CdkDragEnter } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from '@angular/core';
 import { DragElement } from 'src/app/interfaces/DragElement.interface';
 import { EventEmitter } from '@angular/core';
+import { DragDropService } from '../../services/drag-drop.service';
 
 @Component({
   selector: 'app-drop-item',

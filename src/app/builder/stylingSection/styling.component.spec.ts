@@ -1,4 +1,5 @@
 import { ComponentPortal } from '@angular/cdk/portal';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -33,6 +34,7 @@ describe('StylingComponent', () => {
         MatButtonToggleModule,
         MatIconModule,
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });

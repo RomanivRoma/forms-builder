@@ -30,23 +30,49 @@ describe('DragDropService', () => {
   });
 
   it('#clearForm should clear array of form elements', () => {
-    service.addToForm(item)
+    service.addElement(item)
     service.clearForm()
-    expect(service.addedComponentList).toEqual([])
+
+    service.getAddedComponents()
+    .subscribe(comp =>{
+      expect(comp).toEqual([])
+    })
   });
   it('#addToForm should add to an array passed item', () => {
-    service.addToForm(item)
-    expect(service.addedComponentList[0]).toEqual(item)
+    service.addElement(item)
+
+    service.getAddedComponents()
+    .subscribe(comp =>{
+      expect(comp).toEqual([item])
+    })
   });
+  it('#removeElement should remove element by id', () => {
+    service.addElement(item)
+    service.removeElement(1)
 
-  it('#setSelectedElement should select element', () => {
-    service.setSelectedElement(item)
-    expect(service.selectedElementObject).toEqual(item)
-    expect(service.selectedElementId).toEqual(item.id || 0)
-  })
-  it('#setCurrentStylesToElement should select element', () => {
-    service.setSelectedElement(item)
-    expect(service.selectedElementObject).toEqual(item)
+    service.getAddedComponents()
+    .subscribe(comp =>{
+      expect(comp.length).toBeFalsy()
+    })
+  });
+  
+  // it('#selectElement should select element', () => {
+  //   expect(service.selectElement(item)).toEqual(item)
+  //   expect(service.selectedElementObject).toEqual(item)
+  //   expect(service.selectedElementId).toEqual(item.id || 0)
+  // })
+  it('#unselectElement should unselect element', () => {
+    service.selectElement(item)
+    service.unselectElement()
+    expect(service.selectedElementObject).toBeFalsy()
+    expect(service.selectedElementId).toBeFalsy()
   })
 
+  it('#getAddedComponents should return subscription on added elements', () => {
+    service.addElement(item)
+    service.getAddedComponents()
+    .subscribe(comp =>{
+      expect(comp).toEqual([item])
+    })
+  })
 });

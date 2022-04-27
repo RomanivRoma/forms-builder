@@ -73,5 +73,19 @@ describe('AuthService', () => {
     expect(service.isAuthenticated()).toBeFalsy()
 
   });
+
+  it('#getUserByToken should return user by using jwt tocken', () => {
+    const user: User = {
+      email: 'roma@gmail.com',
+      password: '1234'
+    }
+    service.login(user)
+    .subscribe(val =>{
+      expect(service.getUserByToken().email).toBe(user.email)
+    })
+    service.doLogoutUser()
+    expect(service.getUserByToken()).toBeFalsy()
+
+  });
   
 });

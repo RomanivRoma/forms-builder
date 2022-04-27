@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { DragDropService } from '../services/drag-drop.service';
@@ -14,10 +15,9 @@ describe('DragComponent', () => {
         StoreModule.forRoot({})
       ],
       providers: [
-        {provide: DragDropService, useValue: {
-          params: ''
-        }}
-      ]
+
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });

@@ -5,6 +5,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { User } from 'src/app/interfaces/User.interface';
 
 import { LoginComponent } from './login.component';
 
@@ -37,4 +38,5 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

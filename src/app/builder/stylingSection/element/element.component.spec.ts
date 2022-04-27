@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -29,7 +30,8 @@ describe('ElementComponent', () => {
         BrowserAnimationsModule,
         MatButtonToggleModule,
         MatIconModule,
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });
@@ -43,4 +45,9 @@ describe('ElementComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
+  // it('#handleRemoveComponent create', () => {
+    // expect(component).toBeTruthy();
+  // });
 });

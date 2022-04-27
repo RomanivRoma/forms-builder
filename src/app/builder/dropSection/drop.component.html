@@ -10,10 +10,10 @@
     <div class="drop__wrapper">
         <div cdkDropList
              fxLayout="row"
-             [cdkDropListData]="dragDrop.addedComponentList"
+             [cdkDropListData]="addedComponentList"
              (cdkDropListDropped)="drop($event)"
              class="drop__body">
-            <ng-container *ngFor="let component of dragDrop.addedComponentList; index as index ">
+            <ng-container *ngFor="let component of addedComponentList; index as index ">
                 <app-drop-item (click)="handleSelect(component)"
                                 class="drop__item__container"
                                 [component]="component"

@@ -5,6 +5,7 @@ import { takeUntil, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { DragDropService } from '../services/drag-drop.service';
+import { elementStyleValueChange } from '../actions/element.actions';
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
@@ -19,31 +20,13 @@ export class DropComponent implements OnInit, AfterViewInit {
   titleStyle: any;
   formStyle: any;
   headerStyle: any;
+  addedComponentList: DragElement[];
+
 
   constructor(public dragDrop: DragDropService,
               private store: Store<AppState>) { }
               
-  drop(event: CdkDragDrop<DragElement[]>) {    
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    }
-    else {
-      copyArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      const addedElement = this.dragDrop.addedComponentList[event.currentIndex]
-      this.dragDrop.addedComponentList[event.currentIndex] = {...addedElement , id: this.dragDrop.id++}
-    }
-  }
-  handleSelect(component: DragElement){
-    this.dragDrop.setSelectedElement(component)
-  }
-  ngAfterViewInit(): void {
-    this.dragDrop.setForm(this.formRef)
-  }
+
   ngOnInit(): void {
     this.store.select('form')
     .pipe(
@@ -70,7 +53,6 @@ export class DropComponent implements OnInit, AfterViewInit {
     )
     .subscribe(val => {
       this.element = val
-      console.log(val);
       
       const selectedElementObject = this.dragDrop.selectedElementObject
       if(!selectedElementObject) return
@@ -102,7 +84,121 @@ export class DropComponent implements OnInit, AfterViewInit {
         'justifyContent': this.element.justifyContent,
       }        
     })
+
+    this.dragDrop
+    .getAddedComponents()
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe((components) =>{
+      this.addedComponentList = components
+    })
   }
+  ngAfterViewInit(): void {
+    this.dragDrop.setForm(this.formRef)
+  }
+  drop(event: CdkDragDrop<DragElement[]>) {    
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    }
+    else {
+      copyArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      const componentList = this.dragDrop.addedComponentList.getValue()
+      const addedElement = componentList[event.currentIndex]
+      componentList[event.currentIndex] = {...addedElement , id: this.dragDrop.id++}
+    }
+  }
+
+
+  setVisibleInputs(component: DragElement){
+    let visibleInputs = {}
+    if(component.class == 'custom-text'){
+      visibleInputs = {
+        placeholder: false,
+        required: false,
+        value: true,
+        borderRadius: false,
+        borderColor: false,
+        label: false
+      }
+    }
+    else if(component.tag == 'button'){
+      visibleInputs = {
+        placeholder: false,
+        required: false,
+        value: true,
+        borderRadius: true,
+        borderColor: true,
+        label: false
+      }
+    }
+    else if(component.tag == "select"){
+      visibleInputs = {
+        placeholder: false,
+        required: true,
+        value: false,
+        borderRadius: true,
+        borderColor: true,
+        label: false
+      }
+    }
+    else if(component.type == 'radio' || component.type == 'checkbox'){
+      visibleInputs = {
+        placeholder: false,
+        required: true,
+        value: false,
+        borderRadius: true,
+        borderColor: true,
+        label: true
+      }
+    }
+    else{
+      visibleInputs = {
+        placeholder: true,
+        required: true,
+        value: false,
+        borderRadius: true,
+        borderColor: true,
+        label: false
+      }
+    }
+    this.dragDrop.formControlVisibleChange.next({...visibleInputs})
+    return visibleInputs
+  }
+  setCurrentStylesToElement(component: DragElement){
+    let elementStyle:any = {}
+    Object.keys(component?.style || []).forEach(el =>{
+      elementStyle[el] = component.style[el]
+      if(elementStyle[el].includes('px') || elementStyle[el].includes('%'))
+        elementStyle[el] = elementStyle[el].replace(/[^0-9]/g,'')
+    })
+    elementStyle = {
+      ...elementStyle,
+      label: component?.label || '',
+      placeholder: component?.placeholder || '',
+      value: component?.value || '',
+      required: component?.required || false,
+      containerWidth: component.parentStyle?.width.replace(/[^0-9]/g,''),
+    }
+    this.dragDrop.elementStyle.patchValue(elementStyle);
+    this.store.dispatch(elementStyleValueChange(elementStyle))
+  }
+
+  handleSelect(component: DragElement){
+    if(component.id == this.dragDrop.selectedElementId){
+      this.dragDrop.unselectElement()
+      return 
+    }
+    this.dragDrop.selectElement(component)
+    this.setCurrentStylesToElement(component)
+    this.setVisibleInputs(component)
+  }
+
   ngOnDestroy(){
     this.destroy$.next(true)
     this.destroy$.complete()
