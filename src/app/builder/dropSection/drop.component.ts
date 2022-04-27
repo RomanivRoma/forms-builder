@@ -53,14 +53,7 @@ export class DropComponent implements OnInit, AfterViewInit {
     )
     .subscribe(val => {
       this.element = val
-      
-      const selectedElementObject = this.dragDrop.selectedElementObject
-      if(!selectedElementObject) return
-      selectedElementObject.required = this.element.required 
-      selectedElementObject.label = this.element.label
-      selectedElementObject.placeholder = this.element.placeholder
-      selectedElementObject.value = this.element.value
-      const elementStyle = {
+      const style = {
         'color': this.element.fontColor,
         'fontSize': this.element.fontSize + 'px',
         'width': this.element.width + '%',
@@ -78,11 +71,19 @@ export class DropComponent implements OnInit, AfterViewInit {
         'marginRight': this.element.marginRight + 'px',
         'marginBottom': this.element.marginBottom + 'px',
       }
-      selectedElementObject.style = elementStyle
-      selectedElementObject.parentStyle = {
+      const parentStyle = {
         'width': this.element.containerWidth + '%',
         'justifyContent': this.element.justifyContent,
-      }        
+      }
+      const elementObject = {
+        required: this.element.required ,
+        label: this.element.label,
+        placeholder: this.element.placeholder,
+        value: this.element.value,
+        style,
+        parentStyle
+      }
+      this.dragDrop.setSelectedElement(elementObject)
     })
 
     this.dragDrop
@@ -91,6 +92,8 @@ export class DropComponent implements OnInit, AfterViewInit {
       takeUntil(this.destroy$)
     )
     .subscribe((components) =>{
+      console.log(components);
+      
       this.addedComponentList = components
     })
   }

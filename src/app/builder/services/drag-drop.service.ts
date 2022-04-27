@@ -42,7 +42,6 @@ export class DragDropService {
   id: number = 1;
   elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   selectedElementId: number | null;
-  selectedElementObject: DragElement | null;
 
   formControlVisibleChange: BehaviorSubject<any> = new BehaviorSubject<any>({
     placeholder: true,
@@ -58,16 +57,20 @@ export class DragDropService {
 
   selectElement(component: DragElement): DragElement{
     this.selectedElementId = component.id || null
-    this.selectedElementObject = component
     this.elementDisablingChange.next(false)
     return component
   }
   unselectElement(): void{
     this.selectedElementId = null 
-    this.selectedElementObject = null
     this.elementDisablingChange.next(true)
   }
-  
+  setSelectedElement(element: any) {
+    const componentList: DragElement[] = this.addedComponentList.getValue()
+    let selectedElement: any = componentList.find(el => el.id == this.selectedElementId)
+    selectedElement = {...selectedElement, ...element}
+    const newComponentList: DragElement[] = componentList.map(component => component.id == selectedElement?.id ? selectedElement : component);
+    this.addedComponentList.next(newComponentList)
+  }
   addElement(item: DragElement): DragElement{
     const addedElement = {id: this.id++, ...item}
     const componentList = this.addedComponentList.getValue()

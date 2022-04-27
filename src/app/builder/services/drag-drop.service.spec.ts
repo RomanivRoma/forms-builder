@@ -64,7 +64,6 @@ describe('DragDropService', () => {
   it('#unselectElement should unselect element', () => {
     service.selectElement(item)
     service.unselectElement()
-    expect(service.selectedElementObject).toBeFalsy()
     expect(service.selectedElementId).toBeFalsy()
   })
 
