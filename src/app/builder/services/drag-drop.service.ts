@@ -52,7 +52,9 @@ export class DragDropService {
     label: true
   });
   addedComponentList: DragElement[] = [];
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) { 
+    
+  }
 
 
   setSelectedElement(component: DragElement| null): void{
@@ -85,7 +87,8 @@ export class DragDropService {
         borderColor: true,
         label: false
       })
-    }else if(component.tag == "select" || component.type == 'radio' || component.type == 'checkbox'){
+    }
+    else if(component.tag == "select" || component.type == 'radio' || component.type == 'checkbox'){
       this.formControlVisibleChange.next({
         placeholder: false,
         required: true,
@@ -94,7 +97,8 @@ export class DragDropService {
         borderColor: true,
         label: component.tag == "select" ? false :  true
       })
-    }else{
+    }
+    else{
       this.formControlVisibleChange.next({
         placeholder: true,
         required: true,
@@ -118,10 +122,10 @@ export class DragDropService {
       placeholder: component?.placeholder || '',
       value: component?.value || '',
       required: component?.required || false,
-      containerWidth: component.parentStyle.width.replace(/[^0-9]/g,''),
+      containerWidth: component.parentStyle?.width.replace(/[^0-9]/g,''),
     }
     this.elementStyle.patchValue(elementStyle);
-    this.store.dispatch(elementStyleValueChange(elementStyle))
+    // this.store.dispatch(elementStyleValueChange(elementStyle))
   }
 
 

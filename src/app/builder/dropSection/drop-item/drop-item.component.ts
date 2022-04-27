@@ -12,7 +12,6 @@ export class DropItemComponent implements OnInit {
 
   @Input() component: DragElement;
   @Input() isSelected: boolean;
-  @Output() onEntered = new EventEmitter<CdkDragEnter>();
 
   constructor() { }
 

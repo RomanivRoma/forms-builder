@@ -20,7 +20,6 @@
 .dragElements__item  .dragElements__item__addIcon{
     width: 30px;
     height: 30px;
-    margin-right: 8px;
 }
 .cdk-drop-dragging .cdk-drag {
     transition: transform .3s cubic-bezier(0, 0, 0.2, 1);
@@ -35,4 +34,9 @@
 }
 .dragElements__item__preview select{
     width: 200px;
+}
+.add__button{
+    background: none;
+    border: none;
+    margin-right: 8px;
 }

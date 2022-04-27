@@ -37,9 +37,7 @@ import { DropItemComponent } from './dropSection/drop-item/drop-item.component';
   imports: [
     CommonModule,
     DragDropModule,
-    BrowserAnimationsModule,
-    MatButtonToggleModule,
-    MatIconModule,
+    
     PortalModule,
     FormsModule,
     ReactiveFormsModule,
@@ -47,7 +45,10 @@ import { DropItemComponent } from './dropSection/drop-item/drop-item.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    BrowserAnimationsModule,
+    MatButtonToggleModule,
+    MatIconModule,
   ],
 })
 export class BuilderModule { }

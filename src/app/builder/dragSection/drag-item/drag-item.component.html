@@ -1,12 +1,12 @@
-<div cdkDrag (cdkDragStarted)="onDragStart($event)"
+<div cdkDrag 
     class="dragElements__item d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
         <img class="me-3" src={{component?.icon}} alt="">
         <p class="m-0">{{ component?.title }}</p>
     </div>
-    <div (click)="addComponent(component)">
+    <button class="add__button" (click)="addComponent(component)">
         <img class="dragElements__item__addIcon" src="assets/img/add-plus.svg">
-    </div>
+    </button>
     <div *cdkDragPreview class="dragElements__item__preview preview">
         <ng-container [ngTemplateOutlet]="component.tag == 'input' ? inputBlock :
                                           component.tag == 'textarea' ? textareaBlock :

@@ -36,15 +36,17 @@ describe('DragDropService', () => {
   });
   it('#addToForm should add to an array passed item', () => {
     service.addToForm(item)
-
     expect(service.addedComponentList[0]).toEqual(item)
   });
 
   it('#setSelectedElement should select element', () => {
     service.setSelectedElement(item)
-
-    // expect(service.selectedElementObject).toEqual(item)
-    // expect(service.selectedElementId).toEqual(item.id || 0)
+    expect(service.selectedElementObject).toEqual(item)
+    expect(service.selectedElementId).toEqual(item.id || 0)
+  })
+  it('#setCurrentStylesToElement should select element', () => {
+    service.setSelectedElement(item)
+    expect(service.selectedElementObject).toEqual(item)
   })
 
 });
