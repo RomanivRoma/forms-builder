@@ -52,18 +52,21 @@ export class DragDropService {
     label: true
   });
   addedComponentList: DragElement[] = [];
-  constructor(private store: Store<AppState>) { 
+  constructor() { 
     
   }
 
-
-  setSelectedElement(component: DragElement| null): void{
-    if(!component || component.id == this.selectedElementId){
-      this.selectedElementId = null 
-      this.selectedElementObject = null
-      this.elementDisablingChange.next(true); 
-      return
+  unselectElement(): void{
+    this.selectedElementId = null 
+    this.selectedElementObject = null
+    this.elementDisablingChange.next(true); 
+  }
+  setSelectedElement(component: DragElement): void{
+    if(component.id == this.selectedElementId){
+      this.unselectElement()
+      return 
     }
+   
     this.elementDisablingChange.next(false);
     this.selectedElementObject = component
     this.selectedElementId = component.id || null

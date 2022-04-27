@@ -41,7 +41,7 @@ export class ElementComponent implements OnInit {
     this.handleUnselect()
   }
   handleUnselect(){
-    this.dragDrop.setSelectedElement(null)
+    this.dragDrop.unselectElement()
   }
 
 }
