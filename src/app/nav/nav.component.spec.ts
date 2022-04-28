@@ -1,25 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NavComponent } from './nav.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthModule } from '../auth/auth.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginComponent } from '../auth/login/login.component';
 
 describe('NavComponent', () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavComponent ],
+      declarations: [ NavComponent, LoginComponent ],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
         HttpClientModule,
         // AuthModule
-
+        JwtModule,
+        RouterTestingModule.withRoutes(
+          [{path: 'login', component: LoginComponent}]
+        )
       ], 
       providers: [
         { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
@@ -34,6 +38,7 @@ describe('NavComponent', () => {
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {

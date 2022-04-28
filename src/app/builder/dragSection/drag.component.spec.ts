@@ -11,7 +11,7 @@ describe('DragComponent', () => {
   let component: DragComponent;
   let fixture: ComponentFixture<DragComponent>;
   let item: DragElement;
-  const dragDropSerive = jasmine.createSpyObj<DragDropService>(['getAddedComponents', 'getSelectedElementId'])
+  let dragDropSerive: jasmine.SpyObj<DragDropService>;
 
   beforeEach(async () => {
     item = {
@@ -38,7 +38,7 @@ describe('DragComponent', () => {
     fixture = TestBed.createComponent(DragComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    dragDropSerive.getAddedComponents.and.returnValue(of([item]));
+    dragDropSerive = jasmine.createSpyObj<DragDropService>(['getAddedComponents', 'getSelectedElementId'])
   });
 
   it('should create', () => {
@@ -46,6 +46,7 @@ describe('DragComponent', () => {
   });
     
   it('#handleAdd should add element', () => {
+    dragDropSerive.getAddedComponents.and.returnValue(of([item]));
     expect(component.handleAdd(item)).toEqual(item)
     dragDropSerive.getAddedComponents()
     .subscribe(elements =>{

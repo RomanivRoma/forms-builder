@@ -1,6 +1,6 @@
 <div cdkDrag
      style="width: 100%;"
-     [style.justifyContent]="component?.parentStyle.justifyContent"
+     [style.justifyContent]="component?.class == 'custom-text' ? '' : component?.parentStyle?.justifyContent"
      class="dragElements__item"
      [class]="(isSelected ? 'selected ' : '') + component?.class || ''">
     <ng-container [ngTemplateOutlet]="
@@ -31,10 +31,10 @@
     </ng-template>
     <ng-template #labelBlock>
         <label  style="width: 100%;"
-                [style]="component.style">
+                [style]="component?.style">
             <span>{{ component.label }}</span>
             <input class="drop__item" 
-                    type={{component.type}}
+                    type={{component?.type}}
                     [required]="component.required || false"
                     placeholder={{component.placeholder}}/>
         </label>
@@ -42,14 +42,14 @@
     <ng-template #textareaBlock>
         <textarea 
                     style="width: 100%; height: 22px;"
-                    [style]="component.style"
+                    [style]="component?.style"
                     [required]="component.required || false"
                     placeholder={{component.placeholder}}></textarea>
     </ng-template>
     <ng-template #selectBlock>
         <select 
                 style="width: 100%;"
-                [style]="component.style"
+                [style]="component?.style"
                 [required]="component.required || false"
                 class="drop__item">
         </select>

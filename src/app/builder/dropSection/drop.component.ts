@@ -57,8 +57,8 @@ export class DropComponent implements OnInit, AfterViewInit {
     .subscribe(val => {
       this.element = val
       const style = {
-        'color': this.element.fontColor,
-        'font-size': this.element.fontSize + 'px',
+        'color': this.element.color,
+        'fontSize': this.element.fontSize + 'px',
         'width': this.element.width + '%',
         'height': this.element.height + 'px',
         'fontWeight': this.element.fontWeight,
@@ -144,7 +144,7 @@ export class DropComponent implements OnInit, AfterViewInit {
       value: component?.value || '',
       required: component?.required || false,
       containerWidth: component.parentStyle?.width.replace(/[^0-9]/g,''),
-      justifyContent: component.parentStyle.justifyContent,
+      justifyContent: component.parentStyle?.justifyContent,
     }
     this.dragDrop.elementStyle.patchValue(elementStyle);
     this.store.dispatch(elementStyleValueChange(elementStyle))

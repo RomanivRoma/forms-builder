@@ -1,7 +1,7 @@
 import { Injectable, ElementRef, ViewChild } from '@angular/core';
 import { DragElement } from 'src/app/interfaces/DragElement.interface';
 import { FormControl, FormGroup } from '@angular/forms';
-import { BehaviorSubject, Observable, Observer, Subject, Subscriber } from 'rxjs';
+import { BehaviorSubject, Observable, Observer, shareReplay, Subject, Subscriber } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
 
@@ -122,10 +122,10 @@ export class DragDropService {
     return visibleInputs
   }
   getSelectedElementId(){
-    return this.selectedElementId
+    return this.selectedElementId.pipe(shareReplay())
   }
   getFormControlVisibleChange(){
-    return this.formControlVisibleChange
+    return this.formControlVisibleChange.pipe(shareReplay())
   }
   addElement(item: DragElement): DragElement{
     const addedElement = {id: this.id++, ...item}
@@ -144,7 +144,7 @@ export class DragDropService {
     this.formRef = form
   }
   getAddedComponents(): Observable<DragElement[]>{
-    return this.addedComponentList
+    return this.addedComponentList.pipe(shareReplay())
   }
   download(filename:string) {
     const html = this.formRef.nativeElement

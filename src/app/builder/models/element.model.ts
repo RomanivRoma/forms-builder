@@ -1,7 +1,7 @@
 export class Element {
     placeholder: string;
     fontSize: number;
-    fontColor: string;
+    color: string;
     fontWeight: string;
     width: number;
     height: number;

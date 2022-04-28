@@ -12,13 +12,13 @@ import { environment } from 'src/environments/environment';
 export class DragComponent implements OnInit {
   defaultStyle: any = {
     "fontSize": '14',
-    "fontColor": "#212529",
-    "fontWeight": "400",
+    "color": '#212529',
+    "fontWeight": '400',
     "width": '100',
     "height": '22',
-    "align": "left",
+    "align": 'left',
     "containerWidth": '100',
-    "background": "#ffffff",
+    "background": '#ffffff',
     "borderRadius": '0',
     "borderColor": '0',
     "paddingTop": '0',
