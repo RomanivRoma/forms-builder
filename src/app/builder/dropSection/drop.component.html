@@ -18,8 +18,9 @@
                                 class="drop__item__container"
                                 [component]="component"
                                 [style.width]="component.parentStyle.width"
-                                style="width: 100%;"
-                                [isSelected]="dragDrop.selectedElementId == component.id ? true : false"></app-drop-item>
+                                [style.textAlign]="component.class == 'custom-text' ? component.parentStyle.justifyContent : ''"
+                                style="width: 100%; text-align: left;"
+                                [isSelected]="selectedElementId == component.id ? true : false"></app-drop-item>
             </ng-container>
 
         </div>

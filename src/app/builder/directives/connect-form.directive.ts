@@ -20,6 +20,8 @@ export class ConnectFormDirective {
   
   constructor( private formGroupDirective : FormGroupDirective,
                private store : Store<any> ) {}
+
+               
   ngOnInit() {
     this.getComponent()
     .subscribe(val => {

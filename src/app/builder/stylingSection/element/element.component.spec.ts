@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -30,6 +31,7 @@ describe('ElementComponent', () => {
         BrowserAnimationsModule,
         MatButtonToggleModule,
         MatIconModule,
+        ReactiveFormsModule
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

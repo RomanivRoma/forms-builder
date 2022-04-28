@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { DragElement } from 'src/app/interfaces/DragElement.interface';
 import { environment } from 'src/environments/environment';
 import { DragDropService } from '../services/drag-drop.service';
@@ -14,7 +14,6 @@ describe('DropComponent', () => {
   let item: DragElement;
 
   beforeEach(async () => {
-    const dragDropSerive = jasmine.createSpyObj<DragDropService>(['getAddedComponents'])
     item = {
       id: 1,
       title: 'Select',
@@ -23,7 +22,7 @@ describe('DropComponent', () => {
       placeholder: 'Placeholer',
       type: 'text',
     };
-    dragDropSerive.getAddedComponents.and.returnValue(of([item]))
+
     await TestBed.configureTestingModule({
       declarations: [ DropComponent ],
       imports: [
@@ -54,6 +53,20 @@ describe('DropComponent', () => {
       borderColor: true,
       label: false
     });
+  });
+
+  it('#handleSelect should select or unselect element', () => {
+    // dragDropSerive.getAddedComponents.and.returnValue(of([item]))
+    // dragDropSerive.getSelectedElementId.and.returnValue(new BehaviorSubject<number | null>(1))
+    component.handleSelect(item)
+    expect(component.selectedElementId).toBe(item.id || null)
+    component.handleSelect(item)
+    expect(component.selectedElementId).toBe(null)
+ 
+    // dragDropSerive.getSelectedElementId()
+    // .subscribe(id =>{
+    //   expect(id).toBe(item.id || null)
+    // })
   });
 
 

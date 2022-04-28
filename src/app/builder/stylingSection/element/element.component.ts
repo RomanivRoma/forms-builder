@@ -16,17 +16,24 @@ export class ElementComponent implements OnInit {
 
   isFormControlVisible: any;
   destroy$: Subject<boolean> = new Subject();
-
+  selectedElementId: number | null;
 
   constructor(public dragDrop: DragDropService) { }
 
   ngOnInit(): void {
-    this.dragDrop.formControlVisibleChange
+    this.dragDrop.getFormControlVisibleChange()
     .pipe(
       takeUntil(this.destroy$)
     )
     .subscribe(val =>{
       this.isFormControlVisible = val
+    })
+    this.dragDrop.getSelectedElementId()
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe(id =>{
+      this.selectedElementId = id
     })
   }
 
@@ -34,7 +41,8 @@ export class ElementComponent implements OnInit {
     this.destroy$.next(true)
     this.destroy$.complete()
   }
-  handleRemoveComponent(id: number | null){
+  handleRemoveElement(){
+    const id = this.selectedElementId
     if(!id) return
     this.dragDrop.removeElement(id)
     this.dragDrop.unselectElement()

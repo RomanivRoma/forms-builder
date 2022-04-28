@@ -1,6 +1,7 @@
 import { ComponentPortal } from '@angular/cdk/portal';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -10,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { ElementComponent } from './element/element.component';
 import { FormComponent } from './form/form.component';
 
 import { StylingComponent } from './styling.component';
@@ -24,15 +26,6 @@ describe('StylingComponent', () => {
       imports: [
         MatButtonToggleModule,
         StoreModule.forRoot({}),
-        MatButtonToggleModule,
-        MatSliderModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        BrowserAnimationsModule,
-        MatButtonToggleModule,
-        MatIconModule,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
@@ -49,12 +42,12 @@ describe('StylingComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#setPortal should set active portal', () => {
+  it('#setPortal should set active portal', async () => {
     const formPortal = new ComponentPortal(FormComponent) 
-
+    const elementPortal = new ComponentPortal(ElementComponent) 
     component.setPortal('form')
-
     expect(component.selectedPortal).toEqual(formPortal)
-
+    component.setPortal('element')
+    expect(component.selectedPortal).toEqual(elementPortal)
   });
 });

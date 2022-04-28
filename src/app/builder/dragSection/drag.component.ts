@@ -31,7 +31,8 @@ export class DragComponent implements OnInit {
     "marginLeft": '5'
   }
   defaultParentStyle: any = {
-    'width': '100'
+    'width': '100',
+    'justifyContent': 'left'
   }
   componentList: DragElement[] = [
     {
@@ -162,12 +163,13 @@ export class DragComponent implements OnInit {
     },
   ];
   constructor(private dragDrop: DragDropService) { }
+
   ngOnInit(): void {
   }
   noReturnPredicate() {
     return false;
   }
-  handleAdd(item: DragElement): void{
-    this.dragDrop.addElement(item)
+  handleAdd(item: DragElement): DragElement{
+    return this.dragDrop.addElement(item)
   }
 }

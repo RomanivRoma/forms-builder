@@ -60,7 +60,7 @@
         <mat-label>Placeholder</mat-label>
         <input matInput formControlName="placeholder" type="text">
     </mat-form-field>
-    <mat-button-toggle-group value="left" class="mb-3" formControlName="justifyContent" #group = "matButtonToggleGroup">  
+    <mat-button-toggle-group class="mb-3" formControlName="justifyContent" #group = "matButtonToggleGroup">  
     <mat-button-toggle value = "left">  
         <mat-icon>format_align_left</mat-icon>  
     </mat-button-toggle>  
@@ -135,7 +135,7 @@
         class="confirm"
         src="assets/img/right-correct.svg"/>
     <img
-        (click)="handleRemoveComponent(dragDrop.selectedElementId)"
+        (click)="handleRemoveElement()"
         class="delete"
         src="assets/img/close-red.svg"/>
 </div>

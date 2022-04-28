@@ -1,5 +1,6 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, ElementRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 
 import { DragItemComponent } from './drag-item.component';
@@ -7,6 +8,8 @@ import { DragItemComponent } from './drag-item.component';
 describe('DragItemComponent', () => {
   let component: DragItemComponent;
   let fixture: ComponentFixture<DragItemComponent>;
+  let de: DebugElement;
+  let button: ElementRef;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,6 +22,8 @@ describe('DragItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DragItemComponent);
     component = fixture.componentInstance;
+    de = fixture.debugElement;
+    button = de.query(By.css('button'));
     fixture.detectChanges();
   });
 
@@ -26,21 +31,10 @@ describe('DragItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create', () => {
-    // fixture = TestBed.createComponent(DragItemComponent);
-    // spyOn(component.onAdd, 'emit');
-    // const item = {
-    //   title: 'Text',
-    //   icon: `${environment.images}/pencil.svg`,
-    //   tag: 'p',
-    //   type: 'text',
-    //   class: 'custom-text',
-    //   value: 'Text',
-    // }
-    // const nativeElement = fixture.nativeElement;
-    // const button = nativeElement.querySelector('.add__button');
-    // button.click();
-
-    // expect(component.onAdd.emit).toHaveBeenCalledWith(item);
+  it('should emit when button is clicked', () => {
+    spyOn(component.onAdd, 'emit');
+    button.nativeElement.click();
+    expect(component.onAdd.emit).toHaveBeenCalledWith(component.component);
   });
+
 });

@@ -32,13 +32,12 @@ describe('DragDropService', () => {
   it('#clearForm should clear array of form elements', () => {
     service.addElement(item)
     service.clearForm()
-
     service.getAddedComponents()
     .subscribe(comp =>{
       expect(comp).toEqual([])
     })
   });
-  it('#addToForm should add to an array passed item', () => {
+  it('#addElement should add to an array passed item', () => {
     service.addElement(item)
 
     service.getAddedComponents()
@@ -56,15 +55,21 @@ describe('DragDropService', () => {
     })
   });
   
-  // it('#selectElement should select element', () => {
-  //   expect(service.selectElement(item)).toEqual(item)
-  //   expect(service.selectedElementObject).toEqual(item)
-  //   expect(service.selectedElementId).toEqual(item.id || 0)
-  // })
+  it('#selectElement should select element', () => {
+    expect(service.selectElement(item)).toEqual(item)
+    service.getSelectedElementId()
+    .subscribe(id =>{
+      expect(id).toEqual(item.id || 0)
+
+    })
+  })
   it('#unselectElement should unselect element', () => {
     service.selectElement(item)
     service.unselectElement()
-    expect(service.selectedElementId).toBeFalsy()
+    service.getSelectedElementId()
+    .subscribe(id =>{
+      expect(id).toBeFalsy()
+    })
   })
 
   it('#getAddedComponents should return subscription on added elements', () => {
@@ -72,6 +77,17 @@ describe('DragDropService', () => {
     service.getAddedComponents()
     .subscribe(comp =>{
       expect(comp).toEqual([item])
+    })
+  })
+  it('#setFormControlVisibleChange should return object of visible inputs', () => {
+
+    expect(service.setFormControlVisibleChange(item)).toEqual({
+      placeholder: false,
+      required: true,
+      value: false,
+      borderRadius: true,
+      borderColor: true,
+      label: false
     })
   })
 });

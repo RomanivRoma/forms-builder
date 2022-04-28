@@ -1,14 +1,9 @@
 import { Injectable, ElementRef, ViewChild } from '@angular/core';
 import { DragElement } from 'src/app/interfaces/DragElement.interface';
-import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.state';
-import { elementStyleValueChange } from '../actions/element.actions';
 import { BehaviorSubject, Observable, Observer, Subject, Subscriber } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
-import { add, take } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root'
@@ -41,9 +36,9 @@ export class DragDropService {
   });
   id: number = 1;
   elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  selectedElementId: number | null;
+  private selectedElementId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
 
-  formControlVisibleChange: BehaviorSubject<any> = new BehaviorSubject<any>({
+  private formControlVisibleChange: BehaviorSubject<any> = new BehaviorSubject<any>({
     placeholder: true,
     required: true,
     value: true,
@@ -51,25 +46,86 @@ export class DragDropService {
     borderColor: true,
     label: true
   });
-  addedComponentList: BehaviorSubject<DragElement[]> = new BehaviorSubject<DragElement[]>([]);
+  private addedComponentList: BehaviorSubject<DragElement[]> = new BehaviorSubject<DragElement[]>([]);
 
   constructor() { }
 
   selectElement(component: DragElement): DragElement{
-    this.selectedElementId = component.id || null
+    this.selectedElementId.next(component.id || null)
     this.elementDisablingChange.next(false)
     return component
   }
   unselectElement(): void{
-    this.selectedElementId = null 
+    this.selectedElementId.next(null)
     this.elementDisablingChange.next(true)
   }
   setSelectedElement(element: any) {
     const componentList: DragElement[] = this.addedComponentList.getValue()
-    let selectedElement: any = componentList.find(el => el.id == this.selectedElementId)
+    let selectedElement: any = componentList.find(el => el.id == this.selectedElementId.getValue())
     selectedElement = {...selectedElement, ...element}
     const newComponentList: DragElement[] = componentList.map(component => component.id == selectedElement?.id ? selectedElement : component);
     this.addedComponentList.next(newComponentList)
+  }
+  setFormControlVisibleChange(component: DragElement) {
+    let visibleInputs = {}
+    if(component.class == 'custom-text'){
+      visibleInputs = {
+        placeholder: false,
+        required: false,
+        value: true,
+        borderRadius: false,
+        borderColor: false,
+        label: false
+      }
+    }
+    else if(component.tag == 'button'){
+      visibleInputs = {
+        placeholder: false,
+        required: false,
+        value: true,
+        borderRadius: true,
+        borderColor: true,
+        label: false
+      }
+    }
+    else if(component.tag == "select"){
+      visibleInputs = {
+        placeholder: false,
+        required: true,
+        value: false,
+        borderRadius: true,
+        borderColor: true,
+        label: false
+      }
+    }
+    else if(component.type == 'radio' || component.type == 'checkbox'){
+      visibleInputs = {
+        placeholder: false,
+        required: true,
+        value: false,
+        borderRadius: true,
+        borderColor: true,
+        label: true
+      }
+    }
+    else{
+      visibleInputs = {
+        placeholder: true,
+        required: true,
+        value: false,
+        borderRadius: true,
+        borderColor: true,
+        label: false
+      }
+    }
+    this.formControlVisibleChange.next({...visibleInputs})
+    return visibleInputs
+  }
+  getSelectedElementId(){
+    return this.selectedElementId
+  }
+  getFormControlVisibleChange(){
+    return this.formControlVisibleChange
   }
   addElement(item: DragElement): DragElement{
     const addedElement = {id: this.id++, ...item}

@@ -21,14 +21,15 @@ export class DropComponent implements OnInit, AfterViewInit {
   formStyle: any;
   headerStyle: any;
   addedComponentList: DragElement[];
-
+  selectedElementId: number | null
 
   constructor(public dragDrop: DragDropService,
               private store: Store<AppState>) { }
               
 
   ngOnInit(): void {
-    this.store.select('form')
+    this.store
+    .select('form')
     .pipe(
       takeUntil(this.destroy$)
     )
@@ -47,7 +48,9 @@ export class DropComponent implements OnInit, AfterViewInit {
         'backgroundColor': this.form.background
       }
     });
-    this.store.select('element')
+
+    this.store
+    .select('element')
     .pipe(
       takeUntil(this.destroy$)
     )
@@ -55,7 +58,7 @@ export class DropComponent implements OnInit, AfterViewInit {
       this.element = val
       const style = {
         'color': this.element.fontColor,
-        'fontSize': this.element.fontSize + 'px',
+        'font-size': this.element.fontSize + 'px',
         'width': this.element.width + '%',
         'height': this.element.height + 'px',
         'fontWeight': this.element.fontWeight,
@@ -92,10 +95,18 @@ export class DropComponent implements OnInit, AfterViewInit {
       takeUntil(this.destroy$)
     )
     .subscribe((components) =>{
-      console.log(components);
-      
       this.addedComponentList = components
     })
+
+    this.dragDrop
+    .getSelectedElementId()
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe((id) =>{
+      this.selectedElementId = id
+    })
+
   }
   ngAfterViewInit(): void {
     this.dragDrop.setForm(this.formRef)
@@ -111,67 +122,13 @@ export class DropComponent implements OnInit, AfterViewInit {
         event.previousIndex,
         event.currentIndex
       );
-      const componentList = this.dragDrop.addedComponentList.getValue()
+      const componentList = this.addedComponentList
       const addedElement = componentList[event.currentIndex]
       componentList[event.currentIndex] = {...addedElement , id: this.dragDrop.id++}
     }
   }
-
-
   setVisibleInputs(component: DragElement){
-    let visibleInputs = {}
-    if(component.class == 'custom-text'){
-      visibleInputs = {
-        placeholder: false,
-        required: false,
-        value: true,
-        borderRadius: false,
-        borderColor: false,
-        label: false
-      }
-    }
-    else if(component.tag == 'button'){
-      visibleInputs = {
-        placeholder: false,
-        required: false,
-        value: true,
-        borderRadius: true,
-        borderColor: true,
-        label: false
-      }
-    }
-    else if(component.tag == "select"){
-      visibleInputs = {
-        placeholder: false,
-        required: true,
-        value: false,
-        borderRadius: true,
-        borderColor: true,
-        label: false
-      }
-    }
-    else if(component.type == 'radio' || component.type == 'checkbox'){
-      visibleInputs = {
-        placeholder: false,
-        required: true,
-        value: false,
-        borderRadius: true,
-        borderColor: true,
-        label: true
-      }
-    }
-    else{
-      visibleInputs = {
-        placeholder: true,
-        required: true,
-        value: false,
-        borderRadius: true,
-        borderColor: true,
-        label: false
-      }
-    }
-    this.dragDrop.formControlVisibleChange.next({...visibleInputs})
-    return visibleInputs
+    return this.dragDrop.setFormControlVisibleChange(component)
   }
   setCurrentStylesToElement(component: DragElement){
     let elementStyle:any = {}
@@ -187,13 +144,14 @@ export class DropComponent implements OnInit, AfterViewInit {
       value: component?.value || '',
       required: component?.required || false,
       containerWidth: component.parentStyle?.width.replace(/[^0-9]/g,''),
+      justifyContent: component.parentStyle.justifyContent,
     }
     this.dragDrop.elementStyle.patchValue(elementStyle);
     this.store.dispatch(elementStyleValueChange(elementStyle))
   }
 
   handleSelect(component: DragElement){
-    if(component.id == this.dragDrop.selectedElementId){
+    if(component.id == this.selectedElementId){
       this.dragDrop.unselectElement()
       return 
     }

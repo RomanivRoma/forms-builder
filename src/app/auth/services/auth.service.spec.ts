@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { User } from 'src/app/interfaces/User.interface';
@@ -7,28 +7,31 @@ import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let service: AuthService;
-
+  let user: User;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientTestingModule],
       providers: [
         { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
         JwtHelperService,
         { provide: ComponentFixtureAutoDetect, useValue: true }
       ]
     });
-    service = TestBed.inject(AuthService);
   });
+
+  beforeEach(() => {
+    service = TestBed.inject(AuthService);
+    user = {
+      email: 'roma@gmail.com',
+      password: '1234'
+    }
+  })
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
   it('#login should check is successful login user', () => {
-    const user: User = {
-      email: 'roma@gmail.com',
-      password: '1234'
-    }
     service.login(user)
     .subscribe(val =>{
       expect(val).toBeTruthy();
@@ -49,7 +52,6 @@ describe('AuthService', () => {
       expect(val?.email).toEqual(loginInfo.user.email)
     })
     service.doLoginUser(loginInfo)
-
   });
 
   it('#doLogoutUser should logout user', () => {
@@ -61,10 +63,7 @@ describe('AuthService', () => {
   });
 
   it('#isAuthenticated should check if is authenticated', () => {
-    const user: User = {
-      email: 'roma@gmail.com',
-      password: '1234'
-    }
+    
     service.login(user)
     .subscribe(val =>{
       expect(service.isAuthenticated()).toBeTruthy()
@@ -75,10 +74,6 @@ describe('AuthService', () => {
   });
 
   it('#getUserByToken should return user by using jwt tocken', () => {
-    const user: User = {
-      email: 'roma@gmail.com',
-      password: '1234'
-    }
     service.login(user)
     .subscribe(val =>{
       expect(service.getUserByToken().email).toBe(user.email)
