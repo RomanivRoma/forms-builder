@@ -58,24 +58,24 @@ export class DropComponent implements OnInit, AfterViewInit {
       this.element = val
       const style = {
         'color': this.element.color,
-        'fontSize': this.element.fontSize + 'px',
-        'width': this.element.width + '%',
-        'height': this.element.height + 'px',
+        'fontSize.px': this.element.fontSize,
+        'width.%': this.element.width,
+        'height.px': this.element.height,
         'fontWeight': this.element.fontWeight,
         'background': this.element.background,
-        'borderRadius': this.element.borderRadius + 'px',
+        'borderRadius.px': this.element.borderRadius,
         'borderColor': this.element.borderColor,
-        'paddingLeft': this.element.paddingLeft + 'px',
-        'paddingTop': this.element.paddingTop + 'px',
-        'paddingRight': this.element.paddingRight + 'px',
-        'paddingBottom': this.element.paddingBottom + 'px',
-        'marginLeft': this.element.marginLeft + 'px',
-        'marginTop': this.element.marginTop + 'px',
-        'marginRight': this.element.marginRight + 'px',
-        'marginBottom': this.element.marginBottom + 'px',
+        'paddingLeft.px': this.element.paddingLeft,
+        'paddingTop.px': this.element.paddingTop,
+        'paddingRight.px': this.element.paddingRight,
+        'paddingBottom.px': this.element.paddingBottom,
+        'marginLeft.px': this.element.marginLeft,
+        'marginTop.px': this.element.marginTop,
+        'marginRight.px': this.element.marginRight,
+        'marginBottom.px': this.element.marginBottom,
       }
       const parentStyle = {
-        'width': this.element.containerWidth + '%',
+        'width.%': this.element.containerWidth,
         'justifyContent': this.element.justifyContent,
       }
       const elementObject = {
@@ -133,9 +133,8 @@ export class DropComponent implements OnInit, AfterViewInit {
   setCurrentStylesToElement(component: DragElement){
     let elementStyle:any = {}
     Object.keys(component?.style || []).forEach(el =>{
-      elementStyle[el] = component.style[el]
-      if(elementStyle[el].includes('px') || elementStyle[el].includes('%'))
-        elementStyle[el] = elementStyle[el].replace(/[^0-9]/g,'')
+      const splittedStyle = el.split('.')
+      elementStyle[splittedStyle.length > 1 ? splittedStyle[0] : el] = component.style[el]
     })
     elementStyle = {
       ...elementStyle,
@@ -143,9 +142,10 @@ export class DropComponent implements OnInit, AfterViewInit {
       placeholder: component?.placeholder || '',
       value: component?.value || '',
       required: component?.required || false,
-      containerWidth: component.parentStyle?.width.replace(/[^0-9]/g,''),
+      containerWidth: component.parentStyle['width.%'],
       justifyContent: component.parentStyle?.justifyContent,
     }
+    
     this.dragDrop.elementStyle.patchValue(elementStyle);
     this.store.dispatch(elementStyleValueChange(elementStyle))
   }

@@ -11,27 +11,27 @@ import { environment } from 'src/environments/environment';
 })
 export class DragComponent implements OnInit {
   defaultStyle: any = {
-    "fontSize": '14',
+    "fontSize.px": '14',
     "color": '#212529',
     "fontWeight": '400',
-    "width": '100',
-    "height": '22',
+    "width.%": '100',
+    "height.px": '22',
     "align": 'left',
-    "containerWidth": '100',
+    "containerWidth.%": '100',
     "background": '#ffffff',
-    "borderRadius": '0',
+    "borderRadius.px": '0',
     "borderColor": '0',
-    "paddingTop": '0',
-    "paddingRight": '0',
-    "paddingBottom": '0',
-    "paddingLeft": '0',
-    "marginTop": '5',
-    "marginRight": '5',
-    "marginBottom": '5',
-    "marginLeft": '5'
+    "paddingTop.px": '0',
+    "paddingRight.px": '0',
+    "paddingBottom.px": '0',
+    "paddingLeft.px": '0',
+    "marginTop.px": '5',
+    "marginRight.px": '5',
+    "marginBottom.px": '5',
+    "marginLeft.px": '5'
   }
   defaultParentStyle: any = {
-    'width': '100',
+    'width.%': '100',
     'justifyContent': 'left'
   }
   componentList: DragElement[] = [

@@ -15,7 +15,7 @@ export class DragDropService {
     width: new FormControl(''),
     height: new FormControl(''),
     required: new FormControl(''),
-    fontColor: new FormControl(''),
+    color: new FormControl(''),
     fontSize: new FormControl(''),
     fontWeight: new FormControl(''),
     borderColor: new FormControl(''),
