@@ -17,7 +17,6 @@ export class DragComponent implements OnInit {
     "width.%": '100',
     "height.px": '22',
     "align": 'left',
-    "containerWidth.%": '100',
     "background": '#ffffff',
     "borderRadius.px": '0',
     "borderColor": '0',
@@ -31,7 +30,7 @@ export class DragComponent implements OnInit {
     "marginLeft.px": '5'
   }
   defaultParentStyle: any = {
-    'width.%': '100',
+    'width': '100',
     'justifyContent': 'left'
   }
   componentList: DragElement[] = [

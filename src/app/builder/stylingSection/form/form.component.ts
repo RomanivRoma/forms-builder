@@ -28,6 +28,7 @@ export class FormComponent implements OnInit {
   }
   
   handleClear(){
+    this.dragDrop.unselectElement()
     this.dragDrop.clearForm()
   }
 }

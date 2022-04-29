@@ -10,11 +10,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
+import { DragElement } from 'src/app/interfaces/DragElement.interface';
+import { environment } from 'src/environments/environment';
+import { DragDropService } from '../../services/drag-drop.service';
 import { FormComponent } from './form.component';
 
 describe('FormComponent', () => {
   let component: FormComponent;
   let fixture: ComponentFixture<FormComponent>;
+  let dragDropSerive: jasmine.SpyObj<DragDropService>;
+  let item: DragElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -40,10 +46,28 @@ describe('FormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;
+    dragDropSerive = jasmine.createSpyObj<DragDropService>(['getAddedComponents', 'getSelectedElementId'])
+    item = {
+      id: 1,
+      title: 'Select',
+      icon: `${environment.images}/check-mark-box-line.svg`,
+      tag: 'select',
+      placeholder: 'Placeholer',
+      type: 'text',
+    };
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('#handleClear should clear form', () => {
+    dragDropSerive.getAddedComponents.and.returnValue(of([]));
+    component.handleClear()
+    dragDropSerive.getAddedComponents()
+    .subscribe(elements =>{
+      expect(elements).toEqual([]);
+    })
   });
 });

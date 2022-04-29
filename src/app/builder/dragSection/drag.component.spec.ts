@@ -14,14 +14,7 @@ describe('DragComponent', () => {
   let dragDropSerive: jasmine.SpyObj<DragDropService>;
 
   beforeEach(async () => {
-    item = {
-      id: 1,
-      title: 'Select',
-      icon: `${environment.images}/check-mark-box-line.svg`,
-      tag: 'select',
-      placeholder: 'Placeholer',
-      type: 'text',
-    };
+
 
     await TestBed.configureTestingModule({
       declarations: [ DragComponent ],
@@ -38,6 +31,14 @@ describe('DragComponent', () => {
     fixture = TestBed.createComponent(DragComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    item = {
+      id: 1,
+      title: 'Select',
+      icon: `${environment.images}/check-mark-box-line.svg`,
+      tag: 'select',
+      placeholder: 'Placeholer',
+      type: 'text',
+    };
     dragDropSerive = jasmine.createSpyObj<DragDropService>(['getAddedComponents', 'getSelectedElementId'])
   });
 

@@ -10,12 +10,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
+import { DragElement } from 'src/app/interfaces/DragElement.interface';
+import { environment } from 'src/environments/environment';
+import { DragDropService } from '../../services/drag-drop.service';
 
 import { ElementComponent } from './element.component';
 
 describe('ElementComponent', () => {
   let component: ElementComponent;
   let fixture: ComponentFixture<ElementComponent>;
+  let dragDropSerive: jasmine.SpyObj<DragDropService>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -41,6 +46,7 @@ describe('ElementComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ElementComponent);
     component = fixture.componentInstance;
+    dragDropSerive = jasmine.createSpyObj<DragDropService>(['getAddedComponents', 'getSelectedElementId'])
     fixture.detectChanges();
   });
 
@@ -49,7 +55,18 @@ describe('ElementComponent', () => {
   });
 
   
-  // it('#handleRemoveComponent create', () => {
-    // expect(component).toBeTruthy();
-  // });
+  it('#handleRemoveComponent should remove element', () => {
+    expect(component.handleRemoveElement()).toBeFalsy();
+    dragDropSerive.getSelectedElementId.and.returnValue(of(null));
+    dragDropSerive.getAddedComponents.and.returnValue(of([]));
+    component.handleRemoveElement()
+    dragDropSerive.getSelectedElementId()
+    .subscribe(id =>{
+      expect(id).toBeFalsy(null)
+    })
+    dragDropSerive.getAddedComponents()
+    .subscribe(elements =>{
+      expect(elements).toEqual([])
+    })
+  });
 });

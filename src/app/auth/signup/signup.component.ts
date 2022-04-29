@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { catchError, mapTo, Observable, of, Subject, takeUntil, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 export class SignupComponent implements OnInit {
   form: FormGroup;
   destroy$: Subject<boolean> = new Subject();
+  error: any;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -31,12 +32,18 @@ export class SignupComponent implements OnInit {
     this.destroy$.complete()
   }
 
-  submit(): void {
+  submit(): void{
     this.http.post<any>(`${environment.apiURL}/signup`, this.form.getRawValue())
     .pipe(
       takeUntil(this.destroy$),
     )
-    .subscribe(res => this.router.navigate(['/login']))
+    .subscribe(
+      result => this.router.navigate(['/login']),
+      error => {
+          this.error = error
+          console.error(error.error);
+      }
+    )
   }
 
 }

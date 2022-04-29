@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   destroy$: Subject<boolean> = new Subject();
+  error: any;
 
   constructor(private formBuilder: FormBuilder,
-              private http: HttpClient,
               private router: Router,
               private authService: AuthService) { }
 
@@ -25,6 +25,15 @@ export class LoginComponent implements OnInit {
     this.form = this.formBuilder.group({
       email: '',
       password: '',
+    })
+    this.authService.loginError
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe(error =>{
+      console.log(error);
+      
+      this.error = error
     })
   }
   ngOnDestroy(){

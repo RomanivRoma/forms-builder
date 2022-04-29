@@ -7,11 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginComponent } from '../auth/login/login.component';
+import { AuthService } from '../auth/services/auth.service';
 
 describe('NavComponent', () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
   let router: Router;
+  let authService: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,9 +23,6 @@ describe('NavComponent', () => {
         HttpClientModule,
         // AuthModule
         JwtModule,
-        RouterTestingModule.withRoutes(
-          [{path: 'login', component: LoginComponent}]
-        )
       ], 
       providers: [
         { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
@@ -38,12 +37,12 @@ describe('NavComponent', () => {
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 
 
 });

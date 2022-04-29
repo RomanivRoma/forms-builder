@@ -75,7 +75,7 @@ export class DropComponent implements OnInit, AfterViewInit {
         'marginBottom.px': this.element.marginBottom,
       }
       const parentStyle = {
-        'width.%': this.element.containerWidth,
+        'width': this.element.containerWidth,
         'justifyContent': this.element.justifyContent,
       }
       const elementObject = {
@@ -136,13 +136,14 @@ export class DropComponent implements OnInit, AfterViewInit {
       const splittedStyle = el.split('.')
       elementStyle[splittedStyle.length > 1 ? splittedStyle[0] : el] = component.style[el]
     })
+    
     elementStyle = {
       ...elementStyle,
       label: component?.label || '',
       placeholder: component?.placeholder || '',
       value: component?.value || '',
       required: component?.required || false,
-      containerWidth: component.parentStyle['width.%'],
+      containerWidth: component.parentStyle?.width,
       justifyContent: component.parentStyle?.justifyContent,
     }
     

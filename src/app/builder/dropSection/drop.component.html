@@ -4,7 +4,7 @@
     <div [ngStyle]="headerStyle" 
          class="drop__header">
         <h1 [ngStyle]="titleStyle">
-            {{form?.title}}
+            {{ form?.title }}
         </h1>
     </div>
     <div class="drop__wrapper">
@@ -17,7 +17,7 @@
                 <app-drop-item (click)="handleSelect(component)"
                                 class="drop__item__container"
                                 [component]="component"
-                                [style.width.%]="component.parentStyle['width.%']"
+                                [style.width.%]="component.parentStyle?.width"
                                 [style.textAlign]="component.class == 'custom-text' ? component.parentStyle?.justifyContent : ''"
                                 style="width: 100%; text-align: left;"
                                 [isSelected]="selectedElementId == component.id ? true : false"></app-drop-item>

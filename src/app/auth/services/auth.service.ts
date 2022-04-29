@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, tap, pipe, mapTo, catchError, of, Subject } from 'rxjs';
+import { Observable, tap, pipe, mapTo, catchError, of, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
 import { User } from '../../interfaces/User.interface';
@@ -12,12 +12,20 @@ import { User } from '../../interfaces/User.interface';
 export class AuthService {
 
   readonly loggedUser: Subject<User | null> = new Subject<User | null>();
-
+  readonly loginError: Subject<string | null> = new Subject<string | null>();
 
   private readonly JWT_TOKEN = 'JWT_TOKEN';
 
   constructor(public jwtHelper: JwtHelperService,
               private http: HttpClient) { 
+    if(!this.isAuthenticated()) return
+    const id = this.getUserByToken().sub
+    this.http.get<any>(`${environment.apiURL}/users/${id}`)
+    .subscribe(val =>{
+      this.loggedUser.next(val)
+    })
+                
+                
   }
   getUserByToken(): any {
     const token: string = this.getToken()
@@ -40,6 +48,7 @@ export class AuthService {
     const token = loginInfo.accessToken
     this.loggedUser.next(user)
     this.storeToken(token)
+    this.loginError.next(null)
   }
   login(user: User): Observable<boolean>{
     return this.http.post<any>(`${environment.apiURL}/login`, user)
@@ -47,6 +56,7 @@ export class AuthService {
       tap(token => this.doLoginUser(token)),
       mapTo(true),
       catchError(error => {
+        this.loginError.next(error)
         console.error(error.error);
         return of(false);
       }));
