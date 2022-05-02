@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DragElement } from '../../interfaces/DragElement.interface';
 import { CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
-import { takeUntil, Subject } from 'rxjs';
+import { takeUntil, Subject, map, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { DragDropService } from '../services/drag-drop.service';
 import { elementStyleValueChange } from '../actions/element.actions';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
@@ -14,78 +15,79 @@ import { elementStyleValueChange } from '../actions/element.actions';
 export class DropComponent implements OnInit, AfterViewInit {
   @ViewChild('dropListContainer') dropListContainer?: ElementRef;
   @ViewChild('mainForm', {static: true}) formRef: ElementRef;
+  formStyle$: Observable<any>;
   destroy$: Subject<boolean> = new Subject();
-  form: any;
-  element: any
-  titleStyle: any;
-  formStyle: any;
-  headerStyle: any;
   addedComponentList: DragElement[];
-  selectedElementId: number | null
+  selectedElementId: number | null;
 
   constructor(public dragDrop: DragDropService,
               private store: Store<AppState>) { }
               
 
   ngOnInit(): void {
-    this.store
+    this.formStyle$ =  this.store
     .select('form')
     .pipe(
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
+      map(val => {
+        const form: any = val
+        return {
+          title: form.title,
+          titleStyle: {
+            'fontSize.px': form.fontSize,
+            'color': form.fontColor,
+            'textAlign': form.align   
+          },
+          formStyle: {
+            'width.px': form.width,
+            'height.px': form.height
+          },
+          headerStyle: {
+            'backgroundColor': form.background
+          }
+        }
+      })
     )
-    .subscribe(val => {
-      this.form = val
-      this.titleStyle = {
-        'fontSize.px': this.form.fontSize,
-        'color': this.form.fontColor,
-        'textAlign': this.form.align   
-      }
-      this.formStyle = {
-        'width.px': this.form.width,
-        'height.px': this.form.height
-      }
-      this.headerStyle = {
-        'backgroundColor': this.form.background
-      }
-    });
 
     this.store
     .select('element')
     .pipe(
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
     )
     .subscribe(val => {
-      this.element = val
+      const element: any = val
       const style = {
-        'color': this.element.color,
-        'fontSize.px': this.element.fontSize,
-        'width.%': this.element.width,
-        'height.px': this.element.height,
-        'fontWeight': this.element.fontWeight,
-        'background': this.element.background,
-        'borderRadius.px': this.element.borderRadius,
-        'borderColor': this.element.borderColor,
-        'paddingLeft.px': this.element.paddingLeft,
-        'paddingTop.px': this.element.paddingTop,
-        'paddingRight.px': this.element.paddingRight,
-        'paddingBottom.px': this.element.paddingBottom,
-        'marginLeft.px': this.element.marginLeft,
-        'marginTop.px': this.element.marginTop,
-        'marginRight.px': this.element.marginRight,
-        'marginBottom.px': this.element.marginBottom,
+        'color': element.color,
+        'fontSize.px': element.fontSize,
+        'width.%': element.width,
+        'height.px': element.height,
+        'fontWeight': element.fontWeight,
+        'background': element.background,
+        'borderRadius.px': element.borderRadius,
+        'borderColor': element.borderColor,
+        'paddingLeft.px': element.paddingLeft,
+        'paddingTop.px': element.paddingTop,
+        'paddingRight.px': element.paddingRight,
+        'paddingBottom.px': element.paddingBottom,
+        'marginLeft.px': element.marginLeft,
+        'marginTop.px': element.marginTop,
+        'marginRight.px': element.marginRight,
+        'marginBottom.px': element.marginBottom,
       }
       const parentStyle = {
-        'width': this.element.containerWidth,
-        'justifyContent': this.element.justifyContent,
+        'width': element.containerWidth,
+        'justifyContent': element.justifyContent,
       }
       const elementObject = {
-        required: this.element.required ,
-        label: this.element.label,
-        placeholder: this.element.placeholder,
-        value: this.element.value,
+        required: element.required ,
+        label: element.label,
+        placeholder: element.placeholder,
+        value: element.value,
         style,
-        parentStyle
+        parentStyle,
+        options: element.options
       }
+      
       this.dragDrop.setSelectedElement(elementObject)
     })
 
@@ -94,9 +96,9 @@ export class DropComponent implements OnInit, AfterViewInit {
     .pipe(
       takeUntil(this.destroy$)
     )
-    .subscribe((components) =>{
-      this.addedComponentList = components
-    })
+    .subscribe(elements =>
+      this.addedComponentList = elements
+    )
 
     this.dragDrop
     .getSelectedElementId()
@@ -145,10 +147,19 @@ export class DropComponent implements OnInit, AfterViewInit {
       required: component?.required || false,
       containerWidth: component.parentStyle?.width,
       justifyContent: component.parentStyle?.justifyContent,
+      options: component?.options
     }
-    
+
+    const options = this.dragDrop.elementStyle.get('options') as FormArray; 
+    options.clear(); 
+    component.options?.forEach(el =>{
+      const optionForm = new FormGroup({
+        option: new FormControl(el),
+      });
+      options.push(optionForm)
+    })
     this.dragDrop.elementStyle.patchValue(elementStyle);
-    this.store.dispatch(elementStyleValueChange(elementStyle))
+    // this.store.dispatch(elementStyleValueChange(elementStyle))
   }
 
   handleSelect(component: DragElement){
@@ -159,6 +170,7 @@ export class DropComponent implements OnInit, AfterViewInit {
     this.dragDrop.selectElement(component)
     this.setCurrentStylesToElement(component)
     this.setVisibleInputs(component)
+    
   }
 
   ngOnDestroy(){

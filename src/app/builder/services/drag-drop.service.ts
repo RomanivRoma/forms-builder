@@ -1,6 +1,6 @@
 import { Injectable, ElementRef, ViewChild } from '@angular/core';
 import { DragElement } from 'src/app/interfaces/DragElement.interface';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Observer, shareReplay, Subject, Subscriber } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
@@ -30,9 +30,10 @@ export class DragDropService {
     paddingLeft: new FormControl(''),
     marginTop: new FormControl(''),
     marginRight: new FormControl(''),
-    marginBottom: new FormControl(''),
+    marginBottom: new FormControl(''),  
     marginLeft: new FormControl(''),
     label: new FormControl(''),
+    options: new FormArray([]),
   });
   id: number = 1;
   elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -44,7 +45,8 @@ export class DragDropService {
     value: true,
     borderRadius: true,
     borderColor: true,
-    label: true
+    label: true,
+    options: false
   });
   private addedComponentList: BehaviorSubject<DragElement[]> = new BehaviorSubject<DragElement[]>([]);
 
@@ -75,7 +77,8 @@ export class DragDropService {
         value: true,
         borderRadius: false,
         borderColor: false,
-        label: false
+        label: false,
+        options: false
       }
     }
     else if(component.tag == 'button'){
@@ -90,12 +93,13 @@ export class DragDropService {
     }
     else if(component.tag == "select"){
       visibleInputs = {
-        placeholder: false,
+        placeholder: true,
         required: true,
         value: false,
         borderRadius: true,
         borderColor: true,
-        label: false
+        label: false,
+        options: true
       }
     }
     else if(component.type == 'radio' || component.type == 'checkbox'){
@@ -105,7 +109,8 @@ export class DragDropService {
         value: false,
         borderRadius: true,
         borderColor: true,
-        label: true
+        label: true,
+        options: false
       }
     }
     else{
@@ -115,7 +120,8 @@ export class DragDropService {
         value: false,
         borderRadius: true,
         borderColor: true,
-        label: false
+        label: false,
+        options: false
       }
     }
     this.formControlVisibleChange.next({...visibleInputs})
@@ -145,6 +151,18 @@ export class DragDropService {
   }
   getAddedComponents(): Observable<DragElement[]>{
     return this.addedComponentList.pipe(shareReplay())
+  }
+  get options(){
+    return this.elementStyle.controls["options"] as FormArray;
+  }
+  addOption(){
+    const optionForm = new FormGroup({
+      option: new FormControl(),
+    });
+    this.options.push(optionForm as FormGroup);
+  }
+  deleteOption(optionIndex: number) {
+    this.options.removeAt(optionIndex);
   }
   download(filename:string) {
     const html = this.formRef.nativeElement

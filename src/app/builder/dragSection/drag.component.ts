@@ -130,7 +130,8 @@ export class DragComponent implements OnInit {
       placeholder: 'Placeholer',
       type: 'text',
       style: this.defaultStyle,
-      parentStyle: this.defaultParentStyle
+      parentStyle: this.defaultParentStyle,
+      options: ['Option']
     },
     {
       title: 'Select',
@@ -139,7 +140,8 @@ export class DragComponent implements OnInit {
       placeholder: 'Placeholer',
       type: 'text',
       style: this.defaultStyle,
-      parentStyle: this.defaultParentStyle
+      parentStyle: this.defaultParentStyle,
+      options: ['Option']
     },
     {
       title: 'File Uploader',

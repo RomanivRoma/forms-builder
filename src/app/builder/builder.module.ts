@@ -21,6 +21,8 @@ import { ElementComponent } from './stylingSection/element/element.component';
 import { FormComponent } from './stylingSection/form/form.component';
 import { DragItemComponent } from './dragSection/drag-item/drag-item.component';
 import { DropItemComponent } from './dropSection/drop-item/drop-item.component';
+import { ReactiveComponentModule } from '@ngrx/component';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +39,7 @@ import { DropItemComponent } from './dropSection/drop-item/drop-item.component';
   imports: [
     CommonModule,
     DragDropModule,
-    
+    ReactiveComponentModule,
     PortalModule,
     FormsModule,
     ReactiveFormsModule,

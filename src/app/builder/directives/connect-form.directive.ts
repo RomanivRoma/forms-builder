@@ -30,6 +30,7 @@ export class ConnectFormDirective {
 
     this.getChanges()
     .subscribe(value => {
+      
       this.store.dispatch(this.dispatches[this.path](value))
     })
   }

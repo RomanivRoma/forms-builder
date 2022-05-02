@@ -21,4 +21,5 @@ export class Element {
     marginRight: number;
     marginBottom: number;
     marginLeft: number;
+    options: string[];
 }

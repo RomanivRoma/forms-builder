@@ -11,4 +11,5 @@ export interface DragElement {
     style?: any,
     parentStyle?: any,
     label?: string,
+    options?: string[]
 }

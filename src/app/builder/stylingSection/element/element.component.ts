@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { BehaviorSubject, share, shareReplay, Subject, takeUntil } from 'rxjs';
-import { AppState } from 'src/app/app.state';
-import { DragElement } from 'src/app/interfaces/DragElement.interface';
-import { elementStyleValueChange } from '../../actions/element.actions';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { DragDropService } from '../../services/drag-drop.service';
 
 @Component({
@@ -14,20 +9,18 @@ import { DragDropService } from '../../services/drag-drop.service';
 })
 export class ElementComponent implements OnInit {
 
-  isFormControlVisible: any;
+  controlVisible$: Observable<any>;
   destroy$: Subject<boolean> = new Subject();
   selectedElementId: number | null;
 
   constructor(public dragDrop: DragDropService) { }
 
   ngOnInit(): void {
-    this.dragDrop.getFormControlVisibleChange()
+    this.controlVisible$ = this.dragDrop.getFormControlVisibleChange()
     .pipe(
       takeUntil(this.destroy$)
     )
-    .subscribe(val =>{
-      this.isFormControlVisible = val
-    })
+    
     this.dragDrop.getSelectedElementId()
     .pipe(
       takeUntil(this.destroy$)
