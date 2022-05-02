@@ -15,10 +15,15 @@
                 name="password">
         <label for="floatingPassword">Password</label>
       </div>
-  
-      <div  *ngIf="error" class="invalid-feedback d-block  mb-3">
-        {{ error.error }}
+      <div class="form-floating">
+        <input formControlName="confirmPassword" type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password" 
+                name="password">
+        <label for="floatingPassword">Confirm Password</label>
       </div>
-      <button class="w-100 btn btn-lg btn-primary mt-1" type="submit">Sign up</button>
+  
+      <div *ngIf="error$ | ngrxPush as err" class="invalid-feedback d-block mb-3">
+        {{ err.error }}
+      </div>
+      <button class="w-100 btn btn-lg btn-primary mt-1" id="signup" type="submit">Sign up</button>
     </form>
 </main>

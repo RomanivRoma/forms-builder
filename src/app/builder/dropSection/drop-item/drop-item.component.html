@@ -53,7 +53,7 @@
                 [required]="component.required || false"
                 class="drop__item">
 
-                <option value="" disabled selected >{{ component.placeholder }}</option>
+                <option value="" disabled selected hidden>{{ component.placeholder }}</option>
                 <option *ngFor="let option of component?.options" [value]="option">{{ option }}</option>
         </select>
     </ng-template>

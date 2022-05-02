@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, mapTo, Observable, of, Subject, takeUntil, tap } from 'rxjs';
+import { catchError, map, mapTo, Observable, of, Subject, takeUntil, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class SignupComponent implements OnInit {
   form: FormGroup;
   destroy$: Subject<boolean> = new Subject();
-  error: any;
+  error$: Observable<any>;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -33,16 +33,24 @@ export class SignupComponent implements OnInit {
   }
 
   submit(): void{
-    this.http.post<any>(`${environment.apiURL}/signup`, this.form.getRawValue())
+    const { confirmPassword, email, login, password } = this.form.getRawValue()
+    const params = {
+      email,
+      login,
+      password
+    }
+    if(confirmPassword !== password){
+      this.error$ = of({error: "Passwords aren't equal"})
+      return
+    }
+    this.error$ = this.http.post<any>(`${environment.apiURL}/signup`, params)
     .pipe(
+      tap(res =>{
+        this.router.navigate(['/login'])
+        return res
+      }),
       takeUntil(this.destroy$),
-    )
-    .subscribe(
-      result => this.router.navigate(['/login']),
-      error => {
-          this.error = error
-          console.error(error.error);
-      }
+      catchError(error => of(error))
     )
   }
 

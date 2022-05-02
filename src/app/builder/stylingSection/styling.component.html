@@ -3,6 +3,7 @@
                              #group="matButtonToggleGroup"
                              (change)="onValChange(group.value)"
                              [(value)]="value"
+                             class="formElementGroup"
                              >
         <mat-button-toggle value="form">Form</mat-button-toggle>
         <mat-button-toggle [disabled]="dragDrop.elementDisablingChange | async" value="element">Element</mat-button-toggle>

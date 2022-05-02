@@ -24,8 +24,6 @@ export class AuthService {
     .subscribe(val =>{
       this.loggedUser.next(val)
     })
-                
-                
   }
   getUserByToken(): any {
     const token: string = this.getToken()

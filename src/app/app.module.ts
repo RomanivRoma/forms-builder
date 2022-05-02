@@ -13,6 +13,7 @@ import { PortalModule } from '@angular/cdk/portal';
 import { StoreModule } from '@ngrx/store';
 import { formReducer } from './builder/reducers/form.reducer';
 import { elementReducer } from './builder/reducers/element.reducers';
+import { ReactiveComponentModule } from '@ngrx/component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { elementReducer } from './builder/reducers/element.reducers';
     BrowserAnimationsModule,
     BuilderModule,
     // ResizableModule,
+    ReactiveComponentModule,
     PortalModule,
     StoreModule.forRoot({
       form: formReducer,

@@ -1,10 +1,11 @@
-<div #mainForm
-     [ngStyle]="(formStyle$ | ngrxPush).formStyle" 
+<div *ngLet="formStyle$ | ngrxPush as style"
+     #mainForm
+     [ngStyle]="style.formStyle" 
      class="drop__container">
-    <div [ngStyle]="(formStyle$ | ngrxPush).headerStyle" 
+    <div [ngStyle]="style.headerStyle" 
          class="drop__header">
-        <h1 [ngStyle]="(formStyle$ | ngrxPush).titleStyle">
-            {{ (formStyle$ | ngrxPush).title }}
+        <h1 [ngStyle]="style.titleStyle">
+            {{ style.title }}
         </h1>
     </div>
     <div class="drop__wrapper">
@@ -13,7 +14,7 @@
              [cdkDropListData]="addedComponentList"
              (cdkDropListDropped)="drop($event)"
              class="drop__body">
-            <ng-container *ngFor="let component of addedComponentList; index as index ">
+            <ng-container *ngFor="let component of addedComponentList; trackBy:identify">
                 <app-drop-item (click)="handleSelect(component)"
                                 class="drop__item__container"
                                 [component]="component"

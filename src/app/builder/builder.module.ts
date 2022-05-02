@@ -22,6 +22,7 @@ import { FormComponent } from './stylingSection/form/form.component';
 import { DragItemComponent } from './dragSection/drag-item/drag-item.component';
 import { DropItemComponent } from './dropSection/drop-item/drop-item.component';
 import { ReactiveComponentModule } from '@ngrx/component';
+import { LetContextDirective } from './directives/let-context.directive';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ReactiveComponentModule } from '@ngrx/component';
     ElementComponent,
     FormComponent,
     DragItemComponent,
-    DropItemComponent
+    DropItemComponent,
+    LetContextDirective,
   ],
   imports: [
     CommonModule,

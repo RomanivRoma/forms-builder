@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from '../../interfaces/User.interface';
 
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   destroy$: Subject<boolean> = new Subject();
-  error: any;
+  error$: Observable<any>;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -26,15 +26,10 @@ export class LoginComponent implements OnInit {
       email: '',
       password: '',
     })
-    this.authService.loginError
+    this.error$ = this.authService.loginError
     .pipe(
       takeUntil(this.destroy$)
     )
-    .subscribe(error =>{
-      console.log(error);
-      
-      this.error = error
-    })
   }
   ngOnDestroy(){
     this.destroy$.next(true)

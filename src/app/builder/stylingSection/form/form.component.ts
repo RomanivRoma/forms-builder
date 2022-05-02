@@ -26,7 +26,6 @@ export class FormComponent implements OnInit {
   handleDownload(){
     this.dragDrop.download('form.html')
   }
-  
   handleClear(){
     this.dragDrop.unselectElement()
     this.dragDrop.clearForm()

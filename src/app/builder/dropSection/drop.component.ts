@@ -113,6 +113,11 @@ export class DropComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dragDrop.setForm(this.formRef)
   }
+  ngOnDestroy(){
+    this.destroy$.next(true)
+    this.destroy$.complete()
+  }
+  
   drop(event: CdkDragDrop<DragElement[]>) {    
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -172,9 +177,8 @@ export class DropComponent implements OnInit, AfterViewInit {
     this.setVisibleInputs(component)
     
   }
+  identify(index: number, item: DragElement){
+    return item.id; 
+ }
 
-  ngOnDestroy(){
-    this.destroy$.next(true)
-    this.destroy$.complete()
-  }
 }

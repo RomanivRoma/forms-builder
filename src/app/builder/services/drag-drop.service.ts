@@ -197,14 +197,9 @@ export class DragDropService {
         border-bottom-right-radius: 5px;
     }
     .drop__container .drop__body{
-        min-height: 30px;
-        background: #fff;
-        overflow: auto;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        padding: 15px;
-        height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 15px;
     }
     .drop__container .drop__footer{
         background: rgb(202, 202, 202);
