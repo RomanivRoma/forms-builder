@@ -1,16 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { DragElement } from '../../interfaces/DragElement.interface';
 import { CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
 import { takeUntil, Subject, map, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { DragDropService } from '../services/drag-drop.service';
-import { elementStyleValueChange } from '../actions/element.actions';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
   styleUrls: ['./drop.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropComponent implements OnInit, AfterViewInit {
   @ViewChild('dropListContainer') dropListContainer?: ElementRef;
@@ -21,7 +21,8 @@ export class DropComponent implements OnInit, AfterViewInit {
   selectedElementId: number | null;
 
   constructor(public dragDrop: DragDropService,
-              private store: Store<AppState>) { }
+              private store: Store<AppState>,
+              private cdr: ChangeDetectorRef) { }
               
 
   ngOnInit(): void {
@@ -89,6 +90,7 @@ export class DropComponent implements OnInit, AfterViewInit {
       }
       
       this.dragDrop.setSelectedElement(elementObject)
+      this.cdr.detectChanges();
     })
 
     this.dragDrop
@@ -96,9 +98,10 @@ export class DropComponent implements OnInit, AfterViewInit {
     .pipe(
       takeUntil(this.destroy$)
     )
-    .subscribe(elements =>
+    .subscribe(elements =>{
       this.addedComponentList = elements
-    )
+      this.cdr.detectChanges();
+    })
 
     this.dragDrop
     .getSelectedElementId()
