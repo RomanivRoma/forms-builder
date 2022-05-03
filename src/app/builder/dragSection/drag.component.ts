@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { DragElement } from '../../interfaces/DragElement.interface';
 import { DragDropService } from '../services/drag-drop.service';
 import { environment } from 'src/environments/environment';
@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-drag',
   templateUrl: './drag.component.html',
-  styleUrls: ['./drag.component.css']
+  styleUrls: ['./drag.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DragComponent implements OnInit {
   defaultStyle: any = {
