@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
-import { DragElement } from 'src/app/interfaces/DragElement.interface';
+import { DragElement } from 'src/app/interfaces/drag-element.interface';
 import { environment } from 'src/environments/environment';
 import { DragDropService } from './drag-drop.service';
 

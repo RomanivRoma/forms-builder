@@ -1,16 +1,20 @@
 import { Injectable, ElementRef, ViewChild } from '@angular/core';
-import { DragElement } from 'src/app/interfaces/DragElement.interface';
+import { DragElement } from 'src/app/interfaces/drag-element.interface';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, Observer, shareReplay, Subject, Subscriber } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  shareReplay,
+} from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DragDropService {
-  @ViewChild(DropComponent, {static: true}) private formRef: ElementRef;
-  elementStyle: FormGroup = new FormGroup({
+  @ViewChild(DropComponent, { static: true }) private formRef: ElementRef;
+  public elementStyle: FormGroup = new FormGroup({
     placeholder: new FormControl(''),
     width: new FormControl(''),
     height: new FormControl(''),
@@ -30,47 +34,55 @@ export class DragDropService {
     paddingLeft: new FormControl(''),
     marginTop: new FormControl(''),
     marginRight: new FormControl(''),
-    marginBottom: new FormControl(''),  
+    marginBottom: new FormControl(''),
     marginLeft: new FormControl(''),
     label: new FormControl(''),
     options: new FormArray([]),
   });
-  id: number = 1;
-  elementDisablingChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  private selectedElementId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
+  public id: number = 1;
+  public elementDisablingChange: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
+  private selectedElementId: BehaviorSubject<number | null> =
+    new BehaviorSubject<number | null>(null);
 
-  private formControlVisibleChange: BehaviorSubject<any> = new BehaviorSubject<any>({
-    placeholder: true,
-    required: true,
-    value: true,
-    borderRadius: true,
-    borderColor: true,
-    label: true,
-    options: false
-  });
-  private addedComponentList: BehaviorSubject<DragElement[]> = new BehaviorSubject<DragElement[]>([]);
+  private formControlVisibleChange: BehaviorSubject<any> =
+    new BehaviorSubject<any>({
+      placeholder: true,
+      required: true,
+      value: true,
+      borderRadius: true,
+      borderColor: true,
+      label: true,
+      options: false,
+    });
+  private addedComponentList: BehaviorSubject<DragElement[]> =
+    new BehaviorSubject<DragElement[]>([]);
 
-  constructor() { }
+  constructor() {}
 
-  selectElement(component: DragElement): DragElement{
-    this.selectedElementId.next(component.id || null)
-    this.elementDisablingChange.next(false)
-    return component
+  selectElement(component: DragElement): DragElement {
+    this.selectedElementId.next(component.id || null);
+    this.elementDisablingChange.next(false);
+    return component;
   }
-  unselectElement(): void{
-    this.selectedElementId.next(null)
-    this.elementDisablingChange.next(true)
+  unselectElement(): void {
+    this.selectedElementId.next(null);
+    this.elementDisablingChange.next(true);
   }
   setSelectedElement(element: any) {
-    const componentList: DragElement[] = this.addedComponentList.getValue()
-    let selectedElement: any = componentList.find(el => el.id == this.selectedElementId.getValue())
-    selectedElement = {...selectedElement, ...element}
-    const newComponentList: DragElement[] = componentList.map(component => component.id == selectedElement?.id ? selectedElement : component);
-    this.addedComponentList.next(newComponentList)
+    const componentList: DragElement[] = this.addedComponentList.getValue();
+    let selectedElement: any = componentList.find(
+      (el) => el.id == this.selectedElementId.getValue()
+    );
+    selectedElement = { ...selectedElement, ...element };
+    const newComponentList: DragElement[] = componentList.map((component) =>
+      component.id == selectedElement?.id ? selectedElement : component
+    );
+    this.addedComponentList.next(newComponentList);
   }
   setFormControlVisibleChange(component: DragElement) {
-    let visibleInputs = {}
-    if(component.class == 'custom-text'){
+    let visibleInputs = {};
+    if (component.class == 'custom-text') {
       visibleInputs = {
         placeholder: false,
         required: false,
@@ -78,20 +90,18 @@ export class DragDropService {
         borderRadius: false,
         borderColor: false,
         label: false,
-        options: false
-      }
-    }
-    else if(component.tag == 'button'){
+        options: false,
+      };
+    } else if (component.tag == 'button') {
       visibleInputs = {
         placeholder: false,
         required: false,
         value: true,
         borderRadius: true,
         borderColor: true,
-        label: false
-      }
-    }
-    else if(component.tag == "select"){
+        label: false,
+      };
+    } else if (component.tag == 'select') {
       visibleInputs = {
         placeholder: true,
         required: true,
@@ -99,10 +109,9 @@ export class DragDropService {
         borderRadius: true,
         borderColor: true,
         label: false,
-        options: true
-      }
-    }
-    else if(component.type == 'radio' || component.type == 'checkbox'){
+        options: true,
+      };
+    } else if (component.type == 'radio' || component.type == 'checkbox') {
       visibleInputs = {
         placeholder: false,
         required: true,
@@ -110,10 +119,9 @@ export class DragDropService {
         borderRadius: true,
         borderColor: true,
         label: true,
-        options: false
-      }
-    }
-    else{
+        options: false,
+      };
+    } else {
       visibleInputs = {
         placeholder: true,
         required: true,
@@ -121,41 +129,41 @@ export class DragDropService {
         borderRadius: true,
         borderColor: true,
         label: false,
-        options: false
-      }
+        options: false,
+      };
     }
-    this.formControlVisibleChange.next({...visibleInputs})
-    return visibleInputs
+    this.formControlVisibleChange.next({ ...visibleInputs });
+    return visibleInputs;
   }
-  getSelectedElementId(){
-    return this.selectedElementId.pipe(shareReplay())
+  getSelectedElementId() {
+    return this.selectedElementId.pipe(shareReplay());
   }
-  getFormControlVisibleChange(){
-    return this.formControlVisibleChange.pipe(shareReplay())
+  getFormControlVisibleChange() {
+    return this.formControlVisibleChange.pipe(shareReplay());
   }
-  addElement(item: DragElement): DragElement{
-    const addedElement = {id: this.id++, ...item}
-    const componentList = this.addedComponentList.getValue()
-    this.addedComponentList.next([...componentList, addedElement])
-    return addedElement
+  addElement(item: DragElement): DragElement {
+    const addedElement = { id: this.id++, ...item };
+    const componentList = this.addedComponentList.getValue();
+    this.addedComponentList.next([...componentList, addedElement]);
+    return addedElement;
   }
-  removeElement(id: number){
-    const componentList = this.addedComponentList.getValue()
-    this.addedComponentList.next(componentList.filter(el => el.id != id))
+  removeElement(id: number) {
+    const componentList = this.addedComponentList.getValue();
+    this.addedComponentList.next(componentList.filter((el) => el.id != id));
   }
-  clearForm(): void{
-    this.addedComponentList.next([])
+  clearForm(): void {
+    this.addedComponentList.next([]);
   }
-  setForm(form: ElementRef){
-    this.formRef = form
+  setForm(form: ElementRef) {
+    this.formRef = form;
   }
-  getAddedComponents(): Observable<DragElement[]>{
-    return this.addedComponentList.pipe(shareReplay())
+  getAddedComponents(): Observable<DragElement[]> {
+    return this.addedComponentList.pipe(shareReplay());
   }
-  get options(){
-    return this.elementStyle.controls["options"] as FormArray;
+  get options() {
+    return this.elementStyle.controls['options'] as FormArray;
   }
-  addOption(){
+  addOption() {
     const optionForm = new FormGroup({
       option: new FormControl(),
     });
@@ -164,8 +172,8 @@ export class DragDropService {
   deleteOption(optionIndex: number) {
     this.options.removeAt(optionIndex);
   }
-  download(filename:string) {
-    const html = this.formRef.nativeElement
+  download(filename: string) {
+    const html = this.formRef.nativeElement;
     const style = `<style>
     .drop__container{
       border-radius: 5px;
@@ -231,7 +239,11 @@ export class DragDropService {
       background-color: #555;
     }
     
-                  </style>`
-    saveAs('data:text/html;charset=utf-8, ' + encodeURIComponent(style + html.outerHTML), filename)
+                  </style>`;
+    saveAs(
+      'data:text/html;charset=utf-8, ' +
+        encodeURIComponent(style + html.outerHTML),
+      filename
+    );
   }
 }

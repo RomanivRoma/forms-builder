@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragComponent } from './dragSection/drag.component';
 import { DropComponent } from './dropSection/drop.component';
@@ -30,13 +30,13 @@ import { LetContextDirective } from './directives/let-context.directive';
     DragComponent,
     DropComponent,
     StylingComponent,
-    HomeComponent,
     ConnectFormDirective,
     ElementComponent,
     FormComponent,
     DragItemComponent,
     DropItemComponent,
     LetContextDirective,
+    HomeComponent
   ],
   imports: [
     CommonModule,
@@ -53,6 +53,12 @@ import { LetContextDirective } from './directives/let-context.directive';
     BrowserAnimationsModule,
     MatButtonToggleModule,
     MatIconModule,
+  ],
+
+  exports: [
+    DragComponent,
+    DropComponent,
+    StylingComponent,
   ],
 })
 export class BuilderModule { }

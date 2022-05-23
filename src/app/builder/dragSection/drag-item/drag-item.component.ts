@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from '@angular/core';
-import { DragElement } from 'src/app/interfaces/DragElement.interface';
+import { DragElement } from 'src/app/interfaces/drag-element.interface';
 import { EventEmitter } from '@angular/core';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 

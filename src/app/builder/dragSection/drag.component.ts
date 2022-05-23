@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { DragElement } from '../../interfaces/DragElement.interface';
+import { DragElement } from '../../interfaces/drag-element.interface';
 import { DragDropService } from '../services/drag-drop.service';
 import { environment } from 'src/environments/environment';
 

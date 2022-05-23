@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { DragDropService } from '../../services/drag-drop.service';
 
 @Component({
@@ -17,17 +17,11 @@ export class ElementComponent implements OnInit {
 
   ngOnInit(): void {
     this.controlVisible$ = this.dragDrop.getFormControlVisibleChange()
-    .pipe(
-      takeUntil(this.destroy$)
-    )
-    
     this.dragDrop.getSelectedElementId()
     .pipe(
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
     )
-    .subscribe(id =>{
-      this.selectedElementId = id
-    })
+    .subscribe(id => this.selectedElementId = id)
   }
 
   ngOnDestroy(){

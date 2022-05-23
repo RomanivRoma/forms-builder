@@ -11,7 +11,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
-import { DragElement } from 'src/app/interfaces/DragElement.interface';
+import { DragElement } from 'src/app/interfaces/drag-element.interface';
 import { environment } from 'src/environments/environment';
 import { DragDropService } from '../../services/drag-drop.service';
 

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { DragElement } from '../../interfaces/DragElement.interface';
+import { DragElement } from '../../interfaces/drag-element.interface';
 import { CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
 import { takeUntil, Subject, map, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';

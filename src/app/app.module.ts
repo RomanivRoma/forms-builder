@@ -20,7 +20,6 @@ import { ReactiveComponentModule } from '@ngrx/component';
   declarations: [
     AppComponent,
     NavComponent,
-    // SafeStylePipe,
   ],
   imports: [
     BrowserModule,

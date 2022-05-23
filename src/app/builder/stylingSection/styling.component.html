@@ -2,11 +2,11 @@
     <mat-button-toggle-group 
                              #group="matButtonToggleGroup"
                              (change)="onValChange(group.value)"
-                             [(value)]="value"
+                             [value]="value | ngrxPush"       
                              class="formElementGroup"
                              >
-        <mat-button-toggle value="form">Form</mat-button-toggle>
-        <mat-button-toggle [disabled]="dragDrop.elementDisablingChange | async" value="element">Element</mat-button-toggle>
+        <mat-button-toggle [value]="StyleEnum.form">Form</mat-button-toggle>
+        <mat-button-toggle [disabled]="dragDrop.elementDisablingChange | ngrxPush" [value]="StyleEnum.element">Element</mat-button-toggle>
     </mat-button-toggle-group>
 </div>
 <div class="editor__container">
@@ -14,5 +14,4 @@
 </div>
 
 <ng-template #elementPortal>
-
 </ng-template>

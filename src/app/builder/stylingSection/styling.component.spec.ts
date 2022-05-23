@@ -45,9 +45,9 @@ describe('StylingComponent', () => {
   it('#setPortal should set active portal', async () => {
     const formPortal = new ComponentPortal(FormComponent) 
     const elementPortal = new ComponentPortal(ElementComponent) 
-    component.setPortal('form')
+    // component.setPortal('form')
     expect(component.selectedPortal).toEqual(formPortal)
-    component.setPortal('element')
+    // component.setPortal('element')
     expect(component.selectedPortal).toEqual(elementPortal)
   });
 });
