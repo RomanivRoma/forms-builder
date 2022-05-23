@@ -9,7 +9,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
-  styleUrls: ['./drop.component.css'],
+  styleUrls: ['./drop.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropComponent implements OnInit, AfterViewInit {

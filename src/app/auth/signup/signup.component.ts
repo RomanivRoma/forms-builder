@@ -8,12 +8,12 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  form: FormGroup;
-  destroy$: Subject<boolean> = new Subject();
-  error$: Observable<any>;
+  public form: FormGroup;
+  private destroy$: Subject<boolean> = new Subject();
+  public error$: Observable<any>;
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
     this.destroy$.complete()
   }
 
-  submit(): void{
+  public submit(): void{
     const { confirmPassword, email, login, password } = this.form.getRawValue()
     const params = {
       email,

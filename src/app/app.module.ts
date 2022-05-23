@@ -35,7 +35,7 @@ import { ReactiveComponentModule } from '@ngrx/component';
     StoreModule.forRoot({
       form: formReducer,
       element: elementReducer,
-    })
+    }),
   ],
   providers: [
 

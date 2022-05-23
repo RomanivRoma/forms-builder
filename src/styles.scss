@@ -55,16 +55,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   /* border: 1px solid lightgray; */
   /* max-height: 100px; */
 }
-.cdk-drag-preview img{
-  /* display: none; */
-}
+
 .drop__container .cdk-drag-placeholder{
   opacity: 0;
 }
-.cdk-drag-placeholder {
-  /* opacity: 0; */
-  /* height: 30px;   */
-}
+
 
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);

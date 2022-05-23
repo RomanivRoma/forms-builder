@@ -4,7 +4,7 @@ import { DragElement } from 'src/app/interfaces/DragElement.interface';
 @Component({
   selector: 'app-drop-item',
   templateUrl: './drop-item.component.html',
-  styleUrls: ['./drop-item.component.css'],
+  styleUrls: ['./drop-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropItemComponent implements OnInit {

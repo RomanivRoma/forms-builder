@@ -10,7 +10,7 @@ import { FormComponent } from './form/form.component';
 @Component({
   selector: 'app-styling',
   templateUrl: './styling.component.html',
-  styleUrls: ['./styling.component.css'],
+  styleUrls: ['./styling.component.scss'],
 })
 export class StylingComponent implements OnInit {
   value: string;

@@ -6,7 +6,7 @@ import { CdkDragStart } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-drag-item',
   templateUrl: './drag-item.component.html',
-  styleUrls: ['./drag-item.component.css'],
+  styleUrls: ['./drag-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DragItemComponent implements OnInit {
