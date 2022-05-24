@@ -5,20 +5,26 @@
     display: flex;
     gap: 10px;
     align-items: center;
+
+    img {
+      height: 25px;
+    }
+
+    &:first-child {
+      img {
+        display: none;
+      }
+    }
   }
 
   .add__button {
     display: flex;
     justify-content: center;
-  }
 
-  .add__button img {
-    height: 35px;
-    cursor: pointer;
-    margin: 0 auto;
-  }
-
-  .input-group img {
-    height: 25px;
+    img {
+      height: 35px;
+      cursor: pointer;
+      margin: 0 auto;
+    }
   }
 }

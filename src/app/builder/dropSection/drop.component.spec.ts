@@ -2,6 +2,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 import { BehaviorSubject, of } from 'rxjs';
+import { ComponentTag } from 'src/app/enums/component-tag.model';
+import { InputType } from 'src/app/enums/input-type.model';
 import { DragElement } from 'src/app/interfaces/drag-element.interface';
 import { environment } from 'src/environments/environment';
 import { DragDropService } from '../services/drag-drop.service';
@@ -18,9 +20,9 @@ describe('DropComponent', () => {
       id: 1,
       title: 'Select',
       icon: `${environment.images}/check-mark-box-line.svg`,
-      tag: 'select',
+      tag: ComponentTag.select,
       placeholder: 'Placeholer',
-      type: 'text',
+      type: InputType.text,
     };
 
     await TestBed.configureTestingModule({

@@ -8,6 +8,8 @@ import {
 } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { DropComponent } from '../dropSection/drop.component';
+import { ComponentTag } from 'src/app/enums/component-tag.model';
+import { InputType } from 'src/app/enums/input-type.model';
 
 @Injectable({
   providedIn: 'root',
@@ -82,7 +84,7 @@ export class DragDropService {
   }
   setFormControlVisibleChange(component: DragElement) {
     let visibleInputs = {};
-    if (component.class == 'custom-text') {
+    if (component.tag == ComponentTag.p) {
       visibleInputs = {
         placeholder: false,
         required: false,
@@ -92,7 +94,7 @@ export class DragDropService {
         label: false,
         options: false,
       };
-    } else if (component.tag == 'button') {
+    } else if (component.tag == ComponentTag.button) {
       visibleInputs = {
         placeholder: false,
         required: false,
@@ -101,7 +103,7 @@ export class DragDropService {
         borderColor: true,
         label: false,
       };
-    } else if (component.tag == 'select') {
+    } else if (component.tag == ComponentTag.select) {
       visibleInputs = {
         placeholder: true,
         required: true,
@@ -111,7 +113,7 @@ export class DragDropService {
         label: false,
         options: true,
       };
-    } else if (component.type == 'radio' || component.type == 'checkbox') {
+    } else if (component.type == InputType.radio || component.type == InputType.checkbox) {
       visibleInputs = {
         placeholder: false,
         required: true,

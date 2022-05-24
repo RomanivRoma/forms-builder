@@ -11,6 +11,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
+import { ComponentTag } from 'src/app/enums/component-tag.model';
+import { InputType } from 'src/app/enums/input-type.model';
 import { DragElement } from 'src/app/interfaces/drag-element.interface';
 import { environment } from 'src/environments/environment';
 import { DragDropService } from '../../services/drag-drop.service';
@@ -51,9 +53,9 @@ describe('FormComponent', () => {
       id: 1,
       title: 'Select',
       icon: `${environment.images}/check-mark-box-line.svg`,
-      tag: 'select',
+      tag: ComponentTag.select,
       placeholder: 'Placeholer',
-      type: 'text',
+      type: InputType.text,
     };
     fixture.detectChanges();
   });

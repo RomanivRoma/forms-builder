@@ -1,9 +1,9 @@
 <ng-container [ngTemplateOutlet]="
-                component?.tag == 'p' ? textBlock :
-                component?.tag == 'input' ? inputBlock :
-                component?.tag == 'textarea' ? textareaBlock :
-                component?.tag == 'select' ? selectBlock :
-                component?.tag == 'button' ? buttonBlock :
+                component?.tag == eComponentTag.p ? textBlock :
+                component?.tag == eComponentTag.input ? inputBlock :
+                component?.tag == eComponentTag.textarea ? textareaBlock :
+                component?.tag == eComponentTag.select ? selectBlock :
+                component?.tag == eComponentTag.button ? buttonBlock :
                 null">
 </ng-container>
 
@@ -13,18 +13,19 @@
     </p>
 </ng-template>
 <ng-template #inputBlock>
-    <label [ngStyle]="component?.style">
-        <span>{{ component.label }}</span>
-        <input [ngStyle]="component?.style" class="drop__item" type={{component?.type}} [required]="component.required"
-            placeholder={{component.placeholder}} />
-    </label>
-</ng-template>
-<ng-template #labelBlock>
-    <label [ngStyle]="component?.style">
+    <label *ngIf="component.type == eInputType.radio || component.type == eInputType.checkbox; else inputTextBlock" [ngStyle]="component?.style">
         <span>{{ component.label }}</span>
         <input class="drop__item" type={{component?.type}} [required]="component.required"
             placeholder={{component.placeholder}} />
     </label>
+    <ng-template #inputTextBlock>
+        <input class="drop__item" #myInput [ngStyle]="component?.style" type={{component?.type}}
+                [required]="component.required" placeholder={{component?.placeholder}} />
+    </ng-template>
+ 
+</ng-template>
+<ng-template #labelBlock>
+
 </ng-template>
 <ng-template #textareaBlock>
     <textarea class="drop__item" [ngStyle]="component?.style" [required]="component.required"

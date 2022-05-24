@@ -5,7 +5,8 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { ComponentType } from 'src/app/enums/component-type.model';
+import { ComponentTag } from 'src/app/enums/component-tag.model';
+import { InputType } from 'src/app/enums/input-type.model';
 import { DragElement } from 'src/app/interfaces/drag-element.interface';
 
 @Component({
@@ -17,8 +18,9 @@ import { DragElement } from 'src/app/interfaces/drag-element.interface';
 export class DropItemComponent implements OnInit {
   @Input() component: DragElement;
   @Input() isSelected: boolean;
-  public eComponentType = ComponentType;
-
+  public eComponentTag = ComponentTag;
+  public eInputType = InputType;
+  
   @HostBinding('style.justify-content')
   get justyfyContent() {
     return this.component?.class == 'custom-text'

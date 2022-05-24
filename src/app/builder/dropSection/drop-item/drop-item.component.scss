@@ -25,8 +25,12 @@
     margin: 5px;
     border-radius: 0px;
     pointer-events: none;
+    background: unset !important;
   }
-
+  input[type="checkbox"],
+  input[type="radio"]{
+      width: auto;
+  }
   &.custom-text {
     &.selected p {
       border-bottom: 2px solid lightslategray;

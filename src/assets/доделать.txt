@@ -6,8 +6,6 @@ Disable draggin on add button
 Привет, примени фидбек во всех однотипных местах:
 
 
-4. Используй переменные в scss
-background: $white;
 5. Упростить
 map(val => {
         const form: any = val

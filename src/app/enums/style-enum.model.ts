@@ -1,4 +1,4 @@
 export enum ComponentStyle {
-    form = "FORM",
-    element = "ELEMENT"
+  form = 'FORM',
+  element = 'ELEMENT',
 }
