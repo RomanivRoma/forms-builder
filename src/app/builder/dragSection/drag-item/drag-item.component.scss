@@ -1,43 +1,50 @@
-.dragElements__item{
-    background: #fff;
-    border: 2px solid gray;
-    border-radius: 10px;
-    user-select: none;
-    padding: 6px;
-    display: flex;
-    align-items: center;
+$color-white: #ffffff;
 
-    p{
-        font-size: 20px;
-        font-weight: 600;
-    }
-    img{
-        width: 38px;
-        height: 38px;
-        pointer-events: none;
-    }
-    .dragElements__item__addIcon{
-        width: 30px;
-        height: 30px;
-    }
+:host {
+  background: $color-white;
+  border: 2px solid gray;
+  border-radius: 10px;
+  user-select: none;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    .cdk-drop-dragging .cdk-drag {
-        transition: transform .3s cubic-bezier(0, 0, 0.2, 1);
-    }
-    
-    .cdk-drag-animating {
-        transition: transform .3s cubic-bezier(0, 0, 0.2, 1);
-    }
-    
-    .cdk-drag-placeholder {
-        background: rgba(0, 0, 0, .2);
-    }
-    .dragElements__item__preview select{
-        width: 200px;
-    }
-    .add__button{
-        background: none;
-        border: none;
-        margin-right: 8px;
-    }
+  p {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  img {
+    width: 38px;
+    height: 38px;
+    pointer-events: none;
+  }
+
+  .dragElements__item__addIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .cdk-drop-dragging .cdk-drag {
+    transition: transform .3s cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .cdk-drag-animating {
+    transition: transform .3s cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .cdk-drag-placeholder {
+    background: rgba(0, 0, 0, .2);
+  }
+
+  .dragElements__item__preview select {
+    width: 200px;
+  }
+
+  .add__button {
+    background: none;
+    border: none;
+    margin-right: 8px;
+  }
 }

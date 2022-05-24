@@ -5,36 +5,35 @@ import { DragDropService } from '../../services/drag-drop.service';
 @Component({
   selector: 'app-element',
   templateUrl: './element.component.html',
-  styleUrls: ['./element.component.scss']
+  styleUrls: ['./element.component.scss'],
 })
 export class ElementComponent implements OnInit {
-
   controlVisible$: Observable<any>;
   destroy$: Subject<boolean> = new Subject();
   selectedElementId: number | null;
 
-  constructor(public dragDrop: DragDropService) { }
+  constructor(public dragDrop: DragDropService) {}
 
   ngOnInit(): void {
-    this.controlVisible$ = this.dragDrop.getFormControlVisibleChange()
-    this.dragDrop.getSelectedElementId()
-    .pipe(
-      takeUntil(this.destroy$),
-    )
-    .subscribe(id => this.selectedElementId = id)
+    this.controlVisible$ = this.dragDrop.getFormControlVisibleChange();
+
+    this.dragDrop
+      .getSelectedElementId()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((id) => (this.selectedElementId = id));
   }
 
-  ngOnDestroy(){
-    this.destroy$.next(true)
-    this.destroy$.complete()
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
-  handleRemoveElement(){
-    const id = this.selectedElementId
-    if(!id) return
-    this.dragDrop.removeElement(id)
-    this.dragDrop.unselectElement()
+  handleRemoveElement() {
+    const id = this.selectedElementId;
+    if (!id) return;
+    this.dragDrop.removeElement(id);
+    this.dragDrop.unselectElement();
   }
-  handleUnselect(){
-    this.dragDrop.unselectElement()
+  handleUnselect() {
+    this.dragDrop.unselectElement();
   }
 }

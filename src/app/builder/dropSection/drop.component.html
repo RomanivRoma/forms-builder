@@ -1,27 +1,17 @@
-<div *ngLet="formStyle$ | ngrxPush as style"
-     #mainForm
-     [ngStyle]="style.formStyle" 
-     class="drop__container">
-    <div [ngStyle]="style.headerStyle" 
-         class="drop__header">
+<div *ngLet="formStyle$ | ngrxPush as style" #mainForm [ngStyle]="style.formStyle" class="drop__container">
+    <div [ngStyle]="style.headerStyle" class="drop__header">
         <h1 [ngStyle]="style.titleStyle">
             {{ style.title }}
         </h1>
     </div>
     <div class="drop__wrapper">
-        <div cdkDropList
-             fxLayout="row"
-             [cdkDropListData]="addedComponentList"
-             (cdkDropListDropped)="drop($event)"
-             class="drop__body">
-            <ng-container *ngFor="let component of addedComponentList; trackBy:identify">
-                <app-drop-item (click)="handleSelect(component)"
-                                class="drop__item__container"
-                                [component]="component"
-                                [style.width.%]="component.parentStyle?.width"
-                                [style.textAlign]="component.class == 'custom-text' ? component.parentStyle?.justifyContent : ''"
-                                style="width: 100%; text-align: left;"
-                                [isSelected]="selectedElementId == component.id ? true : false"></app-drop-item>
+        <div cdkDropList fxLayout="row" [cdkDropListData]="addedComponentList" (cdkDropListDropped)="drop($event)"
+            class="drop__body">
+            <ng-container *ngFor="let component of addedComponentList$ | ngrxPush; trackBy:identify">
+                <app-drop-item cdkDrag (click)="handleSelect(component)" class="drop__item__container"
+                    [component]="component" [style.width.%]="component.parentStyle?.width"
+                    [style.textAlign]="component.class == 'custom-text' ? component.parentStyle?.justifyContent : ''"
+                    [isSelected]="(selectedElementId$ | ngrxPush) == component.id"></app-drop-item>
             </ng-container>
 
         </div>

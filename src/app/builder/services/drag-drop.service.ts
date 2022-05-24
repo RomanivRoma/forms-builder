@@ -61,7 +61,7 @@ export class DragDropService {
   constructor() {}
 
   selectElement(component: DragElement): DragElement {
-    this.selectedElementId.next(component.id || null);
+    this.selectedElementId.next(component.id!);
     this.elementDisablingChange.next(false);
     return component;
   }
@@ -69,11 +69,11 @@ export class DragDropService {
     this.selectedElementId.next(null);
     this.elementDisablingChange.next(true);
   }
-  setSelectedElement(element: any) {
+  setSelectedElement(element: DragElement) {
     const componentList: DragElement[] = this.addedComponentList.getValue();
-    let selectedElement: any = componentList.find(
+    let selectedElement: DragElement = componentList.find(
       (el) => el.id == this.selectedElementId.getValue()
-    );
+    )!;
     selectedElement = { ...selectedElement, ...element };
     const newComponentList: DragElement[] = componentList.map((component) =>
       component.id == selectedElement?.id ? selectedElement : component
@@ -178,6 +178,9 @@ export class DragDropService {
     .drop__container{
       border-radius: 5px;
       padding: 13px;
+    }
+    .drop__item__container {
+      display: flex;
     }
     .drop__container .drop__header{
         background: rgb(19, 192, 13);

@@ -1,0 +1,34 @@
+.builder__container {
+    /* height: calc(100vh-70px); */
+    height: 89vh;
+    display: grid;
+    grid-template-columns: 0.7fr 1.6fr 0.7fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 7px;
+    grid-template-areas:
+      "drag drop styling"
+      "drag drop styling"
+      "drag drop styling";
+  
+    .drag .drop,
+    .styling {
+      height: 100%;
+    }
+  
+    .drag {
+      grid-area: drag;
+      overflow: auto;
+      margin-top: 7px;
+    }
+  
+    .drop {
+      grid-area: drop;
+      overflow: auto;
+    }
+  
+    .styling {
+      grid-area: styling;
+      margin-top: 5px;
+    }
+  }
+  

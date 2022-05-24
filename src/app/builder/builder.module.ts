@@ -1,11 +1,10 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragComponent } from './dragSection/drag.component';
 import { DropComponent } from './dropSection/drop.component';
 import { StylingComponent } from './stylingSection/styling.component'
 import { HomeComponent } from '../home/home.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PortalModule } from '@angular/cdk/portal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnectFormDirective } from './directives/connect-form.directive';
@@ -23,7 +22,12 @@ import { DragItemComponent } from './dragSection/drag-item/drag-item.component';
 import { DropItemComponent } from './dropSection/drop-item/drop-item.component';
 import { ReactiveComponentModule } from '@ngrx/component';
 import { LetContextDirective } from './directives/let-context.directive';
+import { BuilderComponent } from './builder/builder.component';
+import { RouterModule, Routes } from '@angular/router';
 
+const routes:Routes = [
+  { path: 'builder', component: BuilderComponent } 
+]
 
 @NgModule({
   declarations: [
@@ -36,7 +40,7 @@ import { LetContextDirective } from './directives/let-context.directive';
     DragItemComponent,
     DropItemComponent,
     LetContextDirective,
-    HomeComponent
+    BuilderComponent,
   ],
   imports: [
     CommonModule,
@@ -50,15 +54,16 @@ import { LetContextDirective } from './directives/let-context.directive';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    BrowserAnimationsModule,
     MatButtonToggleModule,
     MatIconModule,
+    RouterModule.forChild(routes)
   ],
 
   exports: [
     DragComponent,
     DropComponent,
     StylingComponent,
+    BuilderComponent
   ],
 })
 export class BuilderModule { }

@@ -1,33 +1,30 @@
-<div cdkDrag 
-    class="dragElements__item d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-        <img class="me-3" src={{component?.icon}} alt="">
-        <p class="m-0">{{ component?.title }}</p>
-    </div>
-    <button class="add__button" (click)="addComponent(component)">
-        <img class="dragElements__item__addIcon" src="assets/img/add-plus.svg">
-    </button>
-    <div *cdkDragPreview class="dragElements__item__preview preview">
-        <ng-container [ngTemplateOutlet]="component.tag == 'input' ? inputBlock :
-                                          component.tag == 'textarea' ? textareaBlock :
-                                          component.tag == 'p' ? textBlock :
-                                          component.tag == 'button' ? buttonBlock :
-                                          component.tag == 'select' ? selectBlock : null"></ng-container>
+<div class="d-flex align-items-center">
+    <img class="me-3" src={{component?.icon}} alt="">
+    <p class="m-0">{{ component?.title }}</p>
+</div>
+<button class="add__button" (click)="addComponent(component)">
+    <img class="dragElements__item__addIcon" src="assets/img/add-plus.svg">
+</button>
+<div *cdkDragPreview class="dragElements__item__preview preview">
+    <ng-container [ngTemplateOutlet]="component.tag == 'input' ? inputBlock :
+                                        component.tag == 'textarea' ? textareaBlock :
+                                        component.tag == 'p' ? textBlock :
+                                        component.tag == 'button' ? buttonBlock :
+                                        component.tag == 'select' ? selectBlock : null"></ng-container>
 
-        <ng-template #textBlock>
-            <p>{{component.value}}</p>
-        </ng-template>
-        <ng-template #inputBlock>
-            <input type={{component.type}}/>
-        </ng-template>
-        <ng-template #textareaBlock>
-            <textarea></textarea>
-        </ng-template>
-        <ng-template #selectBlock>
-            <select></select>
-        </ng-template>
-        <ng-template #buttonBlock>
-            <button>Submit</button>
-        </ng-template>
-    </div>
+    <ng-template #textBlock>
+        <p>{{component.value}}</p>
+    </ng-template>
+    <ng-template #inputBlock>
+        <input type={{component.type}}/>
+    </ng-template>
+    <ng-template #textareaBlock>
+        <textarea></textarea>
+    </ng-template>
+    <ng-template #selectBlock>
+        <select></select>
+    </ng-template>
+    <ng-template #buttonBlock>
+        <button>Submit</button>
+    </ng-template>
 </div>

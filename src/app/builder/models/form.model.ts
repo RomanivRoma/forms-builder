@@ -4,6 +4,6 @@ export class Form {
     fontColor: string;
     width: number;
     height: number;
-    align: string;
+    align: 'left' | 'center' | 'right';
     background: string;
 }

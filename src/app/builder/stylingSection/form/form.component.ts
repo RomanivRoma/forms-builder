@@ -1,13 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, forwardRef, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DragDropService } from '../../services/drag-drop.service';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FormComponent),
+      multi: true
+    }
+  ]
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, ControlValueAccessor {
   innerWidth: number = window.innerWidth;
   innerHeight: number = window.innerHeight;
   formStyle: FormGroup = new FormGroup({
@@ -20,6 +27,15 @@ export class FormComponent implements OnInit {
     background: new FormControl(''),
   });
   constructor(public dragDrop: DragDropService) { }
+
+  writeValue(obj: any): void {
+    console.log(obj);
+    
+  }
+  registerOnChange(fn: any): void {
+  }
+  registerOnTouched(fn: any): void {
+  }
 
   ngOnInit(): void {
   }
