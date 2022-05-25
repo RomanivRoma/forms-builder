@@ -82,7 +82,7 @@ export class AuthService {
     localStorage.removeItem(this.JWT_TOKEN);
   }
 
-  private getToken(): string {
+  public getToken(): string {
     return localStorage.getItem(this.JWT_TOKEN) || '';
   }
 }

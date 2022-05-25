@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import { BuilderModule } from './builder/builder.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +14,7 @@ import { StoreModule } from '@ngrx/store';
 import { formReducer } from './builder/reducers/form.reducer';
 import { elementReducer } from './builder/reducers/element.reducers';
 import { ReactiveComponentModule } from '@ngrx/component';
+import { TokenInterceptor } from './auth/interceptors/token-interceptor.interceptor';
 
 
 @NgModule({
@@ -37,7 +38,11 @@ import { ReactiveComponentModule } from '@ngrx/component';
     }),
   ],
   providers: [
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

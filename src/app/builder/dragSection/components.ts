@@ -1,30 +1,33 @@
-import { ComponentTag } from "src/app/enums/component-tag.model";
-import { InputType } from "src/app/enums/input-type.model";
-import { DragElement } from "src/app/interfaces/drag-element.interface";
-import { environment } from "src/environments/environment";
+import { Alignment } from 'src/app/enums/alignment.model';
+import { ComponentTag } from 'src/app/enums/component-tag.model';
+import { InputType } from 'src/app/enums/input-type.model';
+import { DragElement } from 'src/app/interfaces/drag-element.interface';
+import { ElementStyle } from 'src/app/interfaces/element-style.interface';
+import { ParentElementStyle } from 'src/app/interfaces/parent-element-style.interface';
+import { environment } from 'src/environments/environment';
 
-const defaultStyle: any = {
-    'fontSize.px': '14',
-    color: 'unset',
-    fontWeight: '400',
-    'width.%': '100',
-    'height.px': '22',
-    align: 'left',
-    background: 'unset',
-    'borderRadius.px': '0',
-    borderColor: 'unset',
-    'paddingTop.px': '0',
-    'paddingRight.px': '0',
-    'paddingBottom.px': '0',
-    'paddingLeft.px': '0',
-    'marginTop.px': '5',
-    'marginRight.px': '5',
-    'marginBottom.px': '5',
-    'marginLeft.px': '5',
+const defaultStyle: ElementStyle = {
+  fontSize: 14,
+  color: 'unset',
+  fontWeight: 400,
+  width: 100,
+  height: 22,
+  align: Alignment.left,
+  background: 'unset',
+  borderRadius: 0,
+  borderColor: 'unset',
+  paddingTop: 0,
+  paddingRight: 0,
+  paddingBottom: 0,
+  paddingLeft: 0,
+  marginTop: 5,
+  marginRight: 5,
+  marginBottom: 5,
+  marginLeft: 5,
 };
-const defaultParentStyle: any = {
-    width: '100',
-    justifyContent: 'left',
+const defaultParentStyle: ParentElementStyle = {
+  width: 100,
+  justifyContent: Alignment.left,
 };
 
 export const componentList: DragElement[] = [

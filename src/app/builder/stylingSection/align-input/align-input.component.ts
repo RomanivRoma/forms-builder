@@ -15,7 +15,7 @@ import { Alignment } from 'src/app/enums/alignment.model';
   ],
 })
 export class AlignInputComponent implements OnInit, ControlValueAccessor {
-
+  public eAlignment = Alignment;
   private onChange(_: Alignment) {}
   private _value: Alignment;
 

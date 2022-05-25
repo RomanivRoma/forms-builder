@@ -29,6 +29,12 @@
       "password": "$2a$10$YCLtNuZATmuHYA4Z77gPIu.IvdgYtR5Y9H3YLDM/o7B3hRaEw6xqi",
       "login": "Qwe",
       "id": 5
+    },
+    {
+      "email": "roma2@gmail.com",
+      "password": "$2a$10$OlkjkWKpZGZahw3X1wSynuvo0LTxBSGVSpPRCDxW5prEn5U3INi.O",
+      "login": "qwe",
+      "id": 6
     }
   ]
 }
