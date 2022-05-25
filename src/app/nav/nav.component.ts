@@ -10,7 +10,7 @@ import { User } from '../interfaces/user.interface';
 })
 export class NavComponent implements OnInit {
   
-  user: User | null;
+  public user: User | null;
 
   constructor(public auth: AuthService,
               public router: Router) { 

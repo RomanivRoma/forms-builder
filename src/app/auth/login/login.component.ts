@@ -11,9 +11,9 @@ import { User } from '../../interfaces/user.interface';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
-  destroy$: Subject<boolean> = new Subject();
-  error$: Observable<any>;
+  public form: FormGroup;
+  private destroy$: Subject<boolean> = new Subject();
+  public error$: Observable<any>;
 
   constructor(
     private formBuilder: FormBuilder,
