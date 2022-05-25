@@ -23,6 +23,12 @@
       "password": "$2a$10$vmdeJeH8gFxIkPe3tdGbu.8ZR8qePUuV5Ms5nurSV40sA/7S3zgiq",
       "login": "Qwe",
       "id": 4
+    },
+    {
+      "email": "roma1@gmail.com",
+      "password": "$2a$10$YCLtNuZATmuHYA4Z77gPIu.IvdgYtR5Y9H3YLDM/o7B3hRaEw6xqi",
+      "login": "Qwe",
+      "id": 5
     }
   ]
 }

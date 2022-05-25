@@ -5,6 +5,7 @@ import {
   FormGroup,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import { Indent } from 'src/app/interfaces/indent.interface';
 
 @Component({
   selector: 'app-indent-input',
@@ -33,7 +34,7 @@ export class IndentInputComponent implements OnInit, ControlValueAccessor {
 
   onChange: (value: number) => void;
 
-  writeValue(value: any): void {
+  writeValue(value: Indent): void {
     if (value) {
       this.indent.setValue(value);
     }
