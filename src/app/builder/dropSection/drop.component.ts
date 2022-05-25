@@ -21,6 +21,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Form } from '../models/form.model';
 import { Element } from '../models/element.model';
 import { isEmpty } from 'lodash-es';
+import { Indent } from 'src/app/interfaces/indent.interface';
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
@@ -81,6 +82,9 @@ export class DropComponent implements OnInit, AfterViewInit {
             'paddingTop.px': element.padding.top,
             'paddingRight.px': element.padding.right,
             'paddingBottom.px': element.padding.bottom,
+
+            // 'margin': `${element.margin.top}px ${element.margin.right}px ${element.margin.bottom}px ${element.margin.left}px`
+
             'marginLeft.px': element.margin.left,
             'marginTop.px': element.margin.top,
             'marginRight.px': element.margin.right,
@@ -154,10 +158,24 @@ export class DropComponent implements OnInit, AfterViewInit {
       const splittedStyle = el.split('.');
       elementStyle[splittedStyle.length > 1 ? splittedStyle[0] : el] =
         component.style[el];
+      
     });
-
+    const margin: Indent = {
+      top: +elementStyle['marginTop'],
+      right: +elementStyle['marginRight'],
+      bottom: +elementStyle['marginBottom'],
+      left: +elementStyle['marginLeft']
+    };
+    const padding: Indent = {
+      top: +elementStyle['paddingTop'],
+      right: +elementStyle['paddingRight'],
+      bottom: +elementStyle['paddingBottom'],
+      left: +elementStyle['paddingLeft']
+    };
     elementStyle = {
       ...elementStyle,
+      margin,
+      padding,
       label: component?.label || '',
       placeholder: component?.placeholder || '',
       value: component?.value || '',

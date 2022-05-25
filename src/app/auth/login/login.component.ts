@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { User } from '../../interfaces/User.interface';
+import { User } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-login',

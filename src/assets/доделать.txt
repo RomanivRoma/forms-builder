@@ -3,19 +3,4 @@
 Сделать блоки resizeble горизонтально;
 Disable draggin on add button
 
-Привет, примени фидбек во всех однотипных местах:
 
-
-5. Упростить
-map(val => {
-        const form: any = val
-в
-map((form: FormType) => {
-
-7. Используй Enum
-<ng-container [ngTemplateOutlet]="component.tag == eComponentTags.input ? inputBlock :
-
-
-12. Используй ControlValueAccessor interface, он очень часто используется для shared components
-
-14. Создавай/используй типы, использование any плохая практика

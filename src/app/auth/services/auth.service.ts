@@ -4,7 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, tap, pipe, mapTo, catchError, of, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
-import { User } from '../../interfaces/User.interface';
+import { User } from '../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class AuthService {
               private http: HttpClient) { 
     if(!this.isAuthenticated()) return
     const id = this.getUserByToken().sub
-    this.http.get<any>(`${environment.apiURL}/users/${id}`)
+    this.http.get<User>(`${environment.apiURL}/users/${id}`)
     .subscribe(val =>{
       this.loggedUser.next(val)
     })
@@ -30,7 +30,7 @@ export class AuthService {
     const userByToken = this.getDecodedAccessToken(token)
     return userByToken
   }
-  getDecodedAccessToken(token: string): any {
+  getDecodedAccessToken(token: string): string | null {
     try {
       return jwt_decode(token);
     } catch(Error) {
