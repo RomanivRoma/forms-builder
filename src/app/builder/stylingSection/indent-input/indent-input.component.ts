@@ -1,0 +1,47 @@
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
+
+@Component({
+  selector: 'app-indent-input',
+  templateUrl: './indent-input.component.html',
+  styleUrls: ['./indent-input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => IndentInputComponent),
+      multi: true,
+    },
+  ],
+})
+export class IndentInputComponent implements OnInit, ControlValueAccessor {
+  indent: FormGroup;
+  @Input() title: string;
+
+  constructor(fb: FormBuilder) {
+    this.indent = fb.group({
+      top: [''],
+      right: [''],
+      bottom: [''],
+      left: [''],
+    });
+  }
+
+  onChange: (value: number) => void;
+
+  writeValue(value: any): void {
+    if (value) {
+      this.indent.setValue(value);
+    }
+  }
+  registerOnChange(fn: any): void {
+    this.indent.valueChanges.subscribe(fn);
+  }
+  registerOnTouched(fn: any): void {}
+
+  ngOnInit(): void {}
+}

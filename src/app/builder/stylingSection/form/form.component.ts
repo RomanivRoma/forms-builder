@@ -6,15 +6,8 @@ import { DragDropService } from '../../services/drag-drop.service';
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormComponent),
-      multi: true
-    }
-  ]
 })
-export class FormComponent implements OnInit, ControlValueAccessor {
+export class FormComponent implements OnInit {
   innerWidth: number = window.innerWidth;
   innerHeight: number = window.innerHeight;
   formStyle: FormGroup = new FormGroup({
@@ -27,15 +20,6 @@ export class FormComponent implements OnInit, ControlValueAccessor {
     background: new FormControl(''),
   });
   constructor(public dragDrop: DragDropService) { }
-
-  writeValue(obj: any): void {
-    console.log(obj);
-    
-  }
-  registerOnChange(fn: any): void {
-  }
-  registerOnTouched(fn: any): void {
-  }
 
   ngOnInit(): void {
   }

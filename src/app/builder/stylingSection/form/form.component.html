@@ -1,60 +1,36 @@
-<form [formGroup]="formStyle"
-      connectForm="form"
-      class="form__editor">
+<form [formGroup]="formStyle" connectForm="form" class="form__editor">
     <mat-form-field appearance="fill">
-    <mat-label>Title</mat-label>
-    <input matInput type="text" formControlName="title" >
+        <mat-label>Title</mat-label>
+        <input matInput type="text" formControlName="title">
     </mat-form-field>
     <mat-form-field appearance="fill">
-    <mat-label>Background color</mat-label>
-    <input matInput type="color" formControlName="background">
-    </mat-form-field>  
-    <mat-button-toggle-group value="left" class="mb-3" formControlName="align" #group = "matButtonToggleGroup">  
-    <mat-button-toggle value = "left">  
-        <mat-icon>format_align_left</mat-icon>  
-    </mat-button-toggle>  
-    <mat-button-toggle value = "center">  
-        <mat-icon>format_align_center</mat-icon>  
-    </mat-button-toggle>  
-    <mat-button-toggle value = "right">  
-        <mat-icon>format_align_right</mat-icon>  
-    </mat-button-toggle>  
-    </mat-button-toggle-group>
+        <mat-label>Background color</mat-label>
+        <input matInput type="color" formControlName="background">
+    </mat-form-field>
+
+    <app-align-input formControlName="align"></app-align-input>
+
     <mat-form-field appearance="fill">
-    <mat-label>Font size</mat-label>
-    <input matInput type="number" formControlName="fontSize" >
-    </mat-form-field>  
+        <mat-label>Font size</mat-label>
+        <input matInput type="number" formControlName="fontSize">
+    </mat-form-field>
     <mat-form-field appearance="fill">
-    <mat-label>Font color</mat-label>
-    <input matInput type="color" formControlName="fontColor" >
-    </mat-form-field>  
+        <mat-label>Font color</mat-label>
+        <input matInput type="color" formControlName="fontColor">
+    </mat-form-field>
     <div>
-    <p>Width:</p>
-    <mat-slider
-        class="w-100"    
-        formControlName="width"
-        thumbLabel
-        tickInterval="auto"
-        step="1"
-        min="0"
-        [max]="innerWidth"
-        aria-label="units"></mat-slider>
+        <p>Width:</p>
+        <mat-slider class="w-100" formControlName="width" thumbLabel tickInterval="auto" step="1" min="0"
+            [max]="innerWidth" aria-label="units"></mat-slider>
     </div>
     <div>
-    <p>Height:</p>
-    <mat-slider
-        class="w-100"    
-        formControlName="height"
-        thumbLabel
-        tickInterval="auto"
-        step="1"
-        min="100"
-        [max]="innerHeight"
-        aria-label="units"></mat-slider>
+        <p>Height:</p>
+        <mat-slider class="w-100" formControlName="height" thumbLabel tickInterval="auto" step="1" min="100"
+            [max]="innerHeight" aria-label="units"></mat-slider>
     </div>
     <div class="button__container">
-    <button mat-raised-button color="warn" id="clear" (click)="handleClear()">Clear Form</button>
-    <button mat-raised-button color="primary" id="download" (click)="handleDownload()">Download Form</button>
+        <button mat-raised-button color="warn" id="clear" (click)="handleClear()">Clear Form</button>
+        <button mat-raised-button color="primary" id="download" (click)="handleDownload()">Download Form</button>
     </div>
 
 </form>
