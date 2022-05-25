@@ -1,3 +1,5 @@
+import { Indent } from "src/app/interfaces/indent.interface";
+
 export class Element {
     placeholder: string;
     fontSize: number;
@@ -13,13 +15,7 @@ export class Element {
     background: string;
     borderRadius: number;
     borderColor: string;
-    paddingTop: number;
-    paddingRight: number;
-    paddingBottom: number;
-    paddingLeft: number;
-    marginTop: number;
-    marginRight: number;
-    marginBottom: number;
-    marginLeft: number;
+    padding: Indent;
+    margin: Indent;
     options: string[];
 }

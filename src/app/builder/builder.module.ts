@@ -24,6 +24,8 @@ import { ReactiveComponentModule } from '@ngrx/component';
 import { LetContextDirective } from './directives/let-context.directive';
 import { BuilderComponent } from './builder/builder.component';
 import { RouterModule, Routes } from '@angular/router';
+import { IndentInputComponent } from './stylingSection/indent-input/indent-input.component';
+import { AlignInputComponent } from './stylingSection/align-input/align-input.component';
 
 const routes:Routes = [
   { path: 'builder', component: BuilderComponent } 
@@ -41,6 +43,8 @@ const routes:Routes = [
     DropItemComponent,
     LetContextDirective,
     BuilderComponent,
+    IndentInputComponent,
+    AlignInputComponent,
   ],
   imports: [
     CommonModule,

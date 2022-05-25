@@ -1,9 +1,11 @@
 import { Directive, Input } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
-import { Subscription, take, debounceTime, takeUntil, Subject, Observer, Observable } from 'rxjs';
+import { take, debounceTime, takeUntil, Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { formStyleValueChange } from '../actions/form.actions';
 import { elementStyleValueChange } from '../actions/element.actions';
+import { Element } from '../models/element.model';
+import { Form } from '../models/form.model';
 
 @Directive({
   selector: '[connectForm]'
@@ -24,13 +26,12 @@ export class ConnectFormDirective {
                
   ngOnInit() {
     this.getComponent()
-    .subscribe(val => {
+    .subscribe((val: Form | Element)  => {
         this.formGroupDirective.form.patchValue(val);
     });
 
     this.getChanges()
-    .subscribe(value => {
-      
+    .subscribe((value: Form | Element) => {
       this.store.dispatch(this.dispatches[this.path](value))
     })
   }

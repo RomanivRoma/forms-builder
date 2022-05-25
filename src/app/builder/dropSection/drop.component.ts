@@ -19,6 +19,8 @@ import { AppState } from 'src/app/app.state';
 import { DragDropService } from '../services/drag-drop.service';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Form } from '../models/form.model';
+import { Element } from '../models/element.model';
+import { isEmpty } from 'lodash-es';
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
@@ -41,7 +43,7 @@ export class DropComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.formStyle$ = this.store.select('form').pipe(
-      map((form: any) => {
+      map((form: Form) => {
         return {
           title: form.title,
           titleStyle: {
@@ -63,41 +65,44 @@ export class DropComponent implements OnInit, AfterViewInit {
     this.store
       .select('element')
       .pipe(takeUntil(this.destroy$))
-      .subscribe((element: any) => {
-        const style = {
-          color: element.color,
-          'fontSize.px': element.fontSize,
-          'width.%': element.width,
-          'height.px': element.height,
-          fontWeight: element.fontWeight,
-          background: element.background,
-          'borderRadius.px': element.borderRadius,
-          borderColor: element.borderColor,
-          'paddingLeft.px': element.paddingLeft,
-          'paddingTop.px': element.paddingTop,
-          'paddingRight.px': element.paddingRight,
-          'paddingBottom.px': element.paddingBottom,
-          'marginLeft.px': element.marginLeft,
-          'marginTop.px': element.marginTop,
-          'marginRight.px': element.marginRight,
-          'marginBottom.px': element.marginBottom,
-        };
-        const parentStyle = {
-          width: element.containerWidth,
-          justifyContent: element.justifyContent,
-        };
-        const elementObject: DragElement = {
-          required: element.required,
-          label: element.label,
-          placeholder: element.placeholder,
-          value: element.value,
-          style,
-          parentStyle,
-          options: element.options,
-        };
+      .subscribe(
+        (element: Element) => {
+          if (isEmpty(element)) return;
+          const style = {
+            color: element.color,
+            'fontSize.px': element.fontSize,
+            'width.%': element.width,
+            'height.px': element.height,
+            fontWeight: element.fontWeight,
+            background: element.background,
+            'borderRadius.px': element.borderRadius,
+            borderColor: element.borderColor,
+            'paddingLeft.px': element.padding.left,
+            'paddingTop.px': element.padding.top,
+            'paddingRight.px': element.padding.right,
+            'paddingBottom.px': element.padding.bottom,
+            'marginLeft.px': element.margin.left,
+            'marginTop.px': element.margin.top,
+            'marginRight.px': element.margin.right,
+            'marginBottom.px': element.margin.bottom,
+          };
+          const parentStyle = {
+            width: element.containerWidth,
+            justifyContent: element.justifyContent,
+          };
+          const elementObject: DragElement = {
+            required: element.required,
+            label: element.label,
+            placeholder: element.placeholder,
+            value: element.value,
+            style,
+            parentStyle,
+            options: element.options,
+          };
 
-        this.dragDrop.setSelectedElement(elementObject);
-      });
+          this.dragDrop.setSelectedElement(elementObject);
+        } 
+      );
 
     this.addedComponentList$ = this.dragDrop
       .getAddedComponents()

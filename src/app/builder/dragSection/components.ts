@@ -5,14 +5,14 @@ import { environment } from "src/environments/environment";
 
 const defaultStyle: any = {
     'fontSize.px': '14',
-    color: '#212529',
+    color: 'unset',
     fontWeight: '400',
     'width.%': '100',
     'height.px': '22',
     align: 'left',
-    background: '#ffffff',
+    background: 'unset',
     'borderRadius.px': '0',
-    borderColor: '0',
+    borderColor: 'unset',
     'paddingTop.px': '0',
     'paddingRight.px': '0',
     'paddingBottom.px': '0',
