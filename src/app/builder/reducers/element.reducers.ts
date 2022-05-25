@@ -4,7 +4,7 @@ import { elementStyleValueChange } from '../actions/element.actions';
 import { Alignment } from 'src/app/enums/alignment.model';
 
 const initialState: Element = {
-  background: 'unset',
+  background: '#ffffff',
   borderColor: 'unset',
   borderRadius: 0,
   color: 'unset',

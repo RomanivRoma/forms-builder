@@ -25,15 +25,10 @@ export class AuthService {
 
   private readonly JWT_TOKEN = 'JWT_TOKEN';
 
-  constructor(public jwtHelper: JwtHelperService, private http: HttpClient) {
-    if (!this.isAuthenticated()) return;
-    const id: string | undefined = this.getUserByToken()?.sub;
-    this.http
-      .get<User>(`${environment.apiURL}/users/${id}`)
-      .subscribe((val) => {
-        this.loggedUser.next(val);
-      });
-  }
+  constructor(public jwtHelper: JwtHelperService, private http: HttpClient) {}
+
+  ngOnInit() {}
+
   getUserByToken(): JwtPayload | null {
     const token: string = this.getToken();
     return this.getDecodedAccessToken(token);

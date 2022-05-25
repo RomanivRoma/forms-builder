@@ -8,7 +8,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import { BuilderModule } from './builder/builder.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { ResizableModule } from 'angular-resizable-element';
 import { PortalModule } from '@angular/cdk/portal';
 import { StoreModule } from '@ngrx/store';
 import { formReducer } from './builder/reducers/form.reducer';
@@ -16,12 +15,8 @@ import { elementReducer } from './builder/reducers/element.reducers';
 import { ReactiveComponentModule } from '@ngrx/component';
 import { TokenInterceptor } from './auth/interceptors/token-interceptor.interceptor';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-  ],
+  declarations: [AppComponent, NavComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,7 +24,6 @@ import { TokenInterceptor } from './auth/interceptors/token-interceptor.intercep
     AuthModule,
     BrowserAnimationsModule,
     BuilderModule,
-    // ResizableModule,
     ReactiveComponentModule,
     PortalModule,
     StoreModule.forRoot({
@@ -41,9 +35,9 @@ import { TokenInterceptor } from './auth/interceptors/token-interceptor.intercep
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
