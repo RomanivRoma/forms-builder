@@ -1,11 +1,11 @@
 <form [formGroup]="dragDrop.elementStyle"
       class="form__editor"
       connectForm="element">
-    <mat-form-field *ngIf="(controlVisible$ | ngrxPush).value" appearance="fill">
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.value" appearance="fill">
         <mat-label>Text</mat-label>
         <input matInput formControlName="value" type="text">
     </mat-form-field>
-    <mat-form-field *ngIf="(controlVisible$ | ngrxPush).label" appearance="fill">
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.label" appearance="fill">
         <mat-label>Label</mat-label>
         <input matInput formControlName="label" type="text">
     </mat-form-field>
@@ -17,18 +17,18 @@
     <app-indent-input title="Margin:" formControlName="margin"></app-indent-input>
     <app-indent-input title="Padding:" formControlName="padding"></app-indent-input>
 
-    <mat-form-field *ngIf="(controlVisible$ | ngrxPush).placeholder" appearance="fill">
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.placeholder" appearance="fill">
         <mat-label>Placeholder</mat-label>
         <input matInput formControlName="placeholder" type="text">
     </mat-form-field>
     
     <app-align-input formControlName="justifyContent"></app-align-input>
 
-    <mat-form-field *ngIf="(controlVisible$ | ngrxPush).borderColor" appearance="fill">
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.borderColor" appearance="fill">
         <mat-label>Border color</mat-label>
         <input matInput type="color" formControlName="borderColor" >
     </mat-form-field>  
-    <mat-form-field *ngIf="(controlVisible$ | ngrxPush).borderRadius" appearance="fill">
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.borderRadius" appearance="fill">
         <mat-label>Border radius</mat-label>
         <input matInput type="number" formControlName="borderRadius" >
     </mat-form-field>  
@@ -44,8 +44,8 @@
         <mat-label>Font weight</mat-label>
         <input matInput type="number" formControlName="fontWeight" >
     </mat-form-field> 
-    <mat-checkbox  *ngIf="(controlVisible$ | ngrxPush).required" formControlName="required" class="example-margin mb-2">Required:</mat-checkbox>
-    <div formArrayName="options" *ngIf="(controlVisible$ | ngrxPush).options" class="options__wrapper">
+    <mat-checkbox  *ngIf="(controlVisible$ | ngrxPush)?.required" formControlName="required" class="example-margin mb-2">Required:</mat-checkbox>
+    <div formArrayName="options" *ngIf="(controlVisible$ | ngrxPush)?.options" class="options__wrapper">
         <ng-container *ngFor="let optionForm of dragDrop.options.controls; let i = index">
             <div [formGroup]="$any(optionForm)" class="input-group mb-3">
                 <input type="text" formControlName="option" class="form-control" [placeholder]="'Option ' + (i+1)">

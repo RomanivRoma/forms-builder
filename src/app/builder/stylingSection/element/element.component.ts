@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { VisibleControls } from 'src/app/interfaces/visible-controls.interface';
 import { DragDropService } from '../../services/drag-drop.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { DragDropService } from '../../services/drag-drop.service';
   styleUrls: ['./element.component.scss'],
 })
 export class ElementComponent implements OnInit {
-  public controlVisible$: Observable<any>;
+  public controlVisible$: Observable<VisibleControls>;
   private destroy$: Subject<boolean> = new Subject();
   public selectedElementId: number | null;
 

@@ -13,7 +13,7 @@ import { User } from '../../interfaces/user.interface';
 export class LoginComponent implements OnInit {
   public form: FormGroup;
   private destroy$: Subject<boolean> = new Subject();
-  public error$: Observable<any>;
+  public error$: Observable<string | null>;
 
   constructor(
     private formBuilder: FormBuilder,

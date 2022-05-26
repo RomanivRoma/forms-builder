@@ -23,7 +23,7 @@
     </div>
 
     <div *ngIf="error$ | ngrxPush as err" class="invalid-feedback d-block mb-3">
-      {{ err.error }}
+      {{ err }}
     </div>
     <button class="w-100 btn btn-lg btn-primary mt-1" id="signup" type="submit">Sign up</button>
   </form>

@@ -20,7 +20,7 @@ import { environment } from 'src/environments/environment';
 export class SignupComponent implements OnInit {
   public form: FormGroup;
   private destroy$: Subject<boolean> = new Subject();
-  public error$: Observable<any>;
+  public error$: Observable<string | null>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,7 +49,7 @@ export class SignupComponent implements OnInit {
       password,
     };
     if (confirmPassword !== password) {
-      this.error$ = of({ error: "Passwords aren't equal" });
+      this.error$ = of("Passwords aren't equal");
       return;
     }
     this.error$ = this.http

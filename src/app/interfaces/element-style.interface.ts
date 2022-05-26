@@ -1,21 +1,24 @@
 import { Alignment } from "../enums/alignment.model";
+import { Indent } from "./indent.interface";
 
 export interface ElementStyle {
-    fontSize: number,
+    fontSize: string,
     color: string,
     fontWeight: number,
-    width: number,
-    height: number,
+    width: string,
+    height: string,
     align: Alignment,
     background: string,
-    borderRadius: number,
+    borderRadius: string,
     borderColor: string,
-    paddingTop: number,
-    paddingRight: number,
-    paddingBottom: number,
-    paddingLeft: number,
-    marginTop: number,
-    marginRight: number,
-    marginBottom: number,
-    marginLeft: number,
+    paddingTop: string,
+    paddingRight: string,
+    paddingBottom: string,
+    paddingLeft: string,
+    // padding: Indent,
+    // margin: Indent
+    marginTop: string,
+    marginRight: string,
+    marginBottom: string,
+    marginLeft: string,
 }

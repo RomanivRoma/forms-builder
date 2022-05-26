@@ -21,6 +21,7 @@ const initialState: Element = {
   required: false,
   value: 'Text',
   width: 100,
+  align: Alignment.left
 };
 
 export const elementReducer = createReducer(

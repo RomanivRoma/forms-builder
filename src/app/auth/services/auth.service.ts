@@ -57,7 +57,7 @@ export class AuthService {
       mapTo(true),
       catchError((error) => {
         this.loginError.next(error);
-        console.error(error.error);
+        console.error(error);
         return of(false);
       })
     );

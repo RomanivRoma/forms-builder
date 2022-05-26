@@ -1,7 +1,8 @@
-<div *ngLet="formStyle$ | ngrxPush as style" #mainForm [ngStyle]="style.formStyle" class="drop__container">
-    <div [ngStyle]="style.headerStyle" class="drop__header">
-        <h1 [ngStyle]="style.titleStyle">
-            {{ style.title }}
+<div *ngLet="formStyle$ | ngrxPush as form" #mainForm [style.width.px]="form?.width" [style.height.px]="form?.height"
+    class="drop__container">
+    <div [style.background-color]="form?.background" class="drop__header">
+        <h1 [style.font-size.px]="form?.fontSize" [style.text-align]="form?.align" [style.color]="form?.fontColor">
+            {{ form?.title }}
         </h1>
     </div>
     <div class="drop__wrapper">
@@ -9,8 +10,8 @@
             class="drop__body">
             <ng-container *ngFor="let component of addedComponentList$ | ngrxPush; trackBy:identify">
                 <app-drop-item cdkDrag (click)="handleSelect(component)" class="drop__item__container"
-                    [component]="component" [style.width.%]="component.parentStyle?.width"
-                    [style.textAlign]="component.class == 'custom-text' ? component.parentStyle?.justifyContent : ''"
+                    [component]="component" [style.width]="component.parentStyle?.width"
+                    [style.textAlign]="component.tag == eComponentTag.p ? component.parentStyle?.justifyContent : ''"
                     [isSelected]="(selectedElementId$ | ngrxPush) == component.id"></app-drop-item>
             </ng-container>
 

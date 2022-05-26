@@ -19,7 +19,7 @@
       </label>
     </div>
     <div *ngIf="error$ | ngrxPush as err" class="invalid-feedback d-block  mb-3">
-      {{ err.error }}
+      {{ err }}
     </div>
     <button class="w-100 btn btn-lg btn-primary" id="login" type="submit">Sign in</button>
   </form>
