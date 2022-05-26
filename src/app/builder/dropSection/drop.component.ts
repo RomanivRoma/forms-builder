@@ -68,39 +68,14 @@ export class DropComponent implements OnInit, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (element: Element) => {
-          if (isEmpty(element)) return;
-          const style = {
-            color: element.color,
-            'fontSize.px': element.fontSize,
-            'width.%': element.width,
-            'height.px': element.height,
-            fontWeight: element.fontWeight,
-            background: element.background,
-            'borderRadius.px': element.borderRadius,
-            borderColor: element.borderColor,
-            'paddingLeft.px': element.padding.left,
-            'paddingTop.px': element.padding.top,
-            'paddingRight.px': element.padding.right,
-            'paddingBottom.px': element.padding.bottom,
-
-            // 'margin': `${element.margin.top}px ${element.margin.right}px ${element.margin.bottom}px ${element.margin.left}px`
-
-            'marginLeft.px': element.margin.left,
-            'marginTop.px': element.margin.top,
-            'marginRight.px': element.margin.right,
-            'marginBottom.px': element.margin.bottom,
-          };
-          const parentStyle = {
-            width: element.containerWidth,
-            justifyContent: element.justifyContent,
-          };
+          console.log(element);
           const elementObject: DragElement = {
             required: element.required,
             label: element.label,
             placeholder: element.placeholder,
             value: element.value,
-            style,
-            parentStyle,
+            // style,
+            // parentStyle,
             options: element.options,
           };
 
@@ -153,47 +128,49 @@ export class DropComponent implements OnInit, AfterViewInit {
     return this.dragDrop.setFormControlVisibleChange(component);
   }
   setCurrentStylesToElement(component: DragElement) {
-    let elementStyle: any = {};
-    Object.keys(component?.style || []).forEach((el) => {
-      const splittedStyle = el.split('.');
-      elementStyle[splittedStyle.length > 1 ? splittedStyle[0] : el] =
-        component.style[el];
+    // let elementStyle: any = {};
+    // console.log(component);
+    
+    // Object.keys(component?.style || []).forEach((el) => {
+    //   const splittedStyle = el.split('.');
+    //   elementStyle[splittedStyle.length > 1 ? splittedStyle[0] : el] =
+    //     component.style[el];
       
-    });
-    const margin: Indent = {
-      top: +elementStyle['marginTop'],
-      right: +elementStyle['marginRight'],
-      bottom: +elementStyle['marginBottom'],
-      left: +elementStyle['marginLeft']
-    };
-    const padding: Indent = {
-      top: +elementStyle['paddingTop'],
-      right: +elementStyle['paddingRight'],
-      bottom: +elementStyle['paddingBottom'],
-      left: +elementStyle['paddingLeft']
-    };
-    elementStyle = {
-      ...elementStyle,
-      margin,
-      padding,
-      label: component?.label || '',
-      placeholder: component?.placeholder || '',
-      value: component?.value || '',
-      required: component?.required || false,
-      containerWidth: component.parentStyle?.width,
-      justifyContent: component.parentStyle?.justifyContent,
-      options: component?.options,
-    };
+    // });
+    // const margin: Indent = {
+    //   top: +elementStyle['marginTop'],
+    //   right: +elementStyle['marginRight'],
+    //   bottom: +elementStyle['marginBottom'],
+    //   left: +elementStyle['marginLeft']
+    // };
+    // const padding: Indent = {
+    //   top: +elementStyle['paddingTop'],
+    //   right: +elementStyle['paddingRight'],
+    //   bottom: +elementStyle['paddingBottom'],
+    //   left: +elementStyle['paddingLeft']
+    // };
+    // elementStyle = {
+    //   ...elementStyle,
+    //   margin,
+    //   padding,
+    //   label: component?.label || '',
+    //   placeholder: component?.placeholder || '',
+    //   value: component?.value || '',
+    //   required: component?.required || false,
+    //   containerWidth: component.parentStyle?.width,
+    //   justifyContent: component.parentStyle?.justifyContent,
+    //   options: component?.options,
+    // };
 
-    const options = this.dragDrop.elementStyle.get('options') as FormArray;
-    options.clear();
-    component.options?.forEach((el) => {
-      const optionForm = new FormGroup({
-        option: new FormControl(el),
-      });
-      options.push(optionForm);
-    });
-    this.dragDrop.elementStyle.patchValue(elementStyle);
+    // const options = this.dragDrop.elementStyle.get('options') as FormArray;
+    // options.clear();
+    // component.options?.forEach((el) => {
+    //   const optionForm = new FormGroup({
+    //     option: new FormControl(el),
+    //   });
+    //   options.push(optionForm);
+    // });
+    // this.dragDrop.elementStyle.patchValue(elementStyle);
   }
 
   handleSelect(component: DragElement) {

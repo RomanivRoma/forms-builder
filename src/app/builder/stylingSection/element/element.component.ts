@@ -8,9 +8,9 @@ import { DragDropService } from '../../services/drag-drop.service';
   styleUrls: ['./element.component.scss'],
 })
 export class ElementComponent implements OnInit {
-  controlVisible$: Observable<any>;
-  destroy$: Subject<boolean> = new Subject();
-  selectedElementId: number | null;
+  public controlVisible$: Observable<any>;
+  private destroy$: Subject<boolean> = new Subject();
+  public selectedElementId: number | null;
 
   constructor(public dragDrop: DragDropService) {}
 

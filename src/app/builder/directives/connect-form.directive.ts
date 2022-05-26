@@ -11,10 +11,10 @@ import { Form } from '../models/form.model';
   selector: '[connectForm]',
 })
 export class ConnectFormDirective {
-  destroy$: Subject<boolean> = new Subject();
+  private destroy$: Subject<boolean> = new Subject();
   @Input('connectForm') path: string;
   @Input() debounce: number = 300;
-  dispatches: any = {
+  private dispatches: any = {
     element: elementStyleValueChange,
     form: formStyleValueChange,
   };

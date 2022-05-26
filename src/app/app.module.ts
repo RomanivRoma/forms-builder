@@ -14,6 +14,7 @@ import { formReducer } from './builder/reducers/form.reducer';
 import { elementReducer } from './builder/reducers/element.reducers';
 import { ReactiveComponentModule } from '@ngrx/component';
 import { TokenInterceptor } from './auth/interceptors/token-interceptor.interceptor';
+import { ErrorInterceptor } from './auth/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [AppComponent, NavComponent],
@@ -35,6 +36,11 @@ import { TokenInterceptor } from './auth/interceptors/token-interceptor.intercep
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],

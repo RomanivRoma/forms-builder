@@ -23,7 +23,7 @@ export class TokenInterceptor implements HttpInterceptor {
       if (this.authService.isAuthenticated()) {
         request = request.clone({
           setHeaders: {
-            Authorization: this.authService.getToken()
+            Authorization: `Bearer ${this.authService.getToken()}`
           }
         })
       }
@@ -31,6 +31,6 @@ export class TokenInterceptor implements HttpInterceptor {
       console.error('Error in interceptor:\n', e);
     }
     
-    return next.handle(request);
+    return next.handle(request)
   }
 }
