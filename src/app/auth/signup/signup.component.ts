@@ -2,14 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  catchError,
-  Observable,
-  of,
-  Subject,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { catchError, Observable, of, Subject, takeUntil, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -127,27 +127,8 @@ export class DropComponent implements OnInit, AfterViewInit {
     return this.dragDrop.setFormControlVisibleChange(component);
   }
   setCurrentStylesToElement(component: DragElement) {
-    console.log(component);
-    
     const elementStyle: Element = {
-      margin: component.style?.margin!,
-      padding: component.style?.padding!,
-
-      color: component.style?.color!,
-
-      fontWeight: component.style?.fontWeight!,
-
-      fontSize: component.style?.fontSize!,
-
-      background: component.style?.background!,
-
-      borderColor: component.style?.borderColor!,
-      borderRadius: component.style?.borderRadius!,
-
-      width: component.style?.width!,
-      height: component.style?.height!,
-
-      align: component.style?.align!,
+      ...component.style!,
 
       label: component?.label!,
       placeholder: component?.placeholder!,
@@ -168,7 +149,6 @@ export class DropComponent implements OnInit, AfterViewInit {
       });
       options.push(optionForm);
     });
-    console.log(elementStyle);
     this.dragDrop.elementStyle.patchValue(elementStyle);
   }
   pxStringToInt(str: string): number {

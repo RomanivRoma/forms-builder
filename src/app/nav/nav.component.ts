@@ -7,22 +7,19 @@ import { User } from '../interfaces/user.interface';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
-  
   public user$: Observable<User | null>;
 
-  constructor(public auth: AuthService,
-              public router: Router) { 
-  }
+  constructor(public auth: AuthService, public router: Router) {}
 
   ngOnInit(): void {
-    this.user$ = this.auth.loggedUser
+    this.user$ = this.auth.loggedUser;
   }
 
   logout(): void {
-    this.auth.logout()
-    this.router.navigate(['/login'])
+    this.auth.logout();
+    this.router.navigate(['/login']);
   }
 }
