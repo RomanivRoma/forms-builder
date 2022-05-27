@@ -7,26 +7,20 @@ import { ParentElementStyle } from 'src/app/interfaces/parent-element-style.inte
 import { environment } from 'src/environments/environment';
 
 const defaultStyle: ElementStyle = {
-  fontSize: '14px',
+  fontSize: 14,
   color: 'unset',
   fontWeight: 400,
-  width: '100%',
-  height: '22px',
+  width: 100,
+  height: 22,
   align: Alignment.left,
   background: 'unset',
-  borderRadius: '0px',
+  borderRadius: 0,
   borderColor: 'unset',
-  paddingTop: '0px',
-  paddingRight: '0px',
-  paddingBottom: '0px',
-  paddingLeft: '0px',
-  marginTop: '5px',
-  marginRight: '5px',
-  marginBottom: '5px',
-  marginLeft: '5px',
+  padding: {top: 0, right: 0, bottom: 0, left: 0},
+  margin: {top: 5, right: 5, bottom: 5, left: 5},
 };
 const defaultParentStyle: ParentElementStyle = {
-  width: '100%',
+  width: 100,
   justifyContent: Alignment.left,
 };
 

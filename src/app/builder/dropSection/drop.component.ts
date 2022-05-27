@@ -54,26 +54,20 @@ export class DropComponent implements OnInit, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((element: Element) => {
         const style: ElementStyle = {
-          fontSize: `${element.fontSize!}px`,
-          color: element.color!,
-          fontWeight: element.fontWeight!,
-          width: `${element.width!}%`,
-          height: `${element.height!}px`,
-          align: element.align!,
-          background: element.background!,
-          borderRadius: `${element.borderRadius!}px`,
-          borderColor: element.borderColor!,
-          paddingTop: `${element.padding?.top!}px`,
-          paddingRight: `${element.padding?.right!}px`,
-          paddingBottom: `${element.padding?.bottom!}px`,
-          paddingLeft: `${element.padding?.left!}px`,
-          marginTop: `${element.margin?.top!}px`,
-          marginRight: `${element.margin?.right!}px`,
-          marginBottom: `${element.margin?.bottom!}px`,
-          marginLeft: `${element.margin?.left!}px`,
+          fontSize: element.fontSize,
+          color: element.color,
+          fontWeight: element.fontWeight,
+          width: element.width,
+          height: element.height,
+          align: element.align,
+          background: element.background,
+          borderRadius: element.borderRadius,
+          borderColor: element.borderColor,
+          padding: element.padding,
+          margin: element.margin,
         };
         const parentStyle: ParentElementStyle = {
-          width: `${element.containerWidth!}%`,
+          width: element.containerWidth!,
           justifyContent: element.justifyContent!,
         };
         const elementObject: DragElement = {
@@ -133,41 +127,33 @@ export class DropComponent implements OnInit, AfterViewInit {
     return this.dragDrop.setFormControlVisibleChange(component);
   }
   setCurrentStylesToElement(component: DragElement) {
-    const margin: Indent = {
-      top: this.pxStringToInt(component.style?.marginTop || '')!,
-      right: this.pxStringToInt(component.style?.marginRight || '')!,
-      bottom: this.pxStringToInt(component.style?.marginBottom || '')!,
-      left: this.pxStringToInt(component.style?.marginLeft || '')!,
-    };
-    const padding: Indent = {
-      top: this.pxStringToInt(component.style?.paddingTop || '')!,
-      right: this.pxStringToInt(component.style?.paddingRight || '')!,
-      bottom: this.pxStringToInt(component.style?.paddingBottom || '')!,
-      left: this.pxStringToInt(component.style?.paddingLeft || '')!,
-    };
     const elementStyle: Element = {
-      margin,
-      padding,
+      margin: component.style?.margin!,
+      padding: component.style?.padding!,
 
-      color: component.style?.color,
-      fontWeight: component.style?.fontWeight,
-      fontSize: this.pxStringToInt(component.style?.fontSize || ''),
+      color: component.style?.color!,
 
-      background: component.style?.background,
+      fontWeight: component.style?.fontWeight!,
 
-      borderColor: component.style?.borderColor,
-      borderRadius: this.pxStringToInt(component.style?.borderRadius || ''),
+      fontSize: component.style?.fontSize!,
 
-      width: this.pxStringToInt(component.style?.width || ''),
-      height: this.pxStringToInt(component.style?.height || ''),
+      background: component.style?.background!,
 
-      label: component?.label || '',
-      placeholder: component?.placeholder || '',
-      value: component?.value || '',
-      required: component?.required || false,
-      containerWidth: this.pxStringToInt(component.parentStyle?.width || ''),
-      justifyContent: component.parentStyle?.justifyContent || Alignment.left,
-      options: component?.options || [],
+      borderColor: component.style?.borderColor!,
+      borderRadius: component.style?.borderRadius!,
+
+      width: component.style?.width!,
+      height: component.style?.height!,
+
+      align: component.style?.align!,
+
+      label: component?.label!,
+      placeholder: component?.placeholder!,
+      value: component?.value!,
+      required: component?.required!,
+      containerWidth: component.parentStyle?.width!,
+      justifyContent: component.parentStyle?.justifyContent!,
+      options: component?.options!,
     };
 
     const options: FormArray = this.dragDrop.elementStyle.get(
@@ -180,6 +166,7 @@ export class DropComponent implements OnInit, AfterViewInit {
       });
       options.push(optionForm);
     });
+    console.log(elementStyle);
     this.dragDrop.elementStyle.patchValue(elementStyle);
   }
   pxStringToInt(str: string): number {

@@ -1,6 +1,6 @@
 import { Alignment } from "../enums/alignment.model";
 
 export interface ParentElementStyle {
-    width: string,
+    width: number,
     justifyContent: Alignment,
 }

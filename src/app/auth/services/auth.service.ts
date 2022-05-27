@@ -20,14 +20,16 @@ import { LoggedUser } from 'src/app/interfaces/logged-user.interface';
   providedIn: 'root',
 })
 export class AuthService {
-  readonly loggedUser: Subject<User | null> = new Subject<User | null>();
-  readonly loginError: Subject<string | null> = new Subject<string | null>();
+  public readonly loggedUser: Subject<User | null> = new Subject<User | null>();
+  public readonly loginError: Subject<string | null> = new Subject<string | null>();
 
   private readonly JWT_TOKEN = 'JWT_TOKEN';
 
   constructor(public jwtHelper: JwtHelperService, private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.loggedUser);
+  }
 
   getUserByToken(): JwtPayload | null {
     const token: string = this.getToken();
@@ -44,7 +46,7 @@ export class AuthService {
     const token = localStorage.getItem(this.JWT_TOKEN) || '';
     return !this.jwtHelper.isTokenExpired(token);
   }
-  doLoginUser(loginInfo: LoggedUser) {
+  doLoginUser(loginInfo: LoggedUser): void {
     const user = loginInfo.user;
     const token = loginInfo.accessToken;
     this.loggedUser.next(user);

@@ -8,37 +8,39 @@
 </ng-container>
 
 <ng-template #textBlock>
-    <p class="drop__item" [ngStyle]="component?.style!">
+    <p class="drop__item" [ngStyle]="(component.style! | styleTransform)">
         {{ component?.value }}
     </p>
 </ng-template>
 <ng-template #inputBlock>
-    <label *ngIf="component.type == eInputType.radio || component.type == eInputType.checkbox; else inputTextBlock" [ngStyle]="component?.style!">
+    <label *ngIf="component.type == eInputType.radio || component.type == eInputType.checkbox; else inputTextBlock"
+        [ngStyle]="(component.style! | styleTransform)">
         <span>{{ component.label }}</span>
         <input class="drop__item" type={{component?.type}} [required]="component.required"
             placeholder={{component.placeholder}} />
     </label>
     <ng-template #inputTextBlock>
-        <input class="drop__item" #myInput [ngStyle]="component?.style!" type={{component?.type}}
-                [required]="component.required" placeholder={{component?.placeholder}} />
+        <input class="drop__item" #myInput [ngStyle]="(component.style! | styleTransform)" type={{component?.type}}
+            [required]="component.required" placeholder={{component?.placeholder}} />
     </ng-template>
- 
+
 </ng-template>
 <ng-template #labelBlock>
 
 </ng-template>
 <ng-template #textareaBlock>
-    <textarea class="drop__item" [ngStyle]="component?.style!" [required]="component.required" placeholder={{component.placeholder}}></textarea>
-   
+    <textarea class="drop__item" [ngStyle]="(component.style! | styleTransform)" [required]="component.required"
+        placeholder={{component.placeholder}}></textarea>
+
 </ng-template>
 <ng-template #selectBlock>
-    <select [ngStyle]="component?.style!" [required]="component.required" class="drop__item">
+    <select [ngStyle]="(component.style! | styleTransform)" [required]="component.required" class="drop__item">
         <option value="" disabled selected hidden>{{ component.placeholder }}</option>
         <option *ngFor="let option of component?.options" [value]="option">{{ option }}</option>
     </select>
 </ng-template>
 <ng-template #buttonBlock>
-    <button [ngStyle]="component.style!" class="drop__item">
+    <button [ngStyle]="(component.style! | styleTransform)" class="drop__item">
         {{component.value}}
     </button>
 </ng-template>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from '../auth/services/auth.service';
 import { User } from '../interfaces/user.interface';
 
@@ -10,16 +11,14 @@ import { User } from '../interfaces/user.interface';
 })
 export class NavComponent implements OnInit {
   
-  public user: User | null;
+  public user$: Observable<User | null>;
 
   constructor(public auth: AuthService,
               public router: Router) { 
   }
 
   ngOnInit(): void {
-    this.auth.loggedUser.subscribe(val =>{
-      this.user = val
-    })
+    this.user$ = this.auth.loggedUser
   }
 
   logout(): void {

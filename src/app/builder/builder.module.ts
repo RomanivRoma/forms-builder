@@ -26,6 +26,7 @@ import { BuilderComponent } from './builder/builder.component';
 import { RouterModule, Routes } from '@angular/router';
 import { IndentInputComponent } from './stylingSection/indent-input/indent-input.component';
 import { AlignInputComponent } from './stylingSection/align-input/align-input.component';
+import { StyleTransformPipe } from './pipes/style-transform.pipe';
 
 const routes: Routes = [{ path: 'builder', component: BuilderComponent }];
 
@@ -43,6 +44,7 @@ const routes: Routes = [{ path: 'builder', component: BuilderComponent }];
     BuilderComponent,
     IndentInputComponent,
     AlignInputComponent,
+    StyleTransformPipe,
   ],
   imports: [
     CommonModule,
