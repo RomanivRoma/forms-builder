@@ -4,12 +4,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import {
   Observable,
   tap,
-  pipe,
   mapTo,
   catchError,
   of,
   Subject,
-  BehaviorSubject,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import jwt_decode, { JwtPayload } from 'jwt-decode';

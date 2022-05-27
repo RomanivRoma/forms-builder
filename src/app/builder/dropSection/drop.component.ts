@@ -127,6 +127,8 @@ export class DropComponent implements OnInit, AfterViewInit {
     return this.dragDrop.setFormControlVisibleChange(component);
   }
   setCurrentStylesToElement(component: DragElement) {
+    console.log(component);
+    
     const elementStyle: Element = {
       margin: component.style?.margin!,
       padding: component.style?.padding!,

@@ -25,7 +25,6 @@ export class StyleTransformPipe implements PipeTransform {
         newStyle[el as keyof ElementStyle] = value[el as keyof ElementStyle] as never;
       }
     });
-    console.log(value);
     return newStyle;
   }
 }

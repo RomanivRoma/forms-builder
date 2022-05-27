@@ -4,11 +4,9 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpClient,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
