@@ -155,7 +155,7 @@ export class DropComponent implements OnInit, AfterViewInit {
     this.dragDrop.elementStyle.patchValue(elementStyle);
   }
   public handleSelect(component: DragElement) {
-    if (component.id == this.selectedElementId) {
+    if (component.id === this.selectedElementId) {
       this.dragDrop.unselectElement();
       return;
     }

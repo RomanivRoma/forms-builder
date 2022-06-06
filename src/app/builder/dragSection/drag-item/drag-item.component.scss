@@ -1,8 +1,7 @@
-$color-white: #ffffff;
-
+@import '../../../../assets/styles/variables.scss';
 :host {
-  background: $color-white;
-  border: 2px solid gray;
+  background: $white;
+  border: 2px solid $gray;
   border-radius: 10px;
   user-select: none;
   padding: 6px;

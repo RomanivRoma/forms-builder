@@ -1,3 +1,5 @@
+@import '../../../../assets/styles/variables.scss';
+
 :host {
   display: flex;
   align-items: center;
@@ -32,7 +34,7 @@
   }
   &.custom-text {
     &.selected p {
-      border-bottom: 2px solid lightslategray;
+      border-bottom: 2px solid $light-gray;
     }
   }
 

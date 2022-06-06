@@ -1,4 +1,4 @@
-$color-white: #ffffff;
+@import '../../../assets/styles/variables.scss';
 
 :host {
   width: 100%;
@@ -9,7 +9,7 @@ $color-white: #ffffff;
     padding: 10px 0;
 
     .drop__header {
-      color: $color-white;
+      color: $white;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
 
@@ -21,11 +21,11 @@ $color-white: #ffffff;
     }
 
     .drop__wrapper {
-      border: 2px solid rgb(163, 163, 163);
+      border: 2px solid $gray;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       height: 100%;
-      background: $color-white;
+      background: $white;
       overflow: auto;
     }
 
@@ -35,9 +35,5 @@ $color-white: #ffffff;
       padding: 15px;
     }
 
-    .drop__footer {
-      background: rgb(202, 202, 202);
-      min-height: 30px;
-    }
   }
 }

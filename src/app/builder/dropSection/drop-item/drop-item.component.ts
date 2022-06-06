@@ -16,14 +16,14 @@ import { DragElement } from 'src/app/interfaces/drag-element.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropItemComponent implements OnInit {
-  @Input() component: DragElement;
-  @Input() isSelected: boolean;
+  @Input() public component: DragElement;
+  @Input() public isSelected: boolean;
   public eComponentTag = ComponentTag;
   public eInputType = InputType;
   
   @HostBinding('style.justify-content')
   public get justyfyContent() {
-    return this.component?.class == 'custom-text'
+    return this.component?.class === 'custom-text'
       ? ''
       : this.component?.parentStyle?.justifyContent;
   }

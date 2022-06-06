@@ -7,6 +7,8 @@ import { DropComponent } from '../dropSection/drop.component';
 import { ComponentTag } from 'src/app/enums/component-tag.model';
 import { InputType } from 'src/app/enums/input-type.model';
 import { VisibleControls } from 'src/app/interfaces/visible-controls.interface';
+import { cDownloadStyles } from 'src/app/constants/download-form-style.const';
+import { cComponentTags } from 'src/app/constants/component-tag.const';
 
 @Injectable({
   providedIn: 'root',
@@ -65,72 +67,27 @@ export class DragDropService {
   public setSelectedElement(element: DragElement): void {
     const componentList: DragElement[] = this.addedComponentList.getValue();
     let selectedElement: DragElement = componentList.find(
-      (el) => el.id == this.selectedElementId.getValue()
+      (el) => el.id === this.selectedElementId.getValue()
     )!;
     selectedElement = { ...selectedElement, ...element };
     const newComponentList: DragElement[] = componentList.map((component) =>
-      component.id == selectedElement?.id ? selectedElement : component
+      component.id === selectedElement?.id ? selectedElement : component
     );
     this.addedComponentList.next(newComponentList);
   }
   public setFormControlVisibleChange(component: DragElement): VisibleControls {
-    let visibleInputs: VisibleControls = {} as VisibleControls;
-    if (component.tag == ComponentTag.p) {
-      visibleInputs = {
-        placeholder: false,
-        required: false,
-        value: true,
-        borderRadius: false,
-        borderColor: false,
-        label: false,
-        options: false,
-      };
-    } else if (component.tag == ComponentTag.button) {
-      visibleInputs = {
-        placeholder: false,
-        required: false,
-        value: true,
-        borderRadius: true,
-        borderColor: true,
-        label: false,
-        options: false,
-      };
-    } else if (component.tag == ComponentTag.select) {
-      visibleInputs = {
-        placeholder: true,
-        required: true,
-        value: false,
-        borderRadius: true,
-        borderColor: true,
-        label: false,
-        options: true,
-      };
-    } else if (
-      component.type == InputType.radio ||
-      component.type == InputType.checkbox
-    ) {
-      visibleInputs = {
-        placeholder: false,
-        required: true,
-        value: false,
-        borderRadius: true,
-        borderColor: true,
-        label: true,
-        options: false,
-      };
-    } else {
-      visibleInputs = {
-        placeholder: true,
-        required: true,
-        value: false,
-        borderRadius: true,
-        borderColor: true,
-        label: false,
-        options: false,
-      };
+    const cType: InputType = component.type!;
+    const cTag: ComponentTag = component.tag!;
+    const isDefault: boolean = !(component.tag! in cComponentTags || component.type! in cComponentTags);
+    if(isDefault){
+      return cComponentTags['default'];
     }
-    this.formControlVisibleChange.next({ ...visibleInputs });
-    return visibleInputs;
+    else if(cType === InputType.radio || cType == InputType.checkbox){
+      return cComponentTags[InputType.radio]
+    }
+    else{
+      return cComponentTags[cTag];
+    }
   }
   public getSelectedElementId(): Observable<number | null> {
     return this.selectedElementId.pipe(shareReplay());
@@ -171,75 +128,7 @@ export class DragDropService {
   }
   public download(filename: string): void {
     const html = this.formRef.nativeElement;
-    const style = `<style>
-    .drop__container{
-      border-radius: 5px;
-      padding: 13px;
-    }
-    .drop__item__container {
-      display: flex;
-    }
-    .drop__container .drop__header{
-        background: rgb(19, 192, 13);
-        color: #fff;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-    }
-    .drop__container p{
-      margin: 0;
-    }
-    .drop__container .drop__header h1{
-        margin: 0;
-        padding: 15px;
-        font-size: 29px;
-    }
-    .dragElements__item input,
-    .dragElements__item textarea,
-    .dragElements__item p,
-    .dragElements__item select{
-        margin: 5px;
-    }
-    .drop__container .drop__wrapper{
-        border: 2px solid rgb(163, 163, 163);
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-    }
-    .drop__container .drop__body{
-      display: flex;
-      flex-wrap: wrap;
-      padding: 15px;
-    }
-    .drop__container .drop__footer{
-        background: rgb(202, 202, 202);
-        min-height: 30px;
-    }
-    .dragElements__item {
-        display: flex;
-        align-items: center;
-    }
-    .dragElements__item {
-      width: 100%;
-    }
-    ::-webkit-scrollbar-track{
-      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-      border-radius: 10px;
-      background-color: #F5F5F5;
-    }
-    
-    ::-webkit-scrollbar{
-      width: 8px;
-      height: 8px;
-      background-color: #F5F5F5;
-      border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb{
-      border-radius: 10px;
-      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-      background-color: #555;
-    }
-    
-                  </style>`;
+    const style: string = cDownloadStyles;
     saveAs(
       'data:text/html;charset=utf-8, ' +
         encodeURIComponent(style + html.outerHTML),

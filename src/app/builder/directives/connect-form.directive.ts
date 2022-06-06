@@ -18,8 +18,8 @@ import { TypedAction } from '@ngrx/store/src/models';
 })
 export class ConnectFormDirective {
   private destroy$: Subject<boolean> = new Subject();
-  @Input('connectForm') path: string;
-  @Input() debounce: number = 300;
+  @Input('connectForm') public path: string;
+  @Input() public debounce: number = 300;
 
   constructor(
     private formGroupDirective: FormGroupDirective,

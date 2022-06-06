@@ -21,7 +21,7 @@ import { Indent } from 'src/app/interfaces/indent.interface';
 })
 export class IndentInputComponent implements OnInit, ControlValueAccessor {
   public indent: FormGroup;
-  @Input() title: string;
+  @Input() public title: string;
 
   constructor(fb: FormBuilder) {
     this.indent = fb.group({

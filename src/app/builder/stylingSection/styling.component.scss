@@ -1,6 +1,4 @@
-$color-dark: #212529;
-$app-background-color: #d3d3d3;
-$color-white: #ffffff;
+@import '../../../assets/styles/variables.scss';
 
 .toggle__container .mat-button-toggle-standalone.mat-button-toggle-appearance-standard,
 .mat-button-toggle-group-appearance-standard {
@@ -10,9 +8,9 @@ $color-white: #ffffff;
 ::ng-deep {
   .editor__container {
     height: 82vh;
-    background: $color-white;
+    background: $white;
     padding: 15px 12px;
-    border: 2px solid $color-dark;
+    border: 2px solid $dark;
     overflow: auto;
     border-radius: 0 6px 6px 6px;
   }

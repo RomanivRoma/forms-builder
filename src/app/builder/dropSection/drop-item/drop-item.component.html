@@ -1,9 +1,9 @@
 <ng-container [ngTemplateOutlet]="
-                component?.tag == eComponentTag.p ? textBlock :
-                component?.tag == eComponentTag.input ? inputBlock :
-                component?.tag == eComponentTag.textarea ? textareaBlock :
-                component?.tag == eComponentTag.select ? selectBlock :
-                component?.tag == eComponentTag.button ? buttonBlock :
+                component?.tag === eComponentTag.p ? textBlock :
+                component?.tag === eComponentTag.input ? inputBlock :
+                component?.tag === eComponentTag.textarea ? textareaBlock :
+                component?.tag === eComponentTag.select ? selectBlock :
+                component?.tag === eComponentTag.button ? buttonBlock :
                 null">
 </ng-container>
 
@@ -13,7 +13,7 @@
     </p>
 </ng-template>
 <ng-template #inputBlock>
-    <label *ngIf="component.type == eInputType.radio || component.type == eInputType.checkbox; else inputTextBlock"
+    <label *ngIf="component.type === eInputType.radio || component.type === eInputType.checkbox; else inputTextBlock"
         [ngStyle]="(component.style! | styleTransform)">
         <span>{{ component.label }}</span>
         <input class="drop__item" type={{component?.type}} [required]="component.required"

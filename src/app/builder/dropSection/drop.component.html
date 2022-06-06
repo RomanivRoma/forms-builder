@@ -11,8 +11,8 @@
             <ng-container *ngFor="let component of addedComponentList$ | ngrxPush; trackBy:identify">
                 <app-drop-item cdkDrag (click)="handleSelect(component)" class="drop__item__container"
                     [component]="component" [style.width.%]="component.parentStyle?.width"
-                    [style.textAlign]="component.tag == eComponentTag.p ? component.parentStyle?.justifyContent : ''"
-                    [isSelected]="(selectedElementId$ | ngrxPush) == component.id"></app-drop-item>
+                    [style.textAlign]="component.tag === eComponentTag.p ? component.parentStyle?.justifyContent : ''"
+                    [isSelected]="(selectedElementId$ | ngrxPush) === component.id"></app-drop-item>
             </ng-container>
 
         </div>
