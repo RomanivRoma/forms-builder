@@ -18,7 +18,7 @@ export class LetContextDirective<T> {
   }
 
   @Input()
-  set ngLet(value: T) {
+  public set ngLet(value: T) {
     this._context.ngLet = value;
   }
 }

@@ -19,24 +19,25 @@ export class AlignInputComponent implements OnInit, ControlValueAccessor {
   private onChange(_: Alignment) {}
   private _value: Alignment;
 
-  get value() {
+  public get value() {
     return this._value;
   }
   @Input()
-  set value(val) {
+  public set value(val) {
    this._value = val;
    this.onChange(this._value);
   }
   constructor() { }
-  writeValue(value: Alignment): void {
+  public ngOnInit(): void {
+  }
+  
+  public writeValue(value: Alignment): void {
     this.value = value;
   }
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
-  registerOnTouched(fn: any): void { }
+  public registerOnTouched(fn: any): void { }
 
-  ngOnInit(): void {
-  }
 
 }

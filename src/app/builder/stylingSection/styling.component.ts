@@ -22,7 +22,7 @@ export class StylingComponent implements OnInit {
   public value: Observable<ComponentStyle>;
   constructor(public dragDrop: DragDropService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.elementPortal = new ComponentPortal(ElementComponent);
     this.formPortal = new ComponentPortal(FormComponent);
 
@@ -36,7 +36,7 @@ export class StylingComponent implements OnInit {
       })
     );
   }
-  setPortal(val: ComponentStyle) {
+  private setPortal(val: ComponentStyle) {
     switch (val) {
       case ComponentStyle.form:
         this.selectedPortal = this.formPortal;
@@ -46,7 +46,7 @@ export class StylingComponent implements OnInit {
         break;
     }
   }
-  onValChange(val: ComponentStyle) {
+  public onValChange(val: ComponentStyle) {
     this.setPortal(val);
   }
 }

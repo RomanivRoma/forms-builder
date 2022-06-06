@@ -21,19 +21,19 @@ export class LoginComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.form = this.formBuilder.group({
       email: '',
       password: '',
     });
-    this.error$ = this.authService.loginError.pipe(takeUntil(this.destroy$));
+    this.error$ = this.authService.loginError$.pipe(takeUntil(this.destroy$));
   }
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
   }
 
-  submit(): void {
+  public submit(): void {
     const user: User = {
       email: this.form.value.email,
       password: this.form.value.password,

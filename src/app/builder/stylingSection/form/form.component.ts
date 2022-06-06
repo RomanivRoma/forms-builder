@@ -8,9 +8,9 @@ import { DragDropService } from '../../services/drag-drop.service';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
-  innerWidth: number = window.innerWidth;
-  innerHeight: number = window.innerHeight;
-  formStyle: FormGroup = new FormGroup({
+  public innerWidth: number = window.innerWidth;
+  public innerHeight: number = window.innerHeight;
+  public formStyle: FormGroup = new FormGroup({
     title: new FormControl(''),
     fontSize: new FormControl(''),
     fontColor: new FormControl(''),
@@ -21,12 +21,12 @@ export class FormComponent implements OnInit {
   });
   constructor(public dragDrop: DragDropService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
-  handleDownload(){
+  public handleDownload(){
     this.dragDrop.download('form.html')
   }
-  handleClear(){
+  public handleClear(){
     this.dragDrop.unselectElement()
     this.dragDrop.clearForm()
   }

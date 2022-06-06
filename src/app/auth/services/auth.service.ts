@@ -1,14 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {
-  Observable,
-  tap,
-  mapTo,
-  catchError,
-  of,
-  Subject,
-} from 'rxjs';
+import { Observable, tap, mapTo, catchError, of, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { User } from '../../interfaces/user.interface';
@@ -18,62 +11,65 @@ import { LoggedUser } from 'src/app/interfaces/logged-user.interface';
   providedIn: 'root',
 })
 export class AuthService {
-  public readonly loggedUser: Subject<User | null> = new Subject<User | null>();
-  public readonly loginError: Subject<string | null> = new Subject<string | null>();
+  public readonly loggedUser$: Subject<User | null> = new Subject<User | null>();
+  public readonly loginError$: Subject<string | null> = new Subject<string | null>();
+  public readonly isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   private readonly JWT_TOKEN = 'JWT_TOKEN';
 
-  constructor(public jwtHelper: JwtHelperService, private http: HttpClient) {}
-
-  ngOnInit() {
-    console.log(this.loggedUser);
+  constructor(public jwtHelper: JwtHelperService, private http: HttpClient) {
+    if (this.isAuthenticated()) {
+      this.isAuthenticated$.next(true);
+    }
   }
 
-  getUserByToken(): JwtPayload | null {
+  public getUserByToken(): JwtPayload | null {
     const token: string = this.getToken();
     return this.getDecodedAccessToken(token);
   }
-  getDecodedAccessToken(token: string): JwtPayload | null {
+  public getDecodedAccessToken(token: string): JwtPayload | null {
     try {
       return jwt_decode(token);
     } catch (Error) {
       return null;
     }
   }
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.JWT_TOKEN) || '';
+  public isAuthenticated(): boolean {
+    const token: string = localStorage.getItem(this.JWT_TOKEN) || '';
     return !this.jwtHelper.isTokenExpired(token);
   }
-  doLoginUser(loginInfo: LoggedUser): void {
+  public doLoginUser(loginInfo: LoggedUser): void {
     const user = loginInfo.user;
     const token = loginInfo.accessToken;
-    this.loggedUser.next(user);
+    this.loggedUser$.next(user);
+    this.isAuthenticated$.next(true);    
     this.storeToken(token);
-    this.loginError.next(null);
+    this.loginError$.next(null);
   }
-  login(user: User): Observable<boolean> {
+  public login(user: User): Observable<boolean> {
     return this.http.post<LoggedUser>(`${environment.apiURL}/login`, user).pipe(
       tap((token: LoggedUser) => this.doLoginUser(token)),
       mapTo(true),
       catchError((error) => {
-        this.loginError.next(error);
+        this.loginError$.next(error);
         console.error(error);
         return of(false);
       })
     );
   }
-  doLogoutUser() {
-    this.loggedUser.next(null);
+  public doLogoutUser(): void {
+    this.loggedUser$.next(null);
+    this.isAuthenticated$.next(false);
     this.removeToken();
   }
-  logout() {
+  public logout(): void {
     this.doLogoutUser();
   }
 
-  private storeToken(token: string) {
+  private storeToken(token: string): void {
     localStorage.setItem(this.JWT_TOKEN, token);
   }
-  private removeToken() {
+  private removeToken(): void {
     localStorage.removeItem(this.JWT_TOKEN);
   }
 

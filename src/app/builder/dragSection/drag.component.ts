@@ -15,12 +15,12 @@ export class DragComponent implements OnInit {
 
   constructor(private dragDrop: DragDropService) {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  noReturnPredicate() {
+  public noReturnPredicate() {
     return false;
   }
-  handleAdd(item: DragElement): DragElement {
+  public handleAdd(item: DragElement): DragElement {
     return this.dragDrop.addElement(item);
   }
 }

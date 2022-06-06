@@ -19,10 +19,10 @@ export class DragItemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
   
-  addComponent(component: DragElement){
+  public addComponent(component: DragElement){
     this.onAdd.emit(component)
   }
 

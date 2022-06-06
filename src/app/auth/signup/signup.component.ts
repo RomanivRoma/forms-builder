@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.form = this.formBuilder.group({
       login: '',
       email: '',
@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
       confirmPassword: '',
     });
   }
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
   }

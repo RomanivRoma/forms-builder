@@ -22,21 +22,21 @@ export class DropItemComponent implements OnInit {
   public eInputType = InputType;
   
   @HostBinding('style.justify-content')
-  get justyfyContent() {
+  public get justyfyContent() {
     return this.component?.class == 'custom-text'
       ? ''
       : this.component?.parentStyle?.justifyContent;
   }
   @HostBinding('class')
-  get class() {
+  public get class() {
     return this.component.class;
   }
   @HostBinding('class.selected')
-  get elementIsSelected() {
+  public get elementIsSelected() {
     return this.isSelected;
   }
 
   constructor() {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 }

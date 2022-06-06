@@ -26,7 +26,7 @@ export class ConnectFormDirective {
     private store: Store<any>
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getComponent().subscribe((val: Form | Element) => {
       this.formGroupDirective.form.patchValue(val);
     });
@@ -48,19 +48,19 @@ export class ConnectFormDirective {
     });
   }
 
-  getComponent(): Observable<Form | Element> {
+  public getComponent(): Observable<Form | Element> {
     return this.store
       .select((state) => state[this.path])
       .pipe(takeUntil(this.destroy$), take(1));
   }
-  getChanges(): Observable<Form | Element> {
+  public getChanges(): Observable<Form | Element> {
     return this.formGroupDirective.form.valueChanges.pipe(
       takeUntil(this.destroy$),
       debounceTime(this.debounce)
     );
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
   }

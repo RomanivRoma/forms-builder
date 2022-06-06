@@ -47,7 +47,7 @@ describe('AuthService', () => {
         login: "roma"
       }
     }
-    service.loggedUser
+    service.loggedUser$
     .subscribe(val =>{
       expect(val?.email).toEqual(loginInfo.user.email)
     })
@@ -55,7 +55,7 @@ describe('AuthService', () => {
   });
 
   it('#doLogoutUser should logout user', () => {
-    service.loggedUser
+    service.loggedUser$
     .subscribe(val =>{
       expect(val).toBeFalsy()
     })

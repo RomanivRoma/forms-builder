@@ -31,17 +31,17 @@ export class IndentInputComponent implements OnInit, ControlValueAccessor {
       left: [0],
     });
   }
-  onChange: (value: number) => void;
+  public onChange: (value: number) => void;
 
-  writeValue(value: Indent): void {
+  public writeValue(value: Indent): void {
     if (value) {
       this.indent.setValue(value);
     }
   }
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.indent.valueChanges.subscribe(fn);
   }
-  registerOnTouched(fn: any): void {}
+  public registerOnTouched(fn: any): void {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 }

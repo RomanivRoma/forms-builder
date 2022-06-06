@@ -53,16 +53,16 @@ export class DragDropService {
 
   constructor() {}
 
-  selectElement(component: DragElement): DragElement {
+  public selectElement(component: DragElement): DragElement {
     this.selectedElementId.next(component.id!);
     this.elementDisablingChange.next(false);
     return component;
   }
-  unselectElement(): void {
+  public unselectElement(): void {
     this.selectedElementId.next(null);
     this.elementDisablingChange.next(true);
   }
-  setSelectedElement(element: DragElement): void {
+  public setSelectedElement(element: DragElement): void {
     const componentList: DragElement[] = this.addedComponentList.getValue();
     let selectedElement: DragElement = componentList.find(
       (el) => el.id == this.selectedElementId.getValue()
@@ -73,7 +73,7 @@ export class DragDropService {
     );
     this.addedComponentList.next(newComponentList);
   }
-  setFormControlVisibleChange(component: DragElement): VisibleControls {
+  public setFormControlVisibleChange(component: DragElement): VisibleControls {
     let visibleInputs: VisibleControls = {} as VisibleControls;
     if (component.tag == ComponentTag.p) {
       visibleInputs = {
@@ -132,44 +132,44 @@ export class DragDropService {
     this.formControlVisibleChange.next({ ...visibleInputs });
     return visibleInputs;
   }
-  getSelectedElementId(): Observable<number | null> {
+  public getSelectedElementId(): Observable<number | null> {
     return this.selectedElementId.pipe(shareReplay());
   }
-  getFormControlVisibleChange(): Observable<VisibleControls> {
+  public getFormControlVisibleChange(): Observable<VisibleControls> {
     return this.formControlVisibleChange.pipe(shareReplay());
   }
-  addElement(item: DragElement): DragElement {
+  public addElement(item: DragElement): DragElement {
     const addedElement = { id: this.id++, ...item };
     const componentList = this.addedComponentList.getValue();
     this.addedComponentList.next([...componentList, addedElement]);
     return addedElement;
   }
-  removeElement(id: number): void {
+  public removeElement(id: number): void {
     const componentList = this.addedComponentList.getValue();
     this.addedComponentList.next(componentList.filter((el) => el.id != id));
   }
-  clearForm(): void {
+  public clearForm(): void {
     this.addedComponentList.next([]);
   }
-  setForm(form: ElementRef): void {
+  public setForm(form: ElementRef): void {
     this.formRef = form;
   }
-  getAddedComponents(): Observable<DragElement[]> {
+  public getAddedComponents(): Observable<DragElement[]> {
     return this.addedComponentList.pipe(shareReplay());
   }
   get options() {
     return this.elementStyle.controls['options'] as FormArray;
   }
-  addOption(): void {
+  public addOption(): void {
     const optionForm = new FormGroup({
       option: new FormControl(),
     });
     this.options.push(optionForm as FormGroup);
   }
-  deleteOption(optionIndex: number): void {
+  public deleteOption(optionIndex: number): void {
     this.options.removeAt(optionIndex);
   }
-  download(filename: string): void {
+  public download(filename: string): void {
     const html = this.formRef.nativeElement;
     const style = `<style>
     .drop__container{

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '../auth/services/auth.service';
 import { User } from '../interfaces/user.interface';
 
@@ -11,14 +11,15 @@ import { User } from '../interfaces/user.interface';
 })
 export class NavComponent implements OnInit {
   public user$: Observable<User | null>;
-
+  public isAuthenticated$: BehaviorSubject<boolean>;
   constructor(public auth: AuthService, public router: Router) {}
 
-  ngOnInit(): void {
-    this.user$ = this.auth.loggedUser;
+  public ngOnInit(): void {
+    this.user$ = this.auth.loggedUser$;
+    this.isAuthenticated$ = this.auth.isAuthenticated$;
   }
 
-  logout(): void {
+  public logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
   }

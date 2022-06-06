@@ -5,6 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { DragElement } from '../../interfaces/drag-element.interface';
 import {
@@ -43,10 +44,10 @@ export class DropComponent implements OnInit, AfterViewInit {
   public eComponentTag = ComponentTag;
   constructor(
     public dragDrop: DragDropService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.formStyle$ = this.store.select('form').pipe(map((form: Form) => form));
 
     this.store
@@ -93,15 +94,15 @@ export class DropComponent implements OnInit, AfterViewInit {
       })
     );
   }
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.dragDrop.setForm(this.formRef);
   }
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
   }
 
-  drop(event: CdkDragDrop<DragElement[]>) {
+  public drop(event: CdkDragDrop<DragElement[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -123,10 +124,10 @@ export class DropComponent implements OnInit, AfterViewInit {
       };
     }
   }
-  setVisibleInputs(component: DragElement): VisibleControls {
+  public setVisibleInputs(component: DragElement): VisibleControls {
     return this.dragDrop.setFormControlVisibleChange(component);
   }
-  setCurrentStylesToElement(component: DragElement) {
+  public setCurrentStylesToElement(component: DragElement) {
     const elementStyle: Element = {
       ...component.style!,
 
@@ -149,12 +150,11 @@ export class DropComponent implements OnInit, AfterViewInit {
       });
       options.push(optionForm);
     });
+    console.log(elementStyle);
+    
     this.dragDrop.elementStyle.patchValue(elementStyle);
   }
-  pxStringToInt(str: string): number {
-    return +str.replace(/\D/g, '');
-  }
-  handleSelect(component: DragElement) {
+  public handleSelect(component: DragElement) {
     if (component.id == this.selectedElementId) {
       this.dragDrop.unselectElement();
       return;
@@ -163,7 +163,7 @@ export class DropComponent implements OnInit, AfterViewInit {
     this.setCurrentStylesToElement(component);
     this.setVisibleInputs(component);
   }
-  identify(index: number, item: DragElement) {
+  public identify(index: number, item: DragElement) {
     return item.id;
   }
 }

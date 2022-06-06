@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err) => {
         console.log(err);
 
-        if ([401, 403].includes(err.status) && this.authService.loggedUser) {
+        if ([401, 403].includes(err.status) && this.authService.loggedUser$) {
           this.authService.logout();
           this.router.navigate(['login']);
         }
