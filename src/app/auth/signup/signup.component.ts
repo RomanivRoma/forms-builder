@@ -29,10 +29,6 @@ export class SignupComponent implements OnInit {
       confirmPassword: '',
     });
   }
-  public ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.complete();
-  }
 
   public submit(): void {
     const { confirmPassword, email, login, password } = this.form.getRawValue();
@@ -52,7 +48,6 @@ export class SignupComponent implements OnInit {
           this.router.navigate(['/login']);
           return res;
         }),
-        takeUntil(this.destroy$),
         catchError((error) => of(error))
       );
   }

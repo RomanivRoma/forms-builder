@@ -124,8 +124,9 @@ export class DropComponent implements OnInit, AfterViewInit {
       };
     }
   }
-  public setVisibleInputs(component: DragElement): VisibleControls {
-    return this.dragDrop.setFormControlVisibleChange(component);
+  public setVisibleInputs(component: DragElement): void {
+    const visibleControls: VisibleControls = this.dragDrop.setFormControlVisibleChange(component);
+    this.dragDrop.formControlVisibleChange.next(visibleControls);
   }
   public setCurrentStylesToElement(component: DragElement) {
     const elementStyle: Element = {

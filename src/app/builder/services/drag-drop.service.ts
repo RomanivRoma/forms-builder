@@ -40,7 +40,7 @@ export class DragDropService {
   private selectedElementId: BehaviorSubject<number | null> =
     new BehaviorSubject<number | null>(null);
 
-  private formControlVisibleChange: BehaviorSubject<VisibleControls> =
+  public formControlVisibleChange: BehaviorSubject<VisibleControls> =
     new BehaviorSubject<VisibleControls>({
       placeholder: true,
       required: true,
@@ -79,13 +79,19 @@ export class DragDropService {
     const cType: InputType = component.type!;
     const cTag: ComponentTag = component.tag!;
     const isDefault: boolean = !(component.tag! in cComponentTags || component.type! in cComponentTags);
+    
     if(isDefault){
+      console.log('default');
       return cComponentTags['default'];
     }
     else if(cType === InputType.radio || cType == InputType.checkbox){
+      console.log('radio');
+      
       return cComponentTags[InputType.radio]
     }
     else{
+      console.log('else', cComponentTags[cTag]);
+      
       return cComponentTags[cTag];
     }
   }
