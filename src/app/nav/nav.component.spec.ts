@@ -8,6 +8,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginComponent } from '../auth/login/login.component';
 import { AuthService } from '../auth/services/auth.service';
+import { ReactiveComponentModule } from '@ngrx/component';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -21,6 +22,8 @@ describe('NavComponent', () => {
       imports: [
         HttpClientTestingModule,
         HttpClientModule,
+        ReactiveComponentModule,
+        RouterTestingModule.withRoutes([]),
         // AuthModule
         JwtModule,
       ], 

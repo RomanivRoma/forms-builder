@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -16,6 +16,7 @@ import { InputType } from 'src/app/enums/input-type.model';
 import { DragElement } from 'src/app/interfaces/drag-element.interface';
 import { environment } from 'src/environments/environment';
 import { DragDropService } from '../../services/drag-drop.service';
+import { AlignInputComponent } from '../align-input/align-input.component';
 import { FormComponent } from './form.component';
 
 describe('FormComponent', () => {
@@ -26,7 +27,7 @@ describe('FormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FormComponent ],
+      declarations: [FormComponent, AlignInputComponent],
       imports: [
         StoreModule.forRoot({}),
         MatButtonToggleModule,
@@ -38,17 +39,20 @@ describe('FormComponent', () => {
         BrowserAnimationsModule,
         MatButtonToggleModule,
         MatIconModule,
-        ReactiveFormsModule
+        FormsModule,
+        ReactiveFormsModule,
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
-    .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;
-    dragDropSerive = jasmine.createSpyObj<DragDropService>(['getAddedComponents', 'getSelectedElementId'])
+    dragDropSerive = jasmine.createSpyObj<DragDropService>([
+      'getAddedComponents',
+      'getSelectedElementId',
+    ]);
     item = {
       id: 1,
       title: 'Select',
@@ -66,10 +70,9 @@ describe('FormComponent', () => {
 
   it('#handleClear should clear form', () => {
     dragDropSerive.getAddedComponents.and.returnValue(of([]));
-    component.handleClear()
-    dragDropSerive.getAddedComponents()
-    .subscribe(elements =>{
+    component.handleClear();
+    dragDropSerive.getAddedComponents().subscribe((elements) => {
       expect(elements).toEqual([]);
-    })
+    });
   });
 });

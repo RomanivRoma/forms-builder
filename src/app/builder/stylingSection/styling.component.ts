@@ -38,7 +38,7 @@ export class StylingComponent {
     );
   }
 
-  private setPortal(val: ComponentStyle): void {
+  public setPortal(val: ComponentStyle): void {
     switch (val) {
       case ComponentStyle.form:
         this.selectedPortal = this.formPortal;

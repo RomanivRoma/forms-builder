@@ -125,10 +125,11 @@ export class DropComponent {
     }
   }
 
-  public setVisibleInputs(component: DragElement): void {
+  public setVisibleInputs(component: DragElement): VisibleControls {
     const visibleControls: VisibleControls =
       this.dragDrop.setFormControlVisibleChange(component);
     this.dragDrop.formControlVisibleChange.next(visibleControls);
+    return visibleControls;
   }
 
   public setCurrentStylesToElement(component: DragElement) {

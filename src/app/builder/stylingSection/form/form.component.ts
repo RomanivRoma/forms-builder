@@ -19,6 +19,7 @@ export class FormComponent {
     width: new FormControl(''),
     height: new FormControl(''),
     align: new FormControl(''),
+    margin: new FormControl(''),
     background: new FormControl(''),
   });
   

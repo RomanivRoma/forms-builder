@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ComponentStyle } from 'src/app/enums/style-enum.model';
 import { VisibleControls } from 'src/app/interfaces/visible-controls.interface';

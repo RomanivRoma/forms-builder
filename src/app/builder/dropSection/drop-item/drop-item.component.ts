@@ -28,7 +28,7 @@ export class DropItemComponent {
   }
   @HostBinding('class')
   public get class() {
-    return this.component.class;
+    return this.component?.class;
   }
   @HostBinding('class.selected')
   public get elementIsSelected() {

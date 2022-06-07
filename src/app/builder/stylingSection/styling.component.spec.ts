@@ -10,7 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveComponentModule } from '@ngrx/component';
 import { StoreModule } from '@ngrx/store';
+import { ComponentStyle } from 'src/app/enums/style-enum.model';
 import { ElementComponent } from './element/element.component';
 import { FormComponent } from './form/form.component';
 
@@ -25,6 +27,7 @@ describe('StylingComponent', () => {
       declarations: [ StylingComponent ],
       imports: [
         MatButtonToggleModule,
+        ReactiveComponentModule,
         StoreModule.forRoot({}),
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -45,9 +48,9 @@ describe('StylingComponent', () => {
   it('#setPortal should set active portal', async () => {
     const formPortal = new ComponentPortal(FormComponent) 
     const elementPortal = new ComponentPortal(ElementComponent) 
-    // component.setPortal('form')
+    component.setPortal(ComponentStyle.form)
     expect(component.selectedPortal).toEqual(formPortal)
-    // component.setPortal('element')
+    component.setPortal(ComponentStyle.element)
     expect(component.selectedPortal).toEqual(elementPortal)
   });
 });

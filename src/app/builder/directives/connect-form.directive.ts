@@ -23,7 +23,6 @@ export class ConnectFormDirective {
   ) {}
 
   public ngOnInit() {
-    console.log(this.path);
     this.getComponent().subscribe((val: Form | Element) => {
       this.formGroupDirective.form.patchValue(val);
     });

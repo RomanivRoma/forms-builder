@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
+import { cComponentTags } from 'src/app/constants/component-tag.const';
 import { ComponentTag } from 'src/app/enums/component-tag.model';
 import { InputType } from 'src/app/enums/input-type.model';
 import { DragElement } from 'src/app/interfaces/drag-element.interface';
@@ -84,13 +85,6 @@ describe('DragDropService', () => {
   })
   it('#setFormControlVisibleChange should return object of visible inputs', () => {
 
-    expect(service.setFormControlVisibleChange(item)).toEqual({
-      placeholder: false,
-      required: true,
-      value: false,
-      borderRadius: true,
-      borderColor: true,
-      label: false
-    } as VisibleControls)
+    expect(service.setFormControlVisibleChange(item)).toEqual(cComponentTags.SELECT)
   })
 });
