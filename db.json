@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "email": "roma@gmail.com",
+      "password": "$2a$10$skh.Tz358Q3vdTat0/bghuw.rvTfPHXjgsoB0b2fNO9j4uMPX5hgu",
+      "login": "roma",
+      "id": 1
+    },
+    {
+      "email": "test@test",
+      "password": "$2a$10$qtSJsJIobrTKrElb8GsAfOOJLTvceu.40ulTKiKU76av4vW/Ibgx.",
+      "login": "test",
+      "id": 2
+    },
+    {
+      "email": "test2@test",
+      "password": "$2a$10$SQOwq2jiPt5zRj9JOLmKYubbwEh7FtoCkdmTaChnRu1c.pIGRhs.K",
+      "login": "test2",
+      "id": 3
+    },
+    {
+      "email": "roma@gmail.com1",
+      "password": "$2a$10$vmdeJeH8gFxIkPe3tdGbu.8ZR8qePUuV5Ms5nurSV40sA/7S3zgiq",
+      "login": "Qwe",
+      "id": 4
+    },
+    {
+      "email": "roma1@gmail.com",
+      "password": "$2a$10$YCLtNuZATmuHYA4Z77gPIu.IvdgYtR5Y9H3YLDM/o7B3hRaEw6xqi",
+      "login": "Qwe",
+      "id": 5
+    },
+    {
+      "email": "roma2@gmail.com",
+      "password": "$2a$10$OlkjkWKpZGZahw3X1wSynuvo0LTxBSGVSpPRCDxW5prEn5U3INi.O",
+      "login": "qwe",
+      "id": 6
+    },
+    {
+      "email": "roma5@gmail.com",
+      "password": "$2a$10$rdr9Uar7hEPuAApB8z5Ljun7bqZ3qOxG7qzBOjtUmKnlyYZ1baTla",
+      "login": "AGasfsf",
+      "id": 7
+    }
+  ]
+}

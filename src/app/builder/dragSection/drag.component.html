@@ -1,0 +1,8 @@
+<div cdkDropList cdkDropListSortingDisabled [cdkDropListData]="componentList"
+    [cdkDropListEnterPredicate]="noReturnPredicate" class="dragElements__container p-2">
+
+    <ng-container *ngFor="let component of componentList; index as index ">
+        <app-drag-item cdkDrag [component]="component" (onAdd)="handleAdd($event)"></app-drag-item>
+    </ng-container>
+
+</div>

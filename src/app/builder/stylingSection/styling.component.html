@@ -1,0 +1,14 @@
+<div class="toggle__container">
+    <mat-button-toggle-group #group="matButtonToggleGroup" (change)="onValChange(group.value)"
+        [value]="value | ngrxPush" class="formElementGroup">
+        <mat-button-toggle [value]="eComponentStyle.form">Form</mat-button-toggle>
+        <mat-button-toggle [disabled]="dragDrop.elementDisablingChange | ngrxPush" [value]="eComponentStyle.element">
+            Element</mat-button-toggle>
+    </mat-button-toggle-group>
+</div>
+<div class="editor__container">
+    <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
+</div>
+
+<ng-template #elementPortal>
+</ng-template>

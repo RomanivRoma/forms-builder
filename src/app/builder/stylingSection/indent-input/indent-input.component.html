@@ -1,0 +1,21 @@
+<div class="numberGroup__block">
+    <p>{{ title }}</p>
+    <div class="input__number__container" [formGroup]="indent">
+        <mat-form-field appearance="fill">
+            <mat-label>Top</mat-label>
+            <input matInput type="number" formControlName="top">
+        </mat-form-field>  
+        <mat-form-field appearance="fill">
+            <mat-label>Right</mat-label>
+            <input matInput type="number" formControlName="right">
+        </mat-form-field>  
+        <mat-form-field appearance="fill">
+            <mat-label>Bottom</mat-label>
+            <input matInput type="number" formControlName="bottom">
+        </mat-form-field>  
+        <mat-form-field appearance="fill">
+            <mat-label>Left</mat-label>
+            <input matInput type="number" formControlName="left">
+        </mat-form-field> 
+    </div>
+</div>

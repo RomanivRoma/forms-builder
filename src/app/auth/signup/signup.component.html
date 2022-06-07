@@ -1,0 +1,30 @@
+<main class="form-signin">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+    <div class="form-floating">
+      <input formControlName="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+        name="email">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input formControlName="login" type="text" class="form-control" id="floatingInput" placeholder="Login"
+        name="loginName">
+      <label for="floatingInput">Login name</label>
+    </div>
+    <div class="form-floating">
+      <input formControlName="password" type="password" class="form-control" id="floatingPassword"
+        placeholder="Password" name="password">
+      <label for="floatingPassword">Password</label>
+    </div>
+    <div class="form-floating">
+      <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword"
+        placeholder="Confirm Password" name="password">
+      <label for="confirmPassword">Confirm Password</label>
+    </div>
+
+    <div *ngIf="error$ | ngrxPush as err" class="invalid-feedback d-block mb-3">
+      {{ err }}
+    </div>
+    <button class="w-100 btn btn-lg btn-primary mt-1" id="signup" type="submit">Sign up</button>
+  </form>
+</main>

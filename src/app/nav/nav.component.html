@@ -1,0 +1,22 @@
+<header class="p-3 bg-dark text-white">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none" routerLink="/">Form Builder</a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <!-- <li><a class="nav-link px-2 text-secondary">About</a></li> -->
+      </ul>
+
+      <div class="text-end">
+        <ng-container *ngIf="!(isAuthenticated$ | ngrxPush); else elseBlock">
+          <a class="btn btn-outline-light me-2" routerLink="/login">Login</a>
+          <a class="btn btn-warning" routerLink="/signUp">Sign-up</a>
+        </ng-container>
+        <ng-template #elseBlock>
+          <!-- <p class="p-0 text-secondary d-inline-block m-0 me-4">User login: <b class="user">{{ (user$ | ngrxPush)?.login }}</b></p> -->
+          <a class="btn btn-outline-light me-2" id="logout" (click)="logout()">Logout</a>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</header>

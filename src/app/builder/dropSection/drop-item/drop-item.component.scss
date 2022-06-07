@@ -1,0 +1,41 @@
+@import '../../../../assets/styles/variables.scss';
+
+:host {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  outline: none;
+
+  &.selected {
+    background: rgb(179 255 183 / 47%);
+  }
+
+  input,
+  textarea,
+  p,
+  select {
+    width: 100%;
+    outline: none;
+    margin: 5px;
+    border-radius: 0px;
+    pointer-events: none;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    border-radius: 0px;
+    pointer-events: none;
+  }
+  input[type="checkbox"],
+  input[type="radio"]{
+      width: auto;
+  }
+  &.custom-text {
+    &.selected p {
+      border-bottom: 2px solid $light-gray;
+    }
+  }
+
+}

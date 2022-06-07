@@ -1,0 +1,105 @@
+<form [formGroup]="dragDrop.elementStyle"
+      class="form__editor"
+      [connectForm]="componentStyleElement">
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.value" appearance="fill">
+        <mat-label>Text</mat-label>
+        <input matInput formControlName="value" type="text">
+    </mat-form-field>
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.label" appearance="fill">
+        <mat-label>Label</mat-label>
+        <input matInput formControlName="label" type="text">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Background color</mat-label>
+        <input matInput type="color" formControlName="background" >
+    </mat-form-field>
+
+    <app-indent-input title="Margin:" formControlName="margin"></app-indent-input>
+    <app-indent-input title="Padding:" formControlName="padding"></app-indent-input>
+
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.placeholder" appearance="fill">
+        <mat-label>Placeholder</mat-label>
+        <input matInput formControlName="placeholder" type="text">
+    </mat-form-field>
+    
+    <app-align-input formControlName="justifyContent"></app-align-input>
+
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.borderColor" appearance="fill">
+        <mat-label>Border color</mat-label>
+        <input matInput type="color" formControlName="borderColor" >
+    </mat-form-field>  
+    <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.borderRadius" appearance="fill">
+        <mat-label>Border radius</mat-label>
+        <input matInput type="number" formControlName="borderRadius" >
+    </mat-form-field>  
+    <mat-form-field appearance="fill">
+        <mat-label>Font size</mat-label>
+        <input matInput type="number" formControlName="fontSize" >
+    </mat-form-field>  
+    <mat-form-field appearance="fill">
+        <mat-label>Font color</mat-label>
+        <input matInput type="color" formControlName="color" >
+    </mat-form-field>  
+    <mat-form-field appearance="fill">
+        <mat-label>Font weight</mat-label>
+        <input matInput type="number" formControlName="fontWeight" >
+    </mat-form-field> 
+    <mat-checkbox  *ngIf="(controlVisible$ | ngrxPush)?.required" formControlName="required" class="example-margin mb-2">Required:</mat-checkbox>
+    <div formArrayName="options" *ngIf="(controlVisible$ | ngrxPush)?.options" class="options__wrapper">
+        <ng-container *ngFor="let optionForm of dragDrop.options.controls; let i = index">
+            <div [formGroup]="$any(optionForm)" class="input-group mb-3">
+                <input type="text" formControlName="option" class="form-control" [placeholder]="'Option ' + (i+1)">
+                <img (click)="dragDrop.deleteOption(i)" src="assets/img/close-red.svg"/>
+            </div>
+        </ng-container>
+        <div class="add__button" (click)="dragDrop.addOption()">
+            <img src="assets/img/add-plus.svg"/>
+        </div>
+    </div>
+    <div>
+        <p>Container Width:</p>           
+        <mat-slider
+            class="w-100"    
+            formControlName="containerWidth"
+            thumbLabel
+            tickInterval="auto"
+            step="1"
+            min="0"
+            max="100"
+            aria-label="units"></mat-slider>
+    </div>
+    <div>
+        <p>Element Width:</p>           
+        <mat-slider
+            class="w-100"    
+            formControlName="width"
+            thumbLabel
+            tickInterval="auto"
+            step="1"
+            min="0"
+            max="100"
+            aria-label="units"></mat-slider>
+    </div>
+    <div>
+        <p>Height:</p>           
+        <mat-slider
+            class="w-100"height
+            formControlName="height"
+            thumbLabel
+            tickInterval="auto"
+            step="1"
+            min="0"
+            max="100"
+            aria-label="units"></mat-slider>
+    </div>
+</form>
+<div  class="edit-block"> 
+    <img 
+        (click)="handleUnselect()"
+        class="confirm"
+        src="assets/img/right-correct.svg"/>
+    <img
+        (click)="handleRemoveElement()"
+        class="delete"
+        src="assets/img/close-red.svg"/>
+</div>
