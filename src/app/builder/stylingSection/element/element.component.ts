@@ -25,17 +25,19 @@ export class ElementComponent {
       .subscribe((id) => (this.selectedElementId = id));
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
   }
-  public handleRemoveElement() {
+  
+  public handleRemoveElement(): void {
     const id = this.selectedElementId;
     if (!id) return;
     this.dragDrop.removeElement(id);
     this.dragDrop.unselectElement();
   }
-  public handleUnselect() {
+
+  public handleUnselect(): void{
     this.dragDrop.unselectElement();
   }
 }

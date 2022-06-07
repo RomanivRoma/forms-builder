@@ -1,32 +1,29 @@
 import { Directive, Input } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
 import { take, debounceTime, takeUntil, Subject, Observable } from 'rxjs';
-import { Action, ActionCreator, Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { formStyleValueChange } from '../actions/form.actions';
 import { elementStyleValueChange } from '../actions/element.actions';
 import { Element } from '../models/element.model';
 import { Form } from '../models/form.model';
-import { element } from 'protractor';
-import { TypedAction } from '@ngrx/store/src/models';
+import { ComponentStyle } from 'src/app/enums/style-enum.model';
+import { AppState } from 'src/app/app.state';
 
-// enum StylingComponents {
-//   element,
-//   form
-// }
 @Directive({
   selector: '[connectForm]',
 })
 export class ConnectFormDirective {
   private destroy$: Subject<boolean> = new Subject();
-  @Input('connectForm') public path: string;
+  @Input('connectForm') public path: ComponentStyle;
   @Input() public debounce: number = 300;
 
   constructor(
     private formGroupDirective: FormGroupDirective,
-    private store: Store<any>
+    private store: Store<AppState>
   ) {}
 
   public ngOnInit() {
+    console.log(this.path);
     this.getComponent().subscribe((val: Form | Element) => {
       this.formGroupDirective.form.patchValue(val);
     });
@@ -34,10 +31,10 @@ export class ConnectFormDirective {
     this.getChanges().subscribe((value: Form | Element) => {
       let actionCreator: Action;
       switch (this.path) {
-        case 'form':
+        case ComponentStyle.form:
           actionCreator = formStyleValueChange(value as Form);
           break;
-        case 'element':
+        case ComponentStyle.element:
           actionCreator = elementStyleValueChange(value as Element);
           break;
         default:

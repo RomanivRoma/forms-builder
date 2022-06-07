@@ -21,15 +21,17 @@ export class FormComponent {
     align: new FormControl(''),
     background: new FormControl(''),
   });
-  constructor(public dragDrop: DragDropService) { }
+  
+  constructor(public dragDrop: DragDropService) {}
 
-  public ngOnInit(): void {
+  public ngOnInit(): void {}
+
+  public handleDownload(): void {
+    this.dragDrop.download('form.html');
   }
-  public handleDownload(){
-    this.dragDrop.download('form.html')
-  }
-  public handleClear(){
-    this.dragDrop.unselectElement()
-    this.dragDrop.clearForm()
+  
+  public handleClear(): void {
+    this.dragDrop.unselectElement();
+    this.dragDrop.clearForm();
   }
 }

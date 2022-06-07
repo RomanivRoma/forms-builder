@@ -11,8 +11,8 @@ export class LetContextDirective<T> {
   private _context: LetContext<T | null> = { ngLet: null };
 
   constructor(
-    _viewContainer: ViewContainerRef,
-    _templateRef: TemplateRef<LetContext<T>>
+    private _viewContainer: ViewContainerRef,
+    private _templateRef: TemplateRef<LetContext<T>>
   ) {
     _viewContainer.createEmbeddedView(_templateRef, this._context);
   }

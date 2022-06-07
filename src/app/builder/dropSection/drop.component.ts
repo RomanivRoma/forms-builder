@@ -21,6 +21,7 @@ import { ElementStyle } from 'src/app/interfaces/element-style.interface';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ParentElementStyle } from 'src/app/interfaces/parent-element-style.interface';
 import { ComponentTag } from 'src/app/enums/component-tag.model';
+import { ComponentStyle } from 'src/app/enums/style-enum.model';
 @Component({
   selector: 'app-drop',
   templateUrl: './drop.component.html',
@@ -39,14 +40,16 @@ export class DropComponent {
   public eComponentTag = ComponentTag;
   constructor(
     public dragDrop: DragDropService,
-    private store: Store<AppState>,
+    private store: Store<AppState>
   ) {}
 
   public ngOnInit(): void {
-    this.formStyle$ = this.store.select('form').pipe(map((form: Form) => form));
+    this.formStyle$ = this.store
+      .select(ComponentStyle.form)
+      .pipe(map((form: Form) => form));
 
     this.store
-      .select('element')
+      .select(ComponentStyle.element)
       .pipe(takeUntil(this.destroy$))
       .subscribe((element: Element) => {
         const style: ElementStyle = {
@@ -89,9 +92,11 @@ export class DropComponent {
       })
     );
   }
+
   public ngAfterViewInit(): void {
     this.dragDrop.setForm(this.formRef);
   }
+
   public ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
@@ -119,10 +124,13 @@ export class DropComponent {
       };
     }
   }
+
   public setVisibleInputs(component: DragElement): void {
-    const visibleControls: VisibleControls = this.dragDrop.setFormControlVisibleChange(component);
+    const visibleControls: VisibleControls =
+      this.dragDrop.setFormControlVisibleChange(component);
     this.dragDrop.formControlVisibleChange.next(visibleControls);
   }
+
   public setCurrentStylesToElement(component: DragElement) {
     const elementStyle: Element = {
       ...component.style!,
@@ -146,9 +154,10 @@ export class DropComponent {
       });
       options.push(optionForm);
     });
-    
+
     this.dragDrop.elementStyle.patchValue(elementStyle);
   }
+
   public handleSelect(component: DragElement) {
     if (component.id === this.selectedElementId) {
       this.dragDrop.unselectElement();
@@ -158,6 +167,7 @@ export class DropComponent {
     this.setCurrentStylesToElement(component);
     this.setVisibleInputs(component);
   }
+
   public identify(index: number, item: DragElement) {
     return item.id;
   }

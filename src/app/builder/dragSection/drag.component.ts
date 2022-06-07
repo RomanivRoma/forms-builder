@@ -19,6 +19,7 @@ export class DragComponent {
   public noReturnPredicate() {
     return false;
   }
+  
   public handleAdd(item: DragElement): DragElement {
     return this.dragDrop.addElement(item);
   }

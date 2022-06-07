@@ -16,9 +16,9 @@ import { Alignment } from 'src/app/enums/alignment.model';
 })
 export class AlignInputComponent implements ControlValueAccessor {
   public eAlignment = Alignment;
-  private onChange(_: Alignment) {}
+  private onChange(_: Alignment): void {}
   private _value: Alignment;
-  public get value() {
+  public get value(): Alignment {
     return this._value;
   }
   @Input()

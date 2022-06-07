@@ -1,6 +1,6 @@
 <form [formGroup]="dragDrop.elementStyle"
       class="form__editor"
-      connectForm="element">
+      [connectForm]="componentStyleElement">
     <mat-form-field *ngIf="(controlVisible$ | ngrxPush)?.value" appearance="fill">
         <mat-label>Text</mat-label>
         <input matInput formControlName="value" type="text">

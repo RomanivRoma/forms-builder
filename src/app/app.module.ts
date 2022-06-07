@@ -15,6 +15,7 @@ import { elementReducer } from './builder/reducers/element.reducers';
 import { ReactiveComponentModule } from '@ngrx/component';
 import { TokenInterceptor } from './auth/interceptors/token-interceptor.interceptor';
 import { ErrorInterceptor } from './auth/interceptors/error.interceptor';
+import { ComponentStyle } from './enums/style-enum.model';
 
 @NgModule({
   declarations: [AppComponent, NavComponent],
@@ -28,8 +29,8 @@ import { ErrorInterceptor } from './auth/interceptors/error.interceptor';
     ReactiveComponentModule,
     PortalModule,
     StoreModule.forRoot({
-      form: formReducer,
-      element: elementReducer,
+      [ComponentStyle.form]: formReducer,
+      [ComponentStyle.element]: elementReducer,
     }),
   ],
   providers: [

@@ -20,6 +20,7 @@ export class StylingComponent {
   private elementPortal: ComponentPortal<ElementComponent>;
 
   public value: Observable<ComponentStyle>;
+
   constructor(public dragDrop: DragDropService) {}
 
   public ngOnInit(): void {
@@ -36,7 +37,8 @@ export class StylingComponent {
       })
     );
   }
-  private setPortal(val: ComponentStyle) {
+
+  private setPortal(val: ComponentStyle): void {
     switch (val) {
       case ComponentStyle.form:
         this.selectedPortal = this.formPortal;
@@ -46,7 +48,8 @@ export class StylingComponent {
         break;
     }
   }
-  public onValChange(val: ComponentStyle) {
+
+  public onValChange(val: ComponentStyle): void {
     this.setPortal(val);
   }
 }
