@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -19,7 +19,7 @@ import { Indent } from 'src/app/interfaces/indent.interface';
     },
   ],
 })
-export class IndentInputComponent implements OnInit, ControlValueAccessor {
+export class IndentInputComponent implements ControlValueAccessor {
   public indent: FormGroup;
   @Input() public title: string;
 
@@ -31,6 +31,7 @@ export class IndentInputComponent implements OnInit, ControlValueAccessor {
       left: [0],
     });
   }
+
   public onChange: (value: number) => void;
 
   public writeValue(value: Indent): void {
@@ -38,9 +39,11 @@ export class IndentInputComponent implements OnInit, ControlValueAccessor {
       this.indent.setValue(value);
     }
   }
+
   public registerOnChange(fn: any): void {
     this.indent.valueChanges.subscribe(fn);
   }
+
   public registerOnTouched(fn: any): void {}
 
   public ngOnInit(): void {}

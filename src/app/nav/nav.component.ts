@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '../auth/services/auth.service';
@@ -9,7 +9,7 @@ import { User } from '../interfaces/user.interface';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   public user$: Observable<User | null>;
   public isAuthenticated$: BehaviorSubject<boolean>;
   constructor(public auth: AuthService, public router: Router) {}

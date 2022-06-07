@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, take, takeUntil } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from '../../interfaces/user.interface';
 
@@ -10,7 +10,7 @@ import { User } from '../../interfaces/user.interface';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   public form: FormGroup;
   public error$: Observable<string | null>;
 

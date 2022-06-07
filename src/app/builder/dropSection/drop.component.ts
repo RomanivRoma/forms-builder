@@ -1,11 +1,8 @@
 import {
   Component,
   ElementRef,
-  OnInit,
   ViewChild,
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { DragElement } from '../../interfaces/drag-element.interface';
 import {
@@ -20,10 +17,8 @@ import { DragDropService } from '../services/drag-drop.service';
 import { Form } from '../models/form.model';
 import { Element } from '../models/element.model';
 import { VisibleControls } from 'src/app/interfaces/visible-controls.interface';
-import { Indent } from 'src/app/interfaces/indent.interface';
 import { ElementStyle } from 'src/app/interfaces/element-style.interface';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { Alignment } from 'src/app/enums/alignment.model';
 import { ParentElementStyle } from 'src/app/interfaces/parent-element-style.interface';
 import { ComponentTag } from 'src/app/enums/component-tag.model';
 @Component({
@@ -32,7 +27,7 @@ import { ComponentTag } from 'src/app/enums/component-tag.model';
   styleUrls: ['./drop.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DropComponent implements OnInit, AfterViewInit {
+export class DropComponent {
   @ViewChild('dropListContainer') dropListContainer?: ElementRef;
   @ViewChild('mainForm', { static: true }) formRef: ElementRef;
   public formStyle$: Observable<Form>;
@@ -151,7 +146,6 @@ export class DropComponent implements OnInit, AfterViewInit {
       });
       options.push(optionForm);
     });
-    console.log(elementStyle);
     
     this.dragDrop.elementStyle.patchValue(elementStyle);
   }

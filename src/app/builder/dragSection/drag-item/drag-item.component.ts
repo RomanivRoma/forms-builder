@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
 import { DragElement } from 'src/app/interfaces/drag-element.interface';
 import { EventEmitter } from '@angular/core';
-import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { ComponentTag } from 'src/app/enums/component-tag.model';
 
 @Component({
@@ -10,7 +9,7 @@ import { ComponentTag } from 'src/app/enums/component-tag.model';
   styleUrls: ['./drag-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DragItemComponent implements OnInit {
+export class DragItemComponent {
 
 
   @Input() component: DragElement;

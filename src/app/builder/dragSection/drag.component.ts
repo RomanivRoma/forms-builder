@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DragElement } from '../../interfaces/drag-element.interface';
 import { DragDropService } from '../services/drag-drop.service';
-import { environment } from 'src/environments/environment';
 import { componentList } from './components';
 
 @Component({
@@ -10,7 +9,7 @@ import { componentList } from './components';
   styleUrls: ['./drag.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DragComponent implements OnInit {
+export class DragComponent {
   public componentList: DragElement[] = componentList;
 
   constructor(private dragDrop: DragDropService) {}

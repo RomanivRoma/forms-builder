@@ -1,5 +1,5 @@
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { DragDropService } from '../services/drag-drop.service';
 import { ElementComponent } from './element/element.component';
@@ -11,7 +11,7 @@ import { ComponentStyle } from '../../enums/style-enum.model';
   templateUrl: './styling.component.html',
   styleUrls: ['./styling.component.scss'],
 })
-export class StylingComponent implements OnInit {
+export class StylingComponent {
   public selectedPortal: ComponentPortal<ElementComponent | FormComponent>;
   public eComponentStyle = ComponentStyle;
   private defaultComponentStyle: ComponentStyle = ComponentStyle.form;

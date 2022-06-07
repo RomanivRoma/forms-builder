@@ -1,5 +1,6 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ComponentStyle } from 'src/app/enums/style-enum.model';
 import { DragDropService } from '../../services/drag-drop.service';
 
 @Component({
@@ -7,9 +8,10 @@ import { DragDropService } from '../../services/drag-drop.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
 })
-export class FormComponent implements OnInit {
+export class FormComponent {
   public innerWidth: number = window.innerWidth;
   public innerHeight: number = window.innerHeight;
+  public componentStyleForm: ComponentStyle = ComponentStyle.form;
   public formStyle: FormGroup = new FormGroup({
     title: new FormControl(''),
     fontSize: new FormControl(''),

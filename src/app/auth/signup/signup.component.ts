@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, Observable, of, Subject, takeUntil, tap } from 'rxjs';
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
   public form: FormGroup;
   private destroy$: Subject<boolean> = new Subject();
   public error$: Observable<string | null>;

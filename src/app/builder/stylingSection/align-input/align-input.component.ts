@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Alignment } from 'src/app/enums/alignment.model';
 
@@ -14,30 +14,30 @@ import { Alignment } from 'src/app/enums/alignment.model';
     },
   ],
 })
-export class AlignInputComponent implements OnInit, ControlValueAccessor {
+export class AlignInputComponent implements ControlValueAccessor {
   public eAlignment = Alignment;
   private onChange(_: Alignment) {}
   private _value: Alignment;
-
   public get value() {
     return this._value;
   }
   @Input()
   public set value(val) {
-   this._value = val;
-   this.onChange(this._value);
+    this._value = val;
+    this.onChange(this._value);
   }
-  constructor() { }
-  public ngOnInit(): void {
-  }
-  
+
+  constructor() {}
+
+  public ngOnInit(): void {}
+
   public writeValue(value: Alignment): void {
     this.value = value;
   }
+
   public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
-  public registerOnTouched(fn: any): void { }
 
-
+  public registerOnTouched(fn: any): void {}
 }

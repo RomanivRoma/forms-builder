@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { ComponentStyle } from 'src/app/enums/style-enum.model';
 import { VisibleControls } from 'src/app/interfaces/visible-controls.interface';
 import { DragDropService } from '../../services/drag-drop.service';
-
 @Component({
   selector: 'app-element',
   templateUrl: './element.component.html',
   styleUrls: ['./element.component.scss'],
 })
-export class ElementComponent implements OnInit {
+export class ElementComponent {
   public controlVisible$: Observable<VisibleControls>;
   private destroy$: Subject<boolean> = new Subject();
   public selectedElementId: number | null;
+  public componentStyleElement: ComponentStyle = ComponentStyle.element;
 
   constructor(public dragDrop: DragDropService) {}
 
